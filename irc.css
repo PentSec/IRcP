@@ -530,7 +530,8 @@ body,
   display: none;
 }
 
-#app-mount div.stack_dbd263:not([role=group]) {
+/* Scoped to the rail: unscoped, it also flattened the gap of every stack in the client. */
+#app-mount .guilds__5e434 div.stack_dbd263:not([role=group]) {
   gap: 0 !important;
 }
 
@@ -768,10 +769,11 @@ body,
   padding: var(--space-md);
 }
 
-/* The frame stays on .mainContent: .wrapper also contains the children, so the box would
- * cover the whole category. border-image keeps it square. */
-#app-mount .mainContent__29444 {
+/* The frame sits on the wrapper so it also covers the create-channel button. No left edge,
+ * and border-image keeps the corners square. */
+#app-mount .wrapper__29444 {
   border: 1px solid transparent;
+  border-left-width: 0;
   -o-border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l/0.5) 30%, transparent 78%) 1;
      border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l/0.5) 30%, transparent 78%) 1;
   border-radius: 0;
@@ -779,7 +781,7 @@ body,
   box-shadow: 0 0 calc(var(--glow-intensity, 1) * 8px) hsl(from var(--accent) h s l/0.22);
 }
 
-#app-mount .mainContent__29444:hover {
+#app-mount .wrapper__29444:hover {
   background: linear-gradient(270deg, hsl(from var(--accent) h s l/0.32) 0%, transparent 82%);
 }
 
@@ -968,6 +970,15 @@ body,
   box-shadow: none;
 }
 
+/* The jump-to-present bar: panel surface, accent edge and a glow behind it. */
+#app-mount .jumpToPresentBar__0f481 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 12px) hsl(from var(--accent) h s l/0.35);
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
 #app-mount .barButtonBase__0f481 {
   filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3)) drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--accent) h s l/0.2));
 }
@@ -1033,6 +1044,20 @@ body,
 
 #app-mount .embedWrapper_b7e1cb {
   background: var(--fg-primary);
+}
+
+/* The box takes an accent edge so it reads as the entry point. */
+#app-mount .searchBar__25bec {
+  border: 1px solid var(--accent);
+}
+
+/* The suggestions list has no surface of its own, so it floats on whatever is behind. */
+#app-mount .container__16eb0 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(3px);
 }
 
 /* Member list column and its scroller.
