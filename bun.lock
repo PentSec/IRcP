@@ -8,6 +8,7 @@
         "bd-scss": "^3.0.8",
       },
       "devDependencies": {
+        "postcss": "^8.5.31",
         "prettier": "^3.9.10",
       },
     },

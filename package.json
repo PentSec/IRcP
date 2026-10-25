@@ -15,12 +15,14 @@
     "build": "bd-scss build && node scripts/postbuild.mjs",
     "reroll": "bd-scss reroll",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "verify:cascade": "node scripts/verify-cascade.mjs"
   },
   "dependencies": {
     "bd-scss": "^3.0.8"
   },
   "devDependencies": {
+    "postcss": "^8.5.31",
     "prettier": "^3.9.10"
   }
 }

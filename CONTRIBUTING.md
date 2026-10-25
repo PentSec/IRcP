@@ -65,8 +65,12 @@ There is no test suite. The checks are:
 
 1. `bun run build` succeeds and `dist/` contains `irc.theme.css`, `irc.css`, `fonts.css`,
    `bg.png` and `.nojekyll`.
-2. `bun run format:check` passes.
-3. The theme still renders in the client. When a selector stops matching, open DevTools,
+2. `bun run verify:cascade` reports 0 inverted pairs. It compares the build against the
+   published `irc.css` (or `-- --baseline <file>`) and fails when two rules that share a
+   class and a property swapped places, which is the only way this kind of refactor breaks
+   the theme silently.
+3. `bun run format:check` passes.
+4. The theme still renders in the client. When a selector stops matching, open DevTools,
    copy the offending element (Elements → right click → Copy → Copy outerHTML) and paste it
    in the issue: the real DOM is the only reliable reference.
 
