@@ -1,55 +1,19 @@
-/**
- * @name IRcP
- * @author PentSec
- * @version 2.0.0-irc.57
- * @description A Discord theme shaped like a terminal IRC client: monospace log lines, dim metadata, translucent panels.
- *
- * This is the entry point: metadata, the imports that pull the layout, and the variables
- * worth touching. The heavy machinery lives in the imported files.
- *
- *   irc/01-status.css     presence rings around avatars
- *   irc/02-ui.css         app shell: background, sidebars, member list, popouts
- *   irc/03-fonts.css      Iosevka Term Slab subsets, embedded as base64
- *   irc/05-messages.css   message rows and the forum post list
- *   irc/bg.png            background image
- *
- * The imports are ABSOLUTE, pointing at this theme's own GitHub Pages deployment. That
- * makes this single file self-sufficient: someone can download only irc.theme.css and the
- * layout still loads. The trade-off while developing: edits to the imported files reach
- * the client only after a push, while edits to this file apply instantly.
- *
- * Third-party notices: SoftX (c) 2021 DiscordStyles, RadialStatus (c) 2020 DiscordStyles,
- * both MIT; Iosevka (c) Renzhi Li, SIL OFL 1.1; Font Awesome icons (c) Fonticons, Inc.,
- * CC BY 4.0. Full texts in THIRD-PARTY-NOTICES.md.
- */
-
-@import url("https://jeff.is-a.dev/IRcP/irc/01-status.css");
-@import url("https://jeff.is-a.dev/IRcP/irc/02-ui.css");
-@import url("https://jeff.is-a.dev/IRcP/irc/03-fonts.css");
-@import url("https://jeff.is-a.dev/IRcP/irc/05-messages.css");
-
 /* ============================================================================
  * 4. User variables
  *
- * The theme ships with irc/bg.png (set in 02-ui.css as a stylesheet-relative URL, so it
- * works locally and online). To point at another image, define --background-image here
- * with an ABSOLUTE URL: Chromium resolves url() inside a custom property against the
- * document base (discord.com), not against this file, so a relative path would 404.
+ * This file is the only one worth editing for personal setup. Everything else under
+ * src/ is layout. It compiles into irc.theme.css, the file the client loads, so a
+ * theme toggle re-reads it; the body (irc.css) is a separate request.
+ *
+ * The background ships as src/assets/bg.png and is published next to the theme, so the
+ * default in _ui.scss is a relative url('bg.png') that resolves beside the stylesheet.
+ * This is the one place where a relative path would NOT work: Chromium resolves url()
+ * inside a custom property against the document base (discord.com), not against the
+ * stylesheet. If you set --background-image here, use an absolute URL.
  * ========================================================================== */
 
-/*
- * Font wiring.
- *
- * "gg sans, Noto Sans" shows up as the computed value of --font in Discord, which
- * means Discord itself owns that variable name and our :root declaration loses to
- * it (its stylesheets can mount after Vencord's theme style element). So we do NOT
- * compete for a generic name: the family lives in --irc-font, everything Discord
- * reads is mapped to it with !important, and the app root gets the family directly.
- *
- * --irc-theme: 1 is a marker: if it reads 1, this file parsed and applied.
- */
 :root {
-  --irc-font: "Iosevka Term Slab NF", ui-monospace, monospace;
+  --irc-font: 'Iosevka Term Slab NF', ui-monospace, monospace;
   --irc-line-height: 1.25; /* one line of a terminal: keep nick, timestamp and text on the same baseline */
   --irc-ts-width: 8ch; /* the clock column. 12-hour clock ("9:45 AM" = 7 chars): 8ch. 24-hour clock ("13:38"): 5ch */
   --irc-ts-gutter: calc(var(--irc-ts-width) * 0.75 + 1em); /* clock column + two spaces before the "<" */
@@ -57,22 +21,12 @@
   --irc-nick: var(--accent); /* nick colour for people with no role colour and no gradient */
   --irc-nick-glow: 1; /* glow behind nicks, in the nick's own colour. 0 disables it */
   --irc-nick-glow-size: 6px; /* blur radius of that glow at strength 1 */
-  --irc-role-group-color: var(--accent); /* member-list role headers. Discord does not expose the per-role colour in the DOM, so this is a theme colour, not the role's */
+  --irc-role-group-color: var(
+    --accent
+  ); /* member-list role headers. Discord does not expose the per-role colour in the DOM, so this is a theme colour, not the role's */
   --irc-forum-stamp: 3.4em; /* Forum list: width of the right-hand thumbnail column. Its height matches the row, and object-fit: cover fills the box. */
-  --irc-theme: 1;
+  --irc-theme: 1; /* marker: if the computed value reads 1, this file parsed and applied */
 
-  --font: var(--irc-font) !important;
-  --font-primary: var(--irc-font) !important;
-  --font-display: var(--irc-font) !important;
-  --font-code: var(--irc-font) !important;
-}
-
-body,
-#app-mount {
-  font-family: var(--irc-font) !important;
-}
-
-:root {
   /*
    * App surface
    */

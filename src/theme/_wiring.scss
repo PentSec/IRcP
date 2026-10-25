@@ -1,0 +1,25 @@
+/* ============================================================================
+ * Font wiring
+ *
+ * "gg sans, Noto Sans" shows up as the computed value of --font in Discord, which
+ * means Discord itself owns that variable name and a plain :root declaration loses
+ * to it (its stylesheets can mount after Vencord's theme style element). So we do
+ * NOT compete for a generic name: the family lives in --irc-font (entry file),
+ * everything Discord reads is mapped to it with !important, and the app root gets
+ * the family directly.
+ *
+ * This is not configuration. It is the wiring that makes --irc-font reach the app,
+ * so it lives with the layout: the entry file stays a list of values.
+ * ========================================================================== */
+
+:root {
+  --font: var(--irc-font) !important;
+  --font-primary: var(--irc-font) !important;
+  --font-display: var(--irc-font) !important;
+  --font-code: var(--irc-font) !important;
+}
+
+body,
+#app-mount {
+  font-family: var(--irc-font) !important;
+}

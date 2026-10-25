@@ -1,0 +1,9 @@
+// Body of the theme: compiles to irc.css and is imported by irc.theme.css.
+//
+// The order is the cascade. Presence rings first so the avatar shape is set before the
+// app shell touches the avatar wrappers, message rows next, and the font wiring last so
+// nothing else can claim --font-primary on the way in.
+@use './theme/status';
+@use './theme/ui';
+@use './theme/messages';
+@use './theme/wiring';

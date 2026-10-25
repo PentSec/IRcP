@@ -366,9 +366,10 @@ body,
 }
 
 #app-mount .bg__960e4 {
-  /* The fallback is a stylesheet-relative URL, so it resolves next to this file whether
-   * the theme is loaded locally (vencord:///themes/irc/) or from jsDelivr. An absolute
-   * --background-image from the entry point overrides it. */
+  /* Relative to this stylesheet, not to the document: in `dist` it resolves next to
+   * irc.css and in `dev` next to the single dev file, which is why `dev` copies the
+   * asset into the client's themes folder. An absolute --background-image from the
+   * entry file overrides it. */
   background-image: var(--background-image, url("bg.png"));
   background-color: transparent;
   background-attachment: var(--background-attachment, fixed);
