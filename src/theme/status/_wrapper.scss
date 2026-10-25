@@ -1,0 +1,19 @@
+// Avatar wrapper
+//
+// The wrapper adjustments the ring needs: shape and pointer area.
+
+#app-mount .wrapper__44b0c.StatusEverywhere-avatar-chatAvatar {
+  margin: 0;
+}
+
+#app-mount .avatarWrapper {
+  border-radius: var(--irc-status-avatar-shape);
+}
+
+#app-mount .avatarWrapper .pointerEvents-9SZWKj {
+  stroke: var(--status-color) !important;
+}
+
+#app-mount .avatarWrapper .pointerEvents-9SZWKj[width='30'] {
+  width: calc(100% - 9px) !important;
+}

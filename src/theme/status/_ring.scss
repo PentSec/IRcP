@@ -1,0 +1,81 @@
+/* ============================================================================
+ * Presence ring
+ *
+ * The ring reuses Discord's own SVG mask: the status rect keeps the fill Discord
+ * gives it, the mask is dropped and the rect is stroked instead. That is enough to
+ * pick up online / idle / dnd / streaming / offline without extra data.
+ *
+ * Derived from RadialStatus, Copyright (c) 2020 DiscordStyles, MIT.
+ * See THIRD-PARTY-NOTICES.md for the license text.
+ * ========================================================================== */
+
+#app-mount .wrapper__44b0c {
+  border-radius: var(--irc-status-avatar-shape);
+}
+
+#app-mount .wrapper__44b0c svg:not(:root) {
+  overflow: visible;
+  contain: none;
+}
+
+#app-mount .wrapper__44b0c svg:not(:root) g[transform] {
+  transform: scale(1) !important;
+}
+
+#app-mount .wrapper__44b0c foreignObject {
+  -webkit-mask: none;
+  mask: none;
+}
+
+#app-mount .wrapper__44b0c .dots__5ad89 circle {
+  cy: 22.25 !important;
+}
+
+#app-mount .wrapper__44b0c .dots__5ad89 circle:nth-child(1) {
+  cx: 17 !important;
+}
+
+#app-mount .wrapper__44b0c .dots__5ad89 circle:nth-child(2) {
+  cx: 23.25 !important;
+}
+
+#app-mount .wrapper__44b0c .dots__5ad89 circle:nth-child(3) {
+  cx: 30.5 !important;
+}
+
+#app-mount .wrapper__44b0c .mask__44b0c > rect[x='22'] {
+  x: 0;
+  y: 0;
+}
+
+#app-mount .wrapper__44b0c .mask__44b0c > circle {
+  opacity: 0 !important;
+  width: 100%;
+  height: 100%;
+  cx: 43%;
+  cy: 20;
+}
+
+#app-mount .wrapper__44b0c .pointerEvents__44b0c[x='14.5'] {
+  fill: rgba(0, 0, 0, 0.5) !important;
+  width: var(--irc-status-members-width, 30px);
+  height: var(--irc-status-members-width, 30px);
+  x: calc(var(--irc-status-members-width, 30px) / 2 - 2px);
+  y: calc(var(--irc-status-members-width, 30px) / 2);
+}
+
+#app-mount .wrapper__44b0c img,
+#app-mount .wrapper__44b0c.avatar__91a9d {
+  border-radius: var(--irc-status-avatar-shape);
+}
+
+#app-mount .wrapper__44b0c svg[width='25'][height='15'] > rect {
+  rx: calc(var(--irc-status-avatar-shape) * 2) !important;
+  ry: calc(var(--irc-status-avatar-shape) * 2) !important;
+}
+
+#app-mount .wrapper__44b0c[style*='80px'] svg.cursorDefault__44b0c rect,
+#app-mount .wrapper__44b0c[style*='120px'] svg.cursorDefault__44b0c rect {
+  ry: calc(var(--irc-status-avatar-shape) * 3.3);
+  rx: calc(var(--irc-status-avatar-shape) * 3.3);
+}

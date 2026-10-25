@@ -1,0 +1,109 @@
+/* ============================================================================
+ * Forum post as a log line
+ *
+ * A forum post ships as a card that stacks title, author, preview, media and footer
+ * vertically. The card chrome is dropped and the post becomes one grid row, same
+ * rhythm as a message row: [pin] title  nick: preview  [img] react [31] 7h
+ * 
+ * Structure: .container_faa96b [ .focusTarget, .left_faa96b, footer, media ]
+ *            .body_faa96b      [ .tags, .header_faa96b, .message_faa96b ]
+ * 
+ * Grid, not flex: with three columns the footer keeps the same right edge whether or
+ * not the post has media, so the counters line up down the whole list.
+ * ========================================================================== */
+
+/* ============================================================================
+ * 6. Forum posts as log lines
+ *
+ * A forum post is not a message row: it ships as a card (.mainCard_f369db) that
+ * stacks title, author, preview, media and footer vertically. Here the card is
+ * dropped and the post becomes one log line, same rhythm as section 5:
+ *
+ *   [pin] <title>  <nick>: preview                  [img] react [31] 7h
+ *
+ * Structure, from the live client:
+ *   .container_faa96b  [ .focusTarget, .left_faa96b, footer wrapper, media wrapper ]
+ *   .body_faa96b       [ .tags__08166, .header_faa96b, .message_faa96b ]
+ *
+ * Grid, not flex: with three columns the footer keeps the same right edge whether
+ * or not the post has media, so "31" and the time line up down the whole list.
+ * Hash _faa96b is the post module; re-check it after a Discord update.
+ * ========================================================================== */
+
+/* Card chrome: no box, no gap, no border. The log line is the unit. */
+#app-mount li.card_f369db {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+#app-mount .container_faa96b {
+  display: grid;
+  /* text | metadata | thumbnail. The LAST track is a fixed width on purpose: the
+   * thumbnail keeps one x position down the whole list instead of riding on the
+   * variable width of the footer (one row has "👍3 [3] 38m ago", the next only
+   * "7h ago"). The footer sits in the middle track, right-aligned, so its right
+   * edge is fixed too and the counters line up. */
+  grid-template-columns: minmax(0, 1fr) auto var(--irc-forum-stamp, 3.4em);
+  align-items: baseline;
+  gap: 0 1em;
+  min-height: 0;
+  /* Same line rhythm as a message row (section 4). This is also the height of the
+   * thumbnail stamp: a taller stamp would set the row height and, being centred,
+   * poke above the preview text instead of sitting inside the line. */
+  line-height: var(--irc-line-height, 1.25);
+  padding: var(--irc-forum-row-pad, 2px) var(--space-xs);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+/* Where one post ends and the next begins. Message rows are delimited by the clock
+ * gutter (section 5); a forum row has no clock, so it gets a hairline instead.
+ * --fg-secondary is 4.5% white: visible on the dark surface, invisible as "chrome". */
+#app-mount li.card_f369db + li.card_f369db {
+  border-top: 1px solid var(--fg-secondary);
+}
+
+#app-mount .container_faa96b:hover {
+  background: var(--background-message-hover);
+}
+
+/* .left_faa96b is the wrapper around BOTH the body and the footer, so the footer was
+ * never a grid item: it stayed stacked under the preview and the third column measured
+ * 0px. display: contents drops the wrapper's box and lets its children join the grid
+ * above, which puts the footer back on the line, at the shared right edge. */
+#app-mount .left_faa96b {
+  display: contents;
+}
+
+/* Click overlay: keep it out of the grid flow even if Discord ever ships it static. */
+#app-mount .container_faa96b > .focusTarget_faa96b {
+  grid-area: 1 / 1;
+}
+
+/* Footer and media are placed in fixed tracks. grid-row is explicit so the row can never
+ * split in two; the media is also listed through .left_faa96b for builds that nest the
+ * wrapper there (the DOM has moved between builds). */
+#app-mount .container_faa96b > div:has(> .footer_faa96b),
+#app-mount .left_faa96b > div:has(> .footer_faa96b) {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  position: static;
+}
+
+#app-mount .container_faa96b > div:has(> .bodyMedia_faa96b),
+#app-mount .left_faa96b > div:has(> .bodyMedia_faa96b) {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  /* Stretch, and bleed into the card's 2px vertical padding, so the stamp is exactly
+   * as tall as the row instead of floating inside it. Percentage heights contribute
+   * nothing to the row's intrinsic size, so the text still sets the height. */
+  align-self: stretch;
+  margin-block: calc(var(--irc-forum-row-pad, 2px) * -1);
+  position: static;
+}

@@ -1,0 +1,15 @@
+// Titlebar
+//
+// Channel title and the separator drawn after the toolbar.
+
+#app-mount .title_f75fb0 {
+  background: var(--bg-primary);
+  height: var(--toolbar-height);
+  border-left: 1px solid var(--bg-border);
+  border-bottom: 1px solid var(--bg-border);
+  padding: 0 var(--space-lg);
+}
+
+#app-mount .children__9293f::after {
+  content: none;
+}

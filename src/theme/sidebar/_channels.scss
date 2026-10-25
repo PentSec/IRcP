@@ -1,0 +1,101 @@
+// Channel rows
+//
+// Channels, categories and threads in the guild sidebar, including the unread pill.
+
+#app-mount .wrapper__2ea32 {
+  margin: 0;
+  padding: 0;
+}
+
+#app-mount .wrapper__2ea32.modeUnreadImportant__2ea32 .icon__2ea32,
+#app-mount .wrapper__2ea32.modeUnreadImportant__2ea32 .name__2ea32 {
+  color: var(--channel-unread-colour);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--channel-unread-colour) h s l/0.3))
+    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--channel-unread-colour) h s l/0.2));
+}
+
+#app-mount .wrapper__2ea32.modeSelected__2ea32 .link__2ea32 {
+  background: hsl(from var(--accent) h s l/0.1);
+}
+
+#app-mount .wrapper__2ea32.modeSelected__2ea32 .link__2ea32::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: var(--channel-pill-width);
+  top: 0;
+  background: var(--accent);
+  box-shadow: 0 0 calc(var(--channel-glow-intensity) * 15px) calc(var(--channel-glow-intensity) * 5px)
+    hsl(from var(--accent) h s l/0.2);
+}
+
+#app-mount .wrapper__2ea32.modeSelected__2ea32 .icon__2ea32,
+#app-mount .wrapper__2ea32.modeSelected__2ea32 .name__2ea32 {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3))
+    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--accent) h s l/0.2));
+}
+
+#app-mount .link__2ea32 {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 0;
+}
+
+#app-mount .typeThread__2ea32 .link__2ea32 {
+  padding-left: calc(var(--space-md) * 4);
+}
+
+#app-mount .typeThread__2ea32 .link__2ea32::before {
+  content: '';
+  width: 24px;
+  height: 24px;
+  -webkit-mask: url('data:image/svg+xml; utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.427 4.427l3.396 3.396a.25.25 0 010 .354l-3.396 3.396A.25.25 0 016 11.396V4.604a.25.25 0 01.427-.177z"></path></svg>');
+  mask: url('data:image/svg+xml; utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.427 4.427l3.396 3.396a.25.25 0 010 .354l-3.396 3.396A.25.25 0 016 11.396V4.604a.25.25 0 01.427-.177z"></path></svg>');
+  background: var(--channels-default);
+  top: 50%;
+  left: calc(var(--space-md) * 2);
+  translate: 0 -50%;
+}
+
+#app-mount .spine__5b40b,
+#app-mount .spineBorder__5b40b {
+  display: none;
+}
+
+#app-mount .unread__2ea32 {
+  left: 0;
+  height: 100%;
+  top: 50%;
+  translate: 0 -50%;
+  margin-top: 0;
+  border-radius: 0;
+  width: var(--channel-pill-width);
+  background: var(--channel-unread-colour);
+  height: var(--channel-pill-height);
+  box-shadow: 0 0 calc(var(--channel-glow-intensity) * 10px) calc(var(--channel-glow-intensity) * 2px)
+    hsl(from var(--channel-unread-colour) h s l/0.5);
+}
+
+#app-mount .channelInfo_c69b6d {
+  display: block;
+}
+
+#app-mount .channelInfo_c69b6d .text-xs\/semibold_cf4812 {
+  color: var(--accent) !important;
+  font-weight: normal;
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3))
+    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--accent) h s l/0.2));
+}
+
+#app-mount .searchBar_e6b769 {
+  height: var(--toolbar-height);
+  border-bottom: 1px solid var(--bg-border);
+  padding: 0;
+}
+
+#app-mount .searchBar_e6b769 .button__201d5 {
+  height: var(--toolbar-height);
+  border-radius: 0;
+  background: transparent;
+}

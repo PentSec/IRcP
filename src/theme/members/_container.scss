@@ -1,0 +1,31 @@
+/* ============================================================================
+ * Member list
+ *
+ * The member list column and its scroller.
+ *
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
+ * See THIRD-PARTY-NOTICES.md for the license text.
+ * ========================================================================== */
+
+#app-mount .container_c8ffbb {
+  background: var(--bg-primary);
+  border-left: 1px solid var(--bg-border);
+}
+
+#app-mount .members_c8ffbb {
+  /* Painted here, not only on .container_c8ffbb: a forum post / thread renders the
+   * same scroller without that container, and the list came out transparent. */
+  background: var(--bg-primary);
+  padding: 0;
+}
+
+/* Same reason for the border: in a normal channel the container draws it, so adding it
+   unconditionally would double the line. :not() with a complex selector is supported in
+   Chromium; it only matches scrollers that have no .container_c8ffbb ancestor. */
+#app-mount .members_c8ffbb:not(.container_c8ffbb *) {
+  border-inline-start: 1px solid var(--bg-border);
+}
+
+#app-mount .members_c8ffbb::-webkit-scrollbar {
+  display: none;
+}

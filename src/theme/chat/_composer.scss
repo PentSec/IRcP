@@ -1,0 +1,42 @@
+// Composer
+//
+// The textbox: border, focus ring and the scrollable container around it.
+
+#app-mount .form_f75fb0 {
+  /* No horizontal padding: the composer sits flush with the channel edges. This also
+   * overrides Discord's own padding-inline: var(--space-xs) on .formWithLoadedChatInput_f75fb0. */
+  padding: 0;
+  /* Discord ships .form_f75fb0{flex-shrink:0;margin-top:-16px;position:relative}: it
+   * pulls the composer up by 16px to cancel the padding it puts under the message list.
+   * The terminal layout wants the composer to start where the last row ends, so the
+   * negative margin is cancelled instead of compensated. */
+  margin-top: 0;
+}
+
+#app-mount .channelTextArea_f75fb0,
+#app-mount .channelTextArea__5126c {
+  background: var(--textbox-background);
+  border: 2px solid var(--textbox-border);
+  border-radius: 6px;
+  /* Discord ships margin-bottom: var(--custom-chat-input-margin-bottom) on the
+   * composer box, which adds dead space once the form padding is gone. */
+  margin: 0;
+  transition: var(--transition);
+  transition-property: border-color, box-shadow;
+}
+
+#app-mount .channelTextArea_f75fb0:hover,
+#app-mount .channelTextArea__5126c:hover {
+  border-color: var(--textbox-hover-border);
+}
+
+#app-mount .channelTextArea_f75fb0:focus-within,
+#app-mount .channelTextArea__5126c:focus-within {
+  border-color: hsl(from var(--accent) h s l);
+  box-shadow: 0 0 calc(var(--input-glow-intensity) * 20px) calc(var(--input-glow-intensity) * 5px)
+    hsl(from var(--accent) h s l/0.25);
+}
+
+#app-mount .scrollableContainer__74017 {
+  background: transparent;
+}

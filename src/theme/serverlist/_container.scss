@@ -1,0 +1,59 @@
+// Server list container
+//
+// Rail background, separators, scroller and the folder backdrop.
+
+#app-mount .folderGroupBackground__48112 {
+  left: 50%;
+  translate: -50%;
+  width: var(--server-size);
+}
+
+#app-mount .guilds__5e434 {
+  background: var(--bg-primary);
+  border-right: 1px solid var(--bg-border);
+  /* The guild list renders scaled down (IRC-minimal). zoom scales the element AND the
+   * space it reserves, so the nav, its icons and the column width all shrink together
+   * instead of needing every inline 40px/padding re-declared. Tune with
+   * --irc-guilds-zoom in section 4. */
+  zoom: var(--irc-guilds-zoom, 0.7);
+  /* margin-bottom lives inside the zoom, so it would shrink with everything else and let
+   * the bar grow over the user panel: divide by the zoom to keep the real gap. */
+  margin-bottom: calc(var(--custom-app-panels-height) / var(--irc-guilds-zoom, 0.7));
+}
+
+/* The scroller is narrower than the nav: it ships scrollbar-gutter: stable, which
+ * reserves ~8px for a scrollbar that is never visible, so every icon sits 4px left of the
+ * nav's centre. Give the scroll area the full width and hide the bar (the wheel still
+ * scrolls), like the channel sidebar already does. */
+#app-mount .guilds__5e434 .scroller_ef3116 {
+  scrollbar-gutter: auto;
+  scrollbar-width: none;
+}
+
+#app-mount .guilds__5e434 .scroller_ef3116::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+#app-mount div.stack_dbd263:not([role='group']) {
+  gap: 0 !important;
+}
+
+#app-mount .guildSeparator__252b6 {
+  background: var(--bg-border);
+}
+
+#app-mount .itemsContainer_ef3116 > div.stack_dbd263 {
+  padding-top: var(--server-spacing, 16px);
+}
+
+#app-mount .unreadMentionsIndicatorBottom_ef3116,
+#app-mount .unreadMentionsIndicatorTop_ef3116 {
+  width: calc(var(--guildbar-avatar-size) + var(--custom-guild-list-padding) * 2);
+  padding: calc(var(--custom-guild-list-padding) / 2);
+}
+
+#app-mount .header_f37cb1 {
+  height: var(--toolbar-height);
+}

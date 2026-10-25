@@ -1,0 +1,7 @@
+// Chat — @forward order is the cascade order.
+
+@forward './container';
+@forward './composer';
+@forward './dividers';
+@forward './notices';
+@forward './mentions';

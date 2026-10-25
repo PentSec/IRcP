@@ -1,0 +1,16 @@
+// Folders
+//
+// A folder is a group of servers; the rail must grow instead of clipping it.
+
+#app-mount .folderGroup__48112 {
+  --server-folder-offset: 6px;
+}
+
+#app-mount .folderGroup__48112 ul.stack_dbd263[role='group'] {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+#app-mount .folderGroup__48112 ul.stack_dbd263[role='group'] .listItem__650eb {
+  --server-folder-offset: 0px;
+}

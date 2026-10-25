@@ -1,0 +1,58 @@
+// Presence glow
+//
+// A halo in the status colour, behind the ring, for the statuses worth announcing.
+
+.wrapper__44b0c[aria-label*='Online' i],
+.wrapper__44b0c[aria-label*='online' i],
+.wrapper__44b0c[aria-label*='Conectado' i],
+.wrapper__44b0c[aria-label*='En línea con móvil' i],
+.wrapper__44b0c[aria-label*='En ligne' i],
+.wrapper__44b0c[aria-label*='Na mreži' i],
+.avatarWrapper[data-status='online'] .wrapper__44b0c {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 10px) var(--irc-status-online-color);
+}
+
+.wrapper__44b0c[aria-label*='Idle' i],
+.wrapper__44b0c[aria-label*='Inaktiv' i],
+.wrapper__44b0c[aria-label*='Abwesend' i],
+.wrapper__44b0c[aria-label*='Ausente' i],
+.wrapper__44b0c[aria-label*='Inactif' i],
+.wrapper__44b0c[aria-label*='U mirovanju' i],
+.avatarWrapper[data-status='idle'] .wrapper__44b0c {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 10px) var(--irc-status-idle-color);
+}
+
+.wrapper__44b0c[aria-label*='Do Not disturb' i],
+.wrapper__44b0c[aria-label*='Vil ikke forstyrres' i],
+.wrapper__44b0c[aria-label*='Bitte nicht stören' i],
+.wrapper__44b0c[aria-label*='No molestar' i],
+.wrapper__44b0c[aria-label*='Ne pas déranger' i],
+.wrapper__44b0c[aria-label*='Ne uznemiravaj' i],
+.avatarWrapper[data-status='dnd'] .wrapper__44b0c {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 10px) var(--irc-status-dnd-color);
+}
+
+.wrapper__44b0c[aria-label*='Streaming' i],
+.wrapper__44b0c[aria-label*='Streamer' i],
+.wrapper__44b0c[aria-label*='Streamt' i],
+.wrapper__44b0c[aria-label*='Transmitiendo' i],
+.wrapper__44b0c[aria-label*='En direct' i],
+.avatarWrapper[data-status='streaming'] .wrapper__44b0c {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 10px) var(--irc-status-streaming-color);
+}
+
+.wrapper__44b0c[aria-label*='Invisible' i],
+.wrapper__44b0c[aria-label*='Usynlig' i],
+.wrapper__44b0c[aria-label*='Unsichtbar' i],
+.wrapper__44b0c[aria-label*='Nevidljiv/a' i],
+.avatarWrapper[data-status='invisible'] .wrapper__44b0c {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 10px) var(--irc-status-invisible-color);
+}
+
+.wrapper__44b0c[aria-label*='Offline' i],
+.wrapper__44b0c[aria-label*='Desconectado' i],
+.wrapper__44b0c[aria-label*='Hors ligne' i],
+.wrapper__44b0c[aria-label*='Izvan mreže' i],
+.avatarWrapper[data-status='offline'] .wrapper__44b0c {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 10px) var(--irc-status-offline-color);
+}

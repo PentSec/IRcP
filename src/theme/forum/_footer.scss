@@ -1,0 +1,69 @@
+// Forum footer
+//
+// Reactions, reply count and the relative time.
+
+/* Footer: dim, small, one row, right edge shared by every post. */
+#app-mount .footer_faa96b {
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.75em;
+  position: static;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85em;
+  color: var(--irc-dim);
+  opacity: 0.9;
+}
+
+#app-mount .footer_faa96b > div[data-text-variant] {
+  color: var(--irc-dim) !important;
+  white-space: nowrap;
+}
+
+#app-mount .footer_faa96b .bullet_faa96b {
+  display: none;
+}
+
+/* Reactions as plain "emoji count", no chips. */
+#app-mount .footer_faa96b .reaction_f8896c,
+#app-mount .footer_faa96b .reactionInner_f8896c {
+  background: transparent;
+  border: none;
+  min-width: 0;
+  padding: 0;
+  gap: 0.15em;
+}
+
+#app-mount .footer_faa96b .emoji {
+  width: 1em;
+  height: 1em;
+  margin: 0;
+}
+
+/* Message counter as [31]. */
+#app-mount .messageCountIcon_faa96b {
+  display: none;
+}
+
+#app-mount .messageCountBox_faa96b {
+  gap: 0;
+  color: var(--irc-dim);
+  white-space: nowrap;
+}
+
+#app-mount .messageCountText_faa96b::before {
+  content: '[';
+}
+
+#app-mount .messageCountText_faa96b::after {
+  content: ']';
+}
+
+/* "new" pill -> dim word. */
+#app-mount .newBadge_faa96b {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--irc-dim);
+  font-weight: 400;
+}

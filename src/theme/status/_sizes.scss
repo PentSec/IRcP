@@ -1,0 +1,85 @@
+// Ring sizes
+//
+// Per avatar size: the rect and the image offsets. Discord encodes the size in an inline style.
+
+#app-mount .wrapper__44b0c rect[x='16'] {
+  width: 24px;
+  height: 24px;
+}
+
+#app-mount .wrapper__44b0c rect[x='28'] {
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+}
+
+#app-mount .wrapper__44b0c[style*='32px'] rect {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 0;
+}
+
+#app-mount .wrapper__44b0c[style*='40px'] > svg > svg rect {
+  width: 40px;
+  height: 40px;
+  x: -19;
+  y: -20;
+  ry: calc(var(--irc-status-avatar-shape) * 3.3);
+  rx: calc(var(--irc-status-avatar-shape) * 3.3);
+}
+
+#app-mount .wrapper__44b0c[style*='40px'] foreignObject[mask*='mobile'] img {
+  width: calc(100% - 18px);
+}
+
+#app-mount .wrapper__44b0c[style*='48px'] rect {
+  width: 48px;
+  height: 48px;
+}
+
+#app-mount .wrapper__44b0c[style*='80px'] rect {
+  width: 80px;
+  height: 80px;
+  stroke-width: var(--irc-status-medium-width);
+}
+
+#app-mount .wrapper__44b0c[style*='80px'] img {
+  clip-path: inset(
+    calc(var(--irc-status-medium-spacing) + 1px) calc(var(--irc-status-medium-spacing) + 1px) round
+      var(--irc-status-avatar-shape)
+  );
+}
+
+#app-mount .wrapper__44b0c[style*='120px'] rect {
+  width: 120px;
+  height: 120px;
+  stroke-width: var(--irc-status-large-width);
+  pointer-events: none;
+}
+
+#app-mount .wrapper__44b0c[style*='120px'] img {
+  clip-path: inset(
+    calc(var(--irc-status-large-spacing) + 1px) calc(var(--irc-status-large-spacing) + 1px) round
+      var(--irc-status-avatar-shape)
+  );
+}
+
+#app-mount
+  .wrapper__44b0c:not([style*='80px;'], [style*='120px;'], [style*='16px'])
+  > svg
+  > foreignObject:not(:only-child)
+  img {
+  clip-path: inset(
+    calc(var(--irc-status-small-spacing) + 1px) calc(var(--irc-status-small-spacing) + 1px) round
+      var(--irc-status-avatar-shape)
+  );
+}
+
+#app-mount .wrapper__44b0c[style='width: 16px; height: 16px;'] rect {
+  display: none;
+}
+
+#app-mount .wrapper__44b0c[style='width: 16px; height: 16px;'] img {
+  clip-path: none;
+}

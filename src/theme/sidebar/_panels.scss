@@ -1,0 +1,28 @@
+// User panel
+//
+// The bottom panel: account row, voice controls, activity panel.
+
+#app-mount .panels__5e434 {
+  bottom: 0;
+  left: 0;
+  border-radius: 0;
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--bg-border);
+  background: var(--bg-primary);
+}
+
+#app-mount .activityPanel__5e434 {
+  background: transparent;
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .container_e131a9 {
+  padding: var(--space-md);
+  margin: 0;
+  border-color: var(--bg-border);
+}
+
+#app-mount .container__37e49 {
+  padding: var(--space-md);
+}

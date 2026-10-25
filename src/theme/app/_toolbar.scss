@@ -1,0 +1,75 @@
+// Toolbar icons
+//
+// Discord glyphs are hidden and redrawn as masks, in Tabler outline style.
+
+/* Chat toolbar icons. Discord's glyphs are hidden and redrawn as a mask: the shape comes
+ * from the SVG, the colour stays a CSS value. White with a white halo by default; on
+ * hover and while active (selected) they switch to the accent and its halo. Scoped to
+ * .toolbar__9293f and matched by aria-label because the buttons carry no stable per-icon
+ * class; if the client language changes, those labels change with it. */
+#app-mount .toolbar__9293f .iconWrapper__9293f[aria-label='Threads'] {
+  --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J00zIDIxYy0uNjY3LS42NjcgMy4yNjItNi4yMzYgMTEuNzg1LTE2LjcwOWEzLjUgMy41IDAgMSAxIDUuMDc4IDQuNzkxYy0xMC41NzUgOC42MTItMTYuMTk2IDEyLjU4NS0xNi44NjMgMTEuOTE4Jy8+PHBhdGggZD0nTTE3LjUgNi41bC0xIDEnLz48cGF0aCBkPSdNMTcgN2MtMi4zMzMtMi42NjctMy41LTQtNS00cy0yIDEtMiAyYzAgNCA4LjE2MSA4LjQwNiA2IDExLTEuMDU2IDEuMjY4LTMuMzYzIDEuMjg1LTUuNzUuODA4Jy8+PHBhdGggZD0nTTUuNzM5IDE1LjQyNWMtMS4zOTMtLjU2NS0zLjczOS0xLjkyNS0zLjczOS0zLjQyNScvPjxwYXRoIGQ9J00xOS41IDkuNWwxLjUgMS41Jy8+PC9zdmc+');
+}
+
+#app-mount .toolbar__9293f .iconWrapper__9293f[aria-label='Notification Settings'] {
+  --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J00xMCA1YTIgMiAwIDEgMSA0IDBhNyA3IDAgMCAxIDQgNnYzYTQgNCAwIDAgMCAyIDNoLTE2YTQgNCAwIDAgMCAyLTN2LTNhNyA3IDAgMCAxIDQtNicvPjxwYXRoIGQ9J005IDE3djFhMyAzIDAgMCAwIDYgMHYtMScvPjwvc3ZnPg==');
+}
+
+#app-mount .toolbar__9293f .iconWrapper__9293f[aria-label='Pinned Messages'] {
+  --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J00xNSA0LjVsLTQgNGwtNCAxLjVsLTEuNSAxLjVsNyA3bDEuNS0xLjVsMS41LTRsNC00Jy8+PHBhdGggZD0nTTkgMTVsLTQuNSA0LjUnLz48cGF0aCBkPSdNMTQuNSA0bDUuNSA1LjUnLz48L3N2Zz4=');
+}
+
+#app-mount .toolbar__9293f .iconWrapper__9293f[aria-label='Hide Member List'] {
+  --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J001IDdhNCA0IDAgMSAwIDggMGE0IDQgMCAxIDAtOCAwJy8+PHBhdGggZD0nTTMgMjF2LTJhNCA0IDAgMCAxIDQtNGg0YTQgNCAwIDAgMSA0IDR2MicvPjxwYXRoIGQ9J00xNiAzLjEzYTQgNCAwIDAgMSAwIDcuNzUnLz48cGF0aCBkPSdNMjEgMjF2LTJhNCA0IDAgMCAwLTMtMy44NScvPjwvc3ZnPg==');
+}
+
+#app-mount .toolbar__9293f .iconWrapper__9293f[aria-label='Show Member List'] {
+  --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J001IDdhNCA0IDAgMSAwIDggMGE0IDQgMCAxIDAtOCAwJy8+PHBhdGggZD0nTTMgMjF2LTJhNCA0IDAgMCAxIDQtNGg0YTQgNCAwIDAgMSA0IDR2MicvPjxwYXRoIGQ9J00xNiAzLjEzYTQgNCAwIDAgMSAwIDcuNzUnLz48cGF0aCBkPSdNMjEgMjF2LTJhNCA0IDAgMCAwLTMtMy44NScvPjwvc3ZnPg==');
+}
+
+#app-mount
+  .toolbar__9293f
+  .iconWrapper__9293f:is(
+    [aria-label='Threads'],
+    [aria-label='Notification Settings'],
+    [aria-label='Pinned Messages'],
+    [aria-label='Hide Member List'],
+    [aria-label='Show Member List']
+  )
+  > svg {
+  display: none;
+}
+
+#app-mount
+  .toolbar__9293f
+  .iconWrapper__9293f:is(
+    [aria-label='Threads'],
+    [aria-label='Notification Settings'],
+    [aria-label='Pinned Messages'],
+    [aria-label='Hide Member List'],
+    [aria-label='Show Member List']
+  )::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  filter: drop-shadow(0 0 calc(var(--glow-intensity, 1) * 4px) #fff);
+  -webkit-mask: var(--irc-toolbar-icon) center / contain no-repeat;
+  mask: var(--irc-toolbar-icon) center / contain no-repeat;
+}
+
+/* Hover and active switch the glyph and its halo to the accent. The background and the
+ * shadow have to be set together: the shadow is what reads as "on" here. */
+#app-mount
+  .toolbar__9293f
+  .iconWrapper__9293f:is(
+    [aria-label='Threads'],
+    [aria-label='Notification Settings'],
+    [aria-label='Pinned Messages'],
+    [aria-label='Hide Member List'],
+    [aria-label='Show Member List']
+  ):is(:hover, .selected__9293f, [aria-expanded='true'])::before {
+  background: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--glow-intensity, 1) * 5px) var(--accent));
+}

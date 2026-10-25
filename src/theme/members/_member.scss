@@ -1,0 +1,80 @@
+// Member row
+//
+// One member: selected state, name, activity text and the avatar box.
+
+/* Two row components exist: the channel list uses member_c8ffbb, the thread / forum
+ * post sidebar uses member__5d473 (its default has an 8px inline margin and a reduced
+ * max-width). Both are reset the same way so the two lists read alike. */
+#app-mount .member_c8ffbb,
+#app-mount .member__5d473 {
+  background: transparent;
+  max-width: 100%;
+  margin-left: 0;
+  border-radius: 0;
+}
+
+#app-mount .member_c8ffbb.selected__91a9d .childContainer__91a9d,
+#app-mount .member__5d473.selected__91a9d .childContainer__91a9d {
+  background: transparent;
+}
+
+#app-mount .member_c8ffbb.selected__91a9d .username__5d473,
+#app-mount .member__5d473.selected__91a9d .username__5d473 {
+  text-shadow: 0 0 calc(var(--members-glow-intensity) * 10px) currentColor;
+  overflow: visible;
+  filter: none;
+}
+
+#app-mount .member_c8ffbb.selected__91a9d .username__5d473::before,
+#app-mount .member_c8ffbb.selected__91a9d .username__5d473::after,
+#app-mount .member__5d473.selected__91a9d .username__5d473::before,
+#app-mount .member__5d473.selected__91a9d .username__5d473::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#app-mount .member_c8ffbb.selected__91a9d .username__5d473::before,
+#app-mount .member__5d473.selected__91a9d .username__5d473::before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.2;
+}
+
+#app-mount .member_c8ffbb.selected__91a9d .username__5d473::after,
+#app-mount .member__5d473.selected__91a9d .username__5d473::after {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  box-shadow: 0 0 calc(var(--members-glow-intensity) * 15px) currentColor;
+}
+
+#app-mount .member_c8ffbb.selected__91a9d .activityText__5d473,
+#app-mount .member__5d473.selected__91a9d .activityText__5d473 {
+  color: #fff;
+  z-index: 1;
+}
+
+#app-mount .childContainer__91a9d {
+  padding: var(--space-xs) var(--space-md);
+}
+
+#app-mount .layout__91a9d {
+  overflow: visible;
+  position: initial;
+}
+
+#app-mount .layout__91a9d .name__91a9d,
+#app-mount .layout__91a9d .content__91a9d,
+#app-mount .layout__91a9d .username__5d473 {
+  overflow: visible;
+}
+
+#app-mount .layout__91a9d .avatar__91a9d {
+  z-index: 1;
+}

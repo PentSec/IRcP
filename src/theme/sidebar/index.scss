@@ -1,0 +1,6 @@
+// Sidebar — @forward order is the cascade order.
+
+@forward './container';
+@forward './panels';
+@forward './channels';
+@forward './dms';

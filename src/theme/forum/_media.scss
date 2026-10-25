@@ -1,0 +1,54 @@
+// Forum thumbnail
+//
+// The right-hand stamp: fixed width, object-fit cover.
+
+/* Thumbnail: a right-hand stamp as tall as the row, one per post. The width is
+ * --irc-forum-stamp and the height comes from the row (stretch + the negative margin
+ * above), so the text block always ends before it, with the grid gap as the margin.
+ * object-fit: cover fills the box; at this size the alternative is a letterboxed
+ * sliver, which reads worse than a crop. object-position can be moved to top center
+ * if the interesting part of a screenshot is its header.
+ *
+ * Discord nests five boxes around every image (thumbnailContainer/imageContent >
+ * imageContainer > imageWrapper > clickableWrapper > loadingOverlay > img) and writes
+ * a px width/height inline on BOTH the wrapper and the img. The four inner boxes are
+ * flattened with display: contents so the .imageWrapper is the only box between the
+ * media row and the bitmap, and !important is what beats the inline sizes. */
+#app-mount .bodyMedia_faa96b {
+  display: flex;
+  align-items: center;
+  position: static;
+  width: var(--irc-forum-stamp, 3.4em);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* extra images clip instead of widening the track */
+}
+
+#app-mount
+  .bodyMedia_faa96b
+  :is(
+    .thumbnailContainer_faa96b,
+    .imageContent__0f481,
+    .imageContainer__0f481,
+    .clickableWrapper_af017a,
+    .loadingOverlay_af017a
+  ) {
+  display: contents;
+}
+
+#app-mount .bodyMedia_faa96b .imageWrapper_af017a {
+  flex: 0 0 auto;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+#app-mount .bodyMedia_faa96b img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+}

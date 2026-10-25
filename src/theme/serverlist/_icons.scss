@@ -1,0 +1,24 @@
+// Server icons
+//
+// The icon box, its press animation and the legacy pill.
+
+#app-mount .blobContainer_e5445c,
+#app-mount .listItemWrapper__91816 {
+  transition: var(--transition, 0.15s ease);
+  transition-property: transform;
+}
+
+#app-mount .blobContainer_e5445c:active,
+#app-mount .listItemWrapper__91816:active {
+  transform: scale(0.9);
+}
+
+#app-mount .svg_cc5dd2 foreignObject {
+  border-radius: 50%;
+  -webkit-mask: none !important;
+  mask: none !important;
+}
+
+.pill__5bc7e {
+  display: none;
+}

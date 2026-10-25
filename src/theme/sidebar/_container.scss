@@ -1,0 +1,90 @@
+/* ============================================================================
+ * Sidebar container
+ *
+ * Channel sidebar, its scroller, the private-channel list and the Friends view that shares it.
+ *
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
+ * See THIRD-PARTY-NOTICES.md for the license text.
+ * ========================================================================== */
+
+#app-mount .sidebar__5e434 {
+  border-radius: 0;
+}
+
+#app-mount .sidebar__5e434::after {
+  content: none;
+}
+
+#app-mount .sidebar__5e434 .scroller__629e4::-webkit-scrollbar {
+  display: none;
+}
+
+#app-mount .sidebarList__5e434 {
+  border-radius: 0;
+  border: none;
+  padding-bottom: 0;
+  margin-bottom: var(--custom-app-panels-height);
+}
+
+#app-mount .container__2637a {
+  background: var(--bg-primary);
+  padding-bottom: 0;
+}
+
+#app-mount .privateChannels_e6b769 {
+  background: var(--bg-primary);
+}
+
+#app-mount .privateChannels_e6b769 .scroller__99e7c {
+  background: transparent;
+  margin-bottom: 0;
+}
+
+#app-mount .privateChannels_e6b769 .scroller__99e7c::-webkit-scrollbar {
+  display: none;
+}
+
+/* Friends / "Online" tab. It is not the chat area: Discord paints three opaque layers
+ * that the theme never targeted, so the tab ignored the skin. main.container__133bf only
+ * needs its frame border removed; the surface is tabBody__133bf, which wraps BOTH
+ * columns and paints --background-base-lower. The header section is a separate bar.
+ * Painting main as well would stack two translucent layers and make the panel opaque. */
+#app-mount .container__133bf {
+  background: transparent;
+  border: none;
+}
+
+#app-mount .tabBody__133bf {
+  background: var(--bg-secondary);
+}
+
+#app-mount .container__133bf .container__9293f.themed__9293f {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .nowPlayingColumn__133bf {
+  background: var(--bg-primary);
+}
+
+/* The Active Now cards paint their own opaque surfaces: --background-base-low for the
+ * card and --background-mod-muted for its header, plus a --border-subtle outline. Swap
+ * them for the theme's translucent overlay and hairline so the card reads as part of the
+ * panel instead of a Discord block. The quest card uses the same wrapper classes. */
+#app-mount .refresh-active-now .wrapper__00943 {
+  background: var(--fg-primary);
+  border-color: var(--fg-border);
+}
+
+#app-mount .refresh-active-now .wrapper__00943:hover {
+  background: hsl(0 0% 100% / 0.12); /* keep the card's own hover feedback */
+}
+
+#app-mount .refresh-active-now .header__00943 {
+  background: transparent;
+}
+
+#app-mount .sectionDivider_e6b769 {
+  background: var(--bg-border);
+  margin: 0;
+}

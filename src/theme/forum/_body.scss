@@ -1,0 +1,30 @@
+// Forum body and tags
+//
+// The body wrapper and the tag icons, flattened into the grid.
+
+#app-mount .body_faa96b {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.75em;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pinned marker: a dim flag in front of the title, not a tag row above it. */
+#app-mount .tags__08166 {
+  flex: 0 0 auto;
+  color: var(--irc-dim);
+  opacity: 0.8;
+}
+
+#app-mount .tags__08166 svg {
+  width: 12px;
+  height: 12px;
+}
+
+#app-mount .tags__08166 path {
+  fill: currentColor;
+}

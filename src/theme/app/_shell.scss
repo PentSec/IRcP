@@ -1,0 +1,56 @@
+/* ============================================================================
+ * App shell
+ *
+ * The outermost box: titlebar strip, transparency of the app layers, the image
+ * background and the text selection colour. Nothing here belongs to a component.
+ *
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
+ * See THIRD-PARTY-NOTICES.md for the license text.
+ * ========================================================================== */
+
+#app-mount .bar_c38106 {
+  background: var(--bg-primary);
+}
+
+html,
+span:not([class*='spinner_']):not([class*='spinnerItem']) {
+  backface-visibility: hidden;
+}
+
+body,
+#app-mount,
+.app__160d8 {
+  background: transparent;
+}
+
+#app-mount .bg__960e4 {
+  /* Relative to this stylesheet, not to the document: in `dist` it resolves next to
+   * irc.css and in `dev` next to the single dev file, which is why `dev` copies the
+   * asset into the client's themes folder. An absolute --background-image from the
+   * entry file overrides it. */
+  background-image: var(--background-image, url('bg.png'));
+  background-color: transparent;
+  background-attachment: var(--background-attachment, fixed);
+  background-size: var(--background-size, cover);
+  background-position: var(--background-position, center);
+  filter: blur(var(--background-blur, 0px)) hue-rotate(var(--background-hue, 0deg));
+}
+
+.content__5e434::before {
+  content: '';
+  position: absolute;
+  z-index: 101;
+  width: 100%;
+  height: 1px;
+  background: var(--bg-border);
+}
+
+::-moz-selection {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-text);
+}

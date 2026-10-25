@@ -1,0 +1,58 @@
+// Nick
+//
+// Discord sets the nick at font-weight-medium against an almost identical body grey,
+// so on a monospace line it disappears. Bold gives the hierarchy back. Nicks with no
+// role colour take the accent and a halo in their own colour.
+
+/* nick, timestamp and body on the same line.
+ * position: static matters: Discord's cozy header is position: relative, which makes it
+ * the containing block of the absolutely positioned timestamp (it would sit after the
+ * avatar instead of in the gutter).
+ * !important because Discord re-declares position: relative on the same header with
+ * HIGHER specificity whenever the message has extras: .gradient_c19a55 (display name
+ * styles / gradient), .zalgo_c19a55, .withDisplayNameStyles_c19a55. Those arrive as
+ * (0,3,0) and (0,5,0) selectors and beat this (0,2,0) rule, so the clock abandoned the
+ * gutter and, with the inline header split over two lines by a clan tag, landed under
+ * the nick. */
+:is(.cozy_c19a55, .compact_c19a55) .header_c19a55 {
+  display: inline;
+  min-height: 0;
+  line-height: inherit;
+  white-space: normal;
+  position: static !important;
+}
+
+:is(.cozy_c19a55, .compact_c19a55) .messageContent_c19a55 {
+  display: inline;
+}
+
+/* Nick legibility. Discord sets the nick at font-weight-medium and --text-strong is
+ * almost the same grey as --text-default, so on a monospace line the nick disappears into
+ * the body text. Bold gives the hierarchy back without touching colour, and the embedded
+ * Iosevka Bold is a real face, so nothing shifts. */
+:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55 {
+  font-weight: 700;
+}
+
+/* Nicks with no role colour and no gradient also get the accent.
+ * Role colours arrive as an INLINE style (Discord writes style="color: rgb(...)"), and an
+ * inline style beats any rule without !important, so no colour here can override a role.
+ * Gradients are the opposite: they paint with background-clip and would be flattened by a
+ * solid colour, hence the explicit exclusions (data attribute, gradient classes, and any
+ * inline colour at all). Limit it to the header so quoted nicks stay quiet. */
+:is(.cozy_c19a55, .compact_c19a55)
+  .headerText_c19a55
+  .username_c19a55:not([style*='color']):not([data-username-has-gradient]):not([class*='Gradient']) {
+  color: var(--irc-nick, var(--accent));
+}
+
+/* Nick glow. text-shadow paints behind the glyphs, so it reads as a halo in the nick's
+ * own colour; an inline role colour reaches it through currentColor. Gradient nicks are
+ * excluded: Discord already draws a blurred duplicate (nameGlow__703b9) for those, and
+ * stacking our shadow on top makes them bloom. Strength and radius live in the entry
+ * file as --irc-nick-glow / --irc-nick-glow-size. */
+:is(.cozy_c19a55, .compact_c19a55)
+  .headerText_c19a55
+  .username_c19a55:not([class*='Gradient']):not([data-username-has-gradient]) {
+  text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
+}

@@ -1,0 +1,33 @@
+/* ============================================================================
+ * Chat container
+ *
+ * The message area and its scroller.
+ *
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
+ * See THIRD-PARTY-NOTICES.md for the license text.
+ * ========================================================================== */
+
+#app-mount .chat_f75fb0 {
+  background: transparent;
+  border: none;
+}
+
+#app-mount .chat_f75fb0 ol.scrollerInner__36d07 {
+  padding-bottom: var(--chat-bottom-spacing);
+}
+
+#app-mount .chatContent_f75fb0 {
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--bg-border);
+}
+
+/* Forum channels are NOT .chat_f75fb0: their view is a separate module, and its root
+ * (.container_f369db) paints Discord's opaque --background-base-lowest. Computed in the
+ * live client: oklab(0.322446 0.0015464 -0.0105554), no alpha channel, so the app
+ * background image (on .bg__960e4) stopped there and the whole post list rendered as one
+ * solid dark block. Same treatment as the chat area above, so both surfaces read alike.
+ * Hash comes from the forum DOM: [role=list].content_d125d2 > li.card_f369db lives inside
+ * this container. Re-check it after a Discord update. */
+#app-mount .container_f369db {
+  background: var(--bg-secondary);
+}

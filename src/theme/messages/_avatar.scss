@@ -1,0 +1,18 @@
+// Message avatar
+//
+// One line tall, inline before the nick. Decorations are hidden: they break the rhythm.
+
+/* avatar exactly one line tall, inline before the nick */
+:is(.cozy_c19a55, .compact_c19a55) .avatar_c19a55 {
+  height: var(--irc-avatar-size, 1em);
+  width: var(--irc-avatar-size, 1em);
+  position: relative;
+  inset-inline-start: 0;
+  top: 0.18em;
+  margin: 0 0.4em 0 0;
+}
+
+/* avatar decorations break the one-line rhythm */
+.avatarDecoration_c19a55 {
+  display: none !important;
+}
