@@ -1,10 +1,4 @@
-/* ============================================================================
- * Design tokens
- *
- * Internal custom properties shared by every partial: surfaces, borders, shadows,
- * textbox and the Discord variables the theme maps onto. Everything a user is meant
- * to change lives in src/root.scss instead; this file is the theme talking to itself.
- * ========================================================================== */
+/* Internal tokens. Anything a user should touch lives in root.scss. */
 :root {
   --transition: 0.15s ease;
   --chat-glow-intensity: var(--glow-intensity);
@@ -42,15 +36,34 @@
   --guildbar-folder-size: var(--server-size);
 }
 
-/* ============================================================================
- * App shell
- *
- * The outermost box: titlebar strip, transparency of the app layers, the image
- * background and the text selection colour. Nothing here belongs to a component.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Discord redeclares these on every .theme-dark root, so the override has to sit on the
+ * theme classes themselves, doubled so a later-loaded chunk cannot outrank them. */
+:root,
+.theme-dark.theme-dark,
+.theme-light.theme-light,
+.theme-midnight.theme-midnight,
+.theme-darker.theme-darker {
+  /* Discord and Vencord paint buttons, switches and focus rings from these tokens, so the
+   * accent is set here instead of per component. */
+  --brand-500: var(--accent);
+  --control-primary-background-default: var(--accent);
+  --control-primary-background-hover: hsl(from var(--accent) h s calc(l * 0.88));
+  --control-primary-background-active: hsl(from var(--accent) h s calc(l * 0.78));
+  --control-primary-border-default: var(--accent);
+  --control-primary-border-hover: hsl(from var(--accent) h s calc(l * 0.88));
+  --control-primary-text-default: var(--accent-text);
+  --control-primary-text-hover: var(--accent-text);
+  --control-secondary-background-default: hsl(from var(--accent) h s l/0.12);
+  --control-secondary-background-hover: hsl(from var(--accent) h s l/0.2);
+  --control-secondary-background-active: hsl(from var(--accent) h s l/0.16);
+  --control-secondary-border-default: hsl(from var(--accent) h s l/0.35);
+  --control-secondary-border-hover: hsl(from var(--accent) h s l/0.55);
+  --control-secondary-text-default: var(--accent);
+  --control-secondary-text-hover: var(--accent);
+}
+
+/* Outermost box: app transparency, the background image, the selection colour.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .bar_c38106 {
   background: var(--bg-primary);
 }
@@ -67,10 +80,8 @@ body,
 }
 
 #app-mount .bg__960e4 {
-  /* Relative to this stylesheet, not to the document: in `dist` it resolves next to
-   * irc.css and in `dev` next to the single dev file, which is why `dev` copies the
-   * asset into the client's themes folder. An absolute --background-image from the
-   * entry file overrides it. */
+  /* Relative on purpose: it resolves next to the stylesheet in dist and in the dev file.
+  * An absolute --background-image in the entry file overrides it. */
   background-image: var(--background-image, url("bg.png"));
   background-color: transparent;
   background-attachment: var(--background-attachment, fixed);
@@ -110,11 +121,8 @@ body,
   content: none;
 }
 
-/* Chat toolbar icons. Discord's glyphs are hidden and redrawn as a mask: the shape comes
- * from the SVG, the colour stays a CSS value. White with a white halo by default; on
- * hover and while active (selected) they switch to the accent and its halo. Scoped to
- * .toolbar__9293f and matched by aria-label because the buttons carry no stable per-icon
- * class; if the client language changes, those labels change with it. */
+/* Discord glyphs are hidden and redrawn as masks. Matched by aria-label: the buttons
+ * carry no stable per-icon class. */
 #app-mount .toolbar__9293f .iconWrapper__9293f[aria-label=Threads] {
   --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J00zIDIxYy0uNjY3LS42NjcgMy4yNjItNi4yMzYgMTEuNzg1LTE2LjcwOWEzLjUgMy41IDAgMSAxIDUuMDc4IDQuNzkxYy0xMC41NzUgOC42MTItMTYuMTk2IDEyLjU4NS0xNi44NjMgMTEuOTE4Jy8+PHBhdGggZD0nTTE3LjUgNi41bC0xIDEnLz48cGF0aCBkPSdNMTcgN2MtMi4zMzMtMi42NjctMy41LTQtNS00cy0yIDEtMiAyYzAgNCA4LjE2MSA4LjQwNiA2IDExLTEuMDU2IDEuMjY4LTMuMzYzIDEuMjg1LTUuNzUuODA4Jy8+PHBhdGggZD0nTTUuNzM5IDE1LjQyNWMtMS4zOTMtLjU2NS0zLjczOS0xLjkyNS0zLjczOS0zLjQyNScvPjxwYXRoIGQ9J00xOS41IDkuNWwxLjUgMS41Jy8+PC9zdmc+');
 }
@@ -158,8 +166,7 @@ body,
   mask: var(--irc-toolbar-icon) center/contain no-repeat;
 }
 
-/* Hover and active switch the glyph and its halo to the accent. The background and the
- * shadow have to be set together: the shadow is what reads as "on" here. */
+/* Glyph and halo switch to the accent; the shadow is what reads as "on". */
 #app-mount .toolbar__9293f .iconWrapper__9293f:is([aria-label=Threads],
 [aria-label="Notification Settings"],
 [aria-label="Pinned Messages"],
@@ -179,14 +186,13 @@ body,
   margin: 0;
 }
 
-/* ============================================================================
- * Server list tokens
- *
- * Colours and geometry of the guild rail.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Mana switches write their colour inline; only the checked state carries the brand value. */
+#app-mount .switchIndicator_a28278[style*="88, 101, 242"] {
+  background-color: var(--accent) !important;
+}
+
+/* Colours and geometry of the guild rail.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 :root {
   --server-unread-colour: rgb(255, 255, 255);
   --server-hover-colour: rgb(255, 255, 255);
@@ -209,14 +215,8 @@ body,
   --server-folder-offset: 0px;
 }
 
-/* ============================================================================
- * Server items
- *
- * The item box: spacing and the inline-style spacer between groups.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Item box: spacing and the inline-style spacer between groups.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .scroller_ef3116 > div[style]:not([class]) {
   margin-bottom: var(--server-spacing);
 }
@@ -507,20 +507,18 @@ body,
 #app-mount .guilds__5e434 {
   background: var(--bg-primary);
   border-right: 1px solid var(--bg-border);
-  /* The guild list renders scaled down (IRC-minimal). zoom scales the element AND the
-   * space it reserves, so the nav, its icons and the column width all shrink together
-   * instead of needing every inline 40px/padding re-declared. Tune with
-   * --irc-guilds-zoom in section 4. */
+  /* The Discord button has no gap above it. --server-spacing matches the item spacing, and
+  * padding inside the zoom scales with it, so it is not divided. */
+  padding-top: var(--server-spacing, 16px);
+  /* The rail is scaled with zoom so icons, nav and column width shrink together.
+  * Tuned by --irc-guilds-zoom. */
   zoom: var(--irc-guilds-zoom, 0.7);
-  /* margin-bottom lives inside the zoom, so it would shrink with everything else and let
-   * the bar grow over the user panel: divide by the zoom to keep the real gap. */
+  /* Divided by the zoom: margin-bottom sits inside the scaled box. */
   margin-bottom: calc(var(--custom-app-panels-height) / var(--irc-guilds-zoom, 0.7));
 }
 
-/* The scroller is narrower than the nav: it ships scrollbar-gutter: stable, which
- * reserves ~8px for a scrollbar that is never visible, so every icon sits 4px left of the
- * nav's centre. Give the scroll area the full width and hide the bar (the wheel still
- * scrolls), like the channel sidebar already does. */
+/* scrollbar-gutter: stable reserves width for a bar that is never visible and pushes the
+ * icons off centre; the bar is hidden instead. */
 #app-mount .guilds__5e434 .scroller_ef3116 {
   scrollbar-gutter: auto;
   scrollbar-width: none;
@@ -554,14 +552,8 @@ body,
   height: var(--toolbar-height);
 }
 
-/* ============================================================================
- * Sidebar container
- *
- * Channel sidebar, its scroller, the private-channel list and the Friends view that shares it.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Channel sidebar, its scroller, the private-channel list and the Friends view.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .sidebar__5e434 {
   border-radius: 0;
 }
@@ -599,11 +591,8 @@ body,
   display: none;
 }
 
-/* Friends / "Online" tab. It is not the chat area: Discord paints three opaque layers
- * that the theme never targeted, so the tab ignored the skin. main.container__133bf only
- * needs its frame border removed; the surface is tabBody__133bf, which wraps BOTH
- * columns and paints --background-base-lower. The header section is a separate bar.
- * Painting main as well would stack two translucent layers and make the panel opaque. */
+/* The Friends tab paints opaque layers the theme never targeted; only the frame and the
+ * tabBody surface are replaced, or the whole panel turns opaque. */
 #app-mount .container__133bf {
   background: transparent;
   border: none;
@@ -622,21 +611,27 @@ body,
   background: var(--bg-primary);
 }
 
-/* The Active Now cards paint their own opaque surfaces: --background-base-low for the
- * card and --background-mod-muted for its header, plus a --border-subtle outline. Swap
- * them for the theme's translucent overlay and hairline so the card reads as part of the
- * panel instead of a Discord block. The quest card uses the same wrapper classes. */
+/* Active Now cards in the friends list paint an opaque surface; replaced with the panel overlay. */
 #app-mount .refresh-active-now .wrapper__00943 {
   background: var(--fg-primary);
   border-color: var(--fg-border);
 }
 
 #app-mount .refresh-active-now .wrapper__00943:hover {
-  background: hsla(0, 0%, 100%, 0.12); /* keep the card's own hover feedback */
+  background: hsla(0, 0%, 100%, 0.12); /* the card's own hover feedback */
 }
 
 #app-mount .refresh-active-now .header__00943 {
   background: transparent;
+}
+
+/* The activity card is a separate module and needs the same treatment. */
+#app-mount .container__0f2e8 {
+  background: var(--fg-primary);
+}
+
+#app-mount .container__0f2e8:hover {
+  background: hsla(0, 0%, 100%, 0.12); /* the card's own hover feedback */
 }
 
 #app-mount .sectionDivider_e6b769 {
@@ -773,11 +768,8 @@ body,
   padding: var(--space-md);
 }
 
-/* Channel categories. The clickable row is .mainContent__29444; the outer .wrapper__29444
- * also contains the children, so the frame has to stay on the row or it would box the
- * whole category. border-image draws the gradient on the border AND ignores border-radius,
- * which is what keeps the frame square. Both gradients run 270deg: accent on the right,
- * fading out to the left, matching the theme's neon channels. */
+/* The frame stays on .mainContent: .wrapper also contains the children, so the box would
+ * cover the whole category. border-image keeps it square. */
 #app-mount .mainContent__29444 {
   border: 1px solid transparent;
   -o-border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l/0.5) 30%, transparent 78%) 1;
@@ -850,14 +842,8 @@ body,
   overflow: visible;
 }
 
-/* ============================================================================
- * Chat container
- *
- * The message area and its scroller.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Message area and its scroller.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .chat_f75fb0 {
   background: transparent;
   border: none;
@@ -872,25 +858,17 @@ body,
   border-left: 1px solid var(--bg-border);
 }
 
-/* Forum channels are NOT .chat_f75fb0: their view is a separate module, and its root
- * (.container_f369db) paints Discord's opaque --background-base-lowest. Computed in the
- * live client: oklab(0.322446 0.0015464 -0.0105554), no alpha channel, so the app
- * background image (on .bg__960e4) stopped there and the whole post list rendered as one
- * solid dark block. Same treatment as the chat area above, so both surfaces read alike.
- * Hash comes from the forum DOM: [role=list].content_d125d2 > li.card_f369db lives inside
- * this container. Re-check it after a Discord update. */
+/* Forum channels paint an opaque surface that hides the app background; treated like chat.
+ * Hash _f369db moves between builds. */
 #app-mount .container_f369db {
   background: var(--bg-secondary);
 }
 
 #app-mount .form_f75fb0 {
-  /* No horizontal padding: the composer sits flush with the channel edges. This also
-   * overrides Discord's own padding-inline: var(--space-xs) on .formWithLoadedChatInput_f75fb0. */
+  /* No horizontal padding: the composer sits flush with the channel edges. */
   padding: 0;
-  /* Discord ships .form_f75fb0{flex-shrink:0;margin-top:-16px;position:relative}: it
-   * pulls the composer up by 16px to cancel the padding it puts under the message list.
-   * The terminal layout wants the composer to start where the last row ends, so the
-   * negative margin is cancelled instead of compensated. */
+  /* Discord pulls the composer up 16px to cancel padding under the message list; the
+  * terminal layout cancels the pull instead. */
   margin-top: 0;
 }
 
@@ -899,8 +877,7 @@ body,
   background: var(--textbox-background);
   border: 2px solid var(--textbox-border);
   border-radius: 6px;
-  /* Discord ships margin-bottom: var(--custom-chat-input-margin-bottom) on the
-   * composer box, which adds dead space once the form padding is gone. */
+  /* Discord's composer margin leaves dead space once the form padding is gone. */
   margin: 0;
   transition: var(--transition);
   transition-property: border-color, box-shadow;
@@ -1024,9 +1001,7 @@ body,
   background: hsl(from var(--accent) h s l/0.075);
 }
 
-/* The old chat-bubble experiment is neutralised: a bubble adds 10px/14px of padding and
- * switches the body to inline-block, which is exactly what breaks the one-line layout if
- * the rule ever matches again. */
+/* Off by default: a bubble adds padding and switches to inline-block, which breaks the row. */
 :root {
   --chat-bubble-padding: 0;
   --chat-bubble-display: inline;
@@ -1040,11 +1015,8 @@ body,
   display: var(--chat-bubble-display);
 }
 
-/* Mentions: channel tags and @user tags. Discord paints them with --mention-background
- * and --mention-foreground; here they take the accent tint and a halo in the text colour.
- * A user tag that carries a role colour keeps it: Discord writes that colour inline, which
- * beats this rule, and currentColor makes the halo follow it, so coloured tags glow in
- * their own colour while colourless ones use the accent. */
+/* Accent tint and halo instead of --mention-background; currentColor lets a role-coloured
+ * tag glow in its own colour. */
 #app-mount .wrapper__4106a,
 #app-mount .wrapper_f61d60 {
   background: hsl(from var(--accent) h s l/0.15);
@@ -1063,29 +1035,20 @@ body,
   background: var(--fg-primary);
 }
 
-/* ============================================================================
- * Member list
- *
- * The member list column and its scroller.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Member list column and its scroller.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .container_c8ffbb {
   background: var(--bg-primary);
   border-left: 1px solid var(--bg-border);
 }
 
 #app-mount .members_c8ffbb {
-  /* Painted here, not only on .container_c8ffbb: a forum post / thread renders the
-   * same scroller without that container, and the list came out transparent. */
+  /* Also painted on the bare scroller: a forum or thread renders it without the container. */
   background: var(--bg-primary);
   padding: 0;
 }
 
-/* Same reason for the border: in a normal channel the container draws it, so adding it
-   unconditionally would double the line. :not() with a complex selector is supported in
-   Chromium; it only matches scrollers that have no .container_c8ffbb ancestor. */
+/* Border only outside a container, or the line doubles. */
 #app-mount .members_c8ffbb:not(.container_c8ffbb *) {
   border-inline-start: 1px solid var(--bg-border);
 }
@@ -1094,9 +1057,7 @@ body,
   display: none;
 }
 
-/* Two row components exist: the channel list uses member_c8ffbb, the thread / forum
- * post sidebar uses member__5d473 (its default has an 8px inline margin and a reduced
- * max-width). Both are reset the same way so the two lists read alike. */
+/* Two row components exist, one per list; both are reset alike so they read the same. */
 #app-mount .member_c8ffbb,
 #app-mount .member__5d473 {
   background: transparent;
@@ -1171,33 +1132,21 @@ body,
   z-index: 1;
 }
 
-/* Role-group headers in the member list: bold, coloured, with the same halo as nicknames.
- * Discord itself does not expose the per-role colour here, so the fallback colour is the
- * --irc-role-group-color variable. Vencord's RoleColorEverywhere plugin writes an inline
- * style on this same <h2>; inline beats this rule, so enabling that plugin replaces the
- * fallback with the member's real role colour and the glow follows through currentColor.
- * The colour is set on the <h2>, never on the name span: an explicit colour there would
- * override the inherited one and block the plugin. */
+/* Set on the <h2> so RoleColorEverywhere's inline style beats it and currentColor follows;
+ * colouring the name span would block that. */
 #app-mount .membersGroup_c8ffbb {
   color: var(--irc-role-group-color, var(--accent));
 }
 
 #app-mount .membersGroupName_c8ffbb {
-  /* Discord ships overflow: hidden on this span (a blockified flex item), which clips
-   * text-shadow at the padding edge and cuts the halo off. Visible lets the glow breathe. */
+  /* overflow: hidden clips the halo, so it is released. */
   overflow: visible;
   font-weight: 700;
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }
 
-/* ============================================================================
- * Popouts
- *
- * Server and channel popouts.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Server and channel popouts.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .popout__76f04 {
   background: var(--fg-primary);
   padding: 0;
@@ -1222,41 +1171,122 @@ body,
   padding: var(--space-sm);
 }
 
-/* ============================================================================
- * Message row
- *
- * Discord ships two densities: cozy (2.5rem avatar on its own line, nick above the
- * text) and compact (1em avatar inline). Compact is the layout this theme wants, so
- * these rules reuse Discord's own compact values and apply them to cozy as well.
- * Resulting row: [avatar] HH:MM nick text.
- * ========================================================================== */
+/* Hover popouts paint an opaque surface one level down, so the panel goes on both boxes
+ * and the radius is explicit, or the accent border would run square. */
+#app-mount .popout_af3b89 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md, 8px);
+}
+
+/* The dialog's surface is painted by its content sections; every one of them stays
+ * transparent so the panel above shows through, top and bottom. */
+#app-mount .popout_af3b89 [class*=popoutContent],
+#app-mount .popout_af3b89 .interactionsContainer_af3b89 {
+  background: transparent;
+}
+
+/* The profile card paints an opaque surface with a border ring; replaced so popout,
+ * modal and sidebar variants all follow the theme. */
+#app-mount .outer_c0bea0 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(3px);
+}
+
+/* Menus ship an opaque surface and shadow of their own, which hides the theme.
+ * Replaced here, on the wrapper, so every menu follows the panels. */
+#app-mount .menu_c1e9c4 {
+  background: var(--bg-primary);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
+/* Tooltips paint an opaque surface with the border as an inset ring; replaced so they
+ * sit on the theme instead of on top of it. */
+#app-mount .tooltip_fa450d {
+  background-color: var(--bg-primary);
+  box-shadow: inset 0 0 0 1px var(--accent), var(--shadow-lg);
+  backdrop-filter: blur(3px);
+}
+
+/* Settings and other full modals paint an opaque surface; replaced with the panel and
+ * an accent edge. */
+#app-mount .container__8a031 {
+  background: var(--bg-primary);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Layout wrappers stay transparent so the frame shows through in the sidebar. */
+#app-mount .container__8a031 .modalContent_e44912,
+#app-mount .container__8a031 .modalContentInner_e44912,
+#app-mount .container__8a031 .container_abd9a8,
+#app-mount .container__8a031 .sidebar__409aa,
+#app-mount .container__8a031 .contentBody_e9e3ed {
+  background: transparent;
+}
+
+/* Frosted separation from the content column. */
+#app-mount .container__8a031 .sidebar__409aa {
+  backdrop-filter: blur(8px);
+}
+
+/* The content stacks a second panel, so it reads denser than the sidebar. */
+#app-mount .container__8a031 .content_e9e3ed {
+  background: var(--bg-secondary);
+}
+
+/* The header is its own bar. */
+#app-mount .container__8a031 .contentHeader_e9e3ed {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+}
+
+/* The active settings entry carries the same signal as a selected channel: tint, pill
+ * and accent text. */
+#app-mount .item_caf372.active_caf372,
+#app-mount .item_e4d939.active_e4d939 {
+  position: relative;
+  background: hsl(from var(--accent) h s l/0.1);
+  color: var(--accent);
+}
+
+#app-mount .item_caf372.active_caf372::before,
+#app-mount .item_e4d939.active_e4d939::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--channel-pill-width);
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 calc(var(--channel-glow-intensity) * 15px) calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.2);
+}
+
+/* Cozy and compact share one row: avatar, clock gutter, nick, text.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 {
   padding-top: 0;
   padding-bottom: 0;
-  /* Discord reserves 44px of height per row (2.5rem avatar + 4px) because in cozy the
-   * avatar sits on its own 40px line. Here the avatar is inline and 1em tall, so the
-   * reservation only adds dead space below every one-line message: the row grows to
-   * 44px around 23px of content. Let the content set the height; multi-line messages,
-   * replies and attachments are unaffected because they overflow it anyway. */
+  /* Discord reserves 44px per row for the cozy avatar line; with an inline 1em avatar that
+  * is dead space. */
   min-height: 0;
   line-height: var(--irc-line-height);
 }
 
-/* Discord gives the body line-height: var(--chat-markup-line-height) (22px) while the
- * header keeps 16px, so the text sits on a taller line box than the nick. Force one
- * line-height for every inline piece so the whole row shares a baseline. */
+/* One line-height for every inline piece, or the body sits lower than the nick. */
 :is(.cozy_c19a55, .compact_c19a55) :is(.header_c19a55, .messageContent_c19a55) {
   font-size: inherit;
   line-height: inherit;
   vertical-align: baseline;
 }
 
-/* Terminal log: HH:MM in a fixed left gutter, then avatar, nick and text.
- *
- * The timestamp lives inside .header_c19a55 in the DOM, after the avatar, so it cannot
- * be reordered by selector. It is taken out of the flow and right-aligned in a gutter
- * instead: making .contents_c19a55 a flex container would also drag replies and embeds
- * into the row. Gutter width lives in --irc-ts-gutter (section 4). */
+/* The clock lives inside the header in the DOM, so it is pulled into a gutter instead of
+ * reordering the row; flex on .contents would drag replies and embeds in. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 {
   position: relative;
   padding-inline-start: var(--irc-ts-gutter);
@@ -1268,26 +1298,8 @@ body,
   text-indent: 0;
 }
 
-/* Timestamp column.
- *
- * Discord renders TWO time nodes per message:
- *   - .timestamp_c19a55            short, inline, lives in the header (HH:MM)
- *   - .timestamp_c19a55.alt_c19a55 long variant, absolutely positioned, hover-only
- * A grouped row (same author, not interrupted) has NO header and NO avatar: only the alt
- * node survives, so that is what feeds the gutter there. Rows WITH a header hide it as a
- * duplicate. Position, width and clipping come from the rule below, which already matches
- * every .timestamp inside the wrapper, whichever variant it is.
- *
- * The text is NOT always HH:MM. Discord formats a message from another day with
- * dateStyle:short + timeStyle:short ("18/10/26, 13:38"), not time-only, and both parts
- * live in ONE text node inside <time> — no selector can reach the date alone.
- * So the column is a fixed window anchored to the RIGHT that clips the overflow on the
- * left: a time-only stamp fits whole, "18/10/26, 13:38" gets its date cut and the clock
- * lands where it belongs. That is why direction is rtl (overflow goes start-wards) and
- * why <time> is isolated back to ltr (otherwise the numeric runs get reordered).
- * With a 12-hour clock the clock is 7 chars ("9:45 AM"): --irc-ts-width is 8ch in
- * section 4 for exactly that reason, and the gutter follows.
- */
+/* A fixed window anchored right and clipped left: older messages carry "18/10/26, 13:38"
+ * in one text node, so the date is cut instead of widening the column. Width: --irc-ts-width. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
   position: absolute;
   inset-inline-start: auto; /* the alt variant sets inset-inline-start: 0, which direction:rtl would read as right:0 */
@@ -1311,11 +1323,8 @@ body,
   unicode-bidi: isolate;
 }
 
-/* <nick> brackets in the same gray as the clock. The opening one hangs off .contents
- * (the avatar is an <img>, replaced elements cannot have pseudo-elements) and the closing
- * one off the header, so the pair wraps avatar + nick + badges: HH:MM <avatar nick> text
- * Gated on :has(.header_c19a55): a grouped row has no header and no avatar, so a bracket
- * would hang there with nothing to wrap. */
+/* Brackets hang off .contents and the header (an <img> takes no pseudo-element) so they wrap
+ * avatar and nick; gated on :has(.header), since a grouped row has neither. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:has(.header_c19a55) .contents_c19a55::before {
   content: "<";
   color: var(--irc-dim);
@@ -1330,8 +1339,7 @@ body,
   margin-inline: 0 0.35em;
 }
 
-/* With a reply the first line is the quoted message, so the opening bracket would hang
- * off it instead of the avatar. Move it to the header for those rows. */
+/* With a reply the first line is the quote, so the bracket moves to the header. */
 :is(.cozy_c19a55, .compact_c19a55):has(.repliedMessage_c19a55) .contents_c19a55::before {
   content: none;
 }
@@ -1343,11 +1351,7 @@ body,
   margin-inline-end: 0.15em;
 }
 
-/* Hide the duplicate clock only where a header exists (the inline node already feeds the
- * gutter). Grouped rows keep theirs, but only on hover: in a run, the clock is noise.
- * Direct children of .header/.contents only: the "(edited)" marker is ALSO a
- * .timestamp_c19a55, but it lives inside .messageContent_c19a55 and must stay in the text
- * flow — matching it dragged it into the gutter, on top of the real clock. */
+/* Direct children only: the "(edited)" marker is also a .timestamp and must stay in the text. */
 :is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55) :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55.alt_c19a55,
 :is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55) :is(.header_c19a55, .contents_c19a55) > .timestampVisibleOnHover_c19a55 {
   display: none;
@@ -1362,18 +1366,8 @@ body,
   opacity: 0.75;
 }
 
-/* A run of messages from the same author has no header, so nothing says "same person".
- * Draw it as a tree instead: .contents::before already holds the "<" of the nick, and the
- * two selectors are mutually exclusive (one needs a header, the other forbids it).
- * transform: scaleY(--irc-line-height) makes the glyph fill the whole row, otherwise a
- * 1em bar inside a 1.25em line leaves a 4px gap between rows and the spine looks dashed.
- *
- * BASELINE IS "└": any headerless row is the end of its run until proven otherwise.
- * Only the row whose NEXT <li> is not a groupStart becomes "│". That needs :has() with a
- * relative selector, and :has() cannot be nested inside :has() (Chromium drops the whole
- * rule, not just the inner part), so the next row is identified by its groupStart class
- * instead of :not(:has(.header)) — the class prefix survives hash changes.
- */
+/* A headerless row is drawn as an end (└); it becomes │ only when the next row is not a
+ * groupStart, because :has() cannot be nested and the class prefix survives hash changes. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
   content: "└";
   display: inline-block;
@@ -1388,22 +1382,14 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   content: "│";
 }
 
-/* No connector curves: the reply spine is absolutely positioned off the old avatar gutter
- * and lands on top of the timestamp column once the avatar is inline. A terminal does not
- * draw them; the "replying to" line above the message stays. */
+/* No connector curves: the spine would land on the clock column; the reply line stays. */
 :is(.cozy_c19a55, .compact_c19a55) :is(.repliedMessageClickableSpine_c19a55, .messageSpine_c19a55),
 :is(.cozy_c19a55, .compact_c19a55) :is(.repliedMessageClickableSpine_c19a55, .messageSpine_c19a55)::before {
   display: none;
 }
 
-/* Reply marker.
- * ⤹ (U+2939, Supplemental Arrows-B) is what the user picked. Heads up: Iosevka does NOT
- * ship this block — the TTF has no glyph for it (it stops at U+21FF), so this one glyph
- * comes from the system's symbol fallback (Noto Sans Symbols / DejaVu). That is why it may
- * read bigger than the ↶ that came from the embedded face.
- * It sits in the same column as "<" and the run tree (│ └) so the three markers line up.
- * The whole quote is dimmed: it is context, not another message. One opacity on the block
- * keeps avatar, nick, clan tag and preview at the same level. */
+/* ⤹ is U+2939, which Iosevka does not ship, so it renders from the system fallback.
+ * One opacity dims avatar, nick and preview together. */
 :is(.cozy_c19a55, .compact_c19a55) .repliedMessage_c19a55 {
   opacity: 0.6;
 }
@@ -1415,7 +1401,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   margin-inline-end: 0.35em;
 }
 
-/* avatar exactly one line tall, inline before the nick */
+/* One line tall, inline before the nick. */
 :is(.cozy_c19a55, .compact_c19a55) .avatar_c19a55 {
   height: var(--irc-avatar-size, 1em);
   width: var(--irc-avatar-size, 1em);
@@ -1425,21 +1411,13 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   margin: 0 0.4em 0 0;
 }
 
-/* avatar decorations break the one-line rhythm */
+/* Decorations break the one-line rhythm. */
 .avatarDecoration_c19a55 {
   display: none !important;
 }
 
-/* nick, timestamp and body on the same line.
- * position: static matters: Discord's cozy header is position: relative, which makes it
- * the containing block of the absolutely positioned timestamp (it would sit after the
- * avatar instead of in the gutter).
- * !important because Discord re-declares position: relative on the same header with
- * HIGHER specificity whenever the message has extras: .gradient_c19a55 (display name
- * styles / gradient), .zalgo_c19a55, .withDisplayNameStyles_c19a55. Those arrive as
- * (0,3,0) and (0,5,0) selectors and beat this (0,2,0) rule, so the clock abandoned the
- * gutter and, with the inline header split over two lines by a clan tag, landed under
- * the nick. */
+/* static keeps the absolute clock anchored to the wrapper; !important because Discord
+ * re-declares position here with higher specificity when a message has extras. */
 :is(.cozy_c19a55, .compact_c19a55) .header_c19a55 {
   display: inline;
   min-height: 0;
@@ -1452,36 +1430,24 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   display: inline;
 }
 
-/* Nick legibility. Discord sets the nick at font-weight-medium and --text-strong is
- * almost the same grey as --text-default, so on a monospace line the nick disappears into
- * the body text. Bold gives the hierarchy back without touching colour, and the embedded
- * Iosevka Bold is a real face, so nothing shifts. */
+/* Bold restores the hierarchy: a medium-weight nick is the same grey as the body. */
 :is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55 {
   font-weight: 700;
 }
 
-/* Nicks with no role colour and no gradient also get the accent.
- * Role colours arrive as an INLINE style (Discord writes style="color: rgb(...)"), and an
- * inline style beats any rule without !important, so no colour here can override a role.
- * Gradients are the opposite: they paint with background-clip and would be flattened by a
- * solid colour, hence the explicit exclusions (data attribute, gradient classes, and any
- * inline colour at all). Limit it to the header so quoted nicks stay quiet. */
+/* Inline role colours beat any rule without !important, so this only paints nicks that have
+ * none; gradients paint with background-clip and would be flattened. */
 :is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55:not([style*=color]):not([data-username-has-gradient]):not([class*=Gradient]) {
   color: var(--irc-nick, var(--accent));
 }
 
-/* Nick glow. text-shadow paints behind the glyphs, so it reads as a halo in the nick's
- * own colour; an inline role colour reaches it through currentColor. Gradient nicks are
- * excluded: Discord already draws a blurred duplicate (nameGlow__703b9) for those, and
- * stacking our shadow on top makes them bloom. Strength and radius live in the entry
- * file as --irc-nick-glow / --irc-nick-glow-size. */
+/* text-shadow reads as a halo in the nick's own colour through currentColor.
+ * Gradient nicks are excluded: Discord already draws a blurred copy and the halo blooms. */
 :is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55:not([class*=Gradient]):not([data-username-has-gradient]) {
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }
 
-/* cozy fallback: the 4.5rem avatar gutter is not needed, the timestamp owns the gutter.
- * position: static on .contents_c19a55 in BOTH densities (compact sets relative too),
- * otherwise it becomes the containing block of the absolute timestamp. */
+/* static: a positioned box would become the containing block of the absolute clock. */
 :is(.cozy_c19a55, .compact_c19a55) .contents_c19a55 {
   position: static;
 }
@@ -1495,37 +1461,8 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   opacity: 1;
 }
 
-/* ============================================================================
- * Forum post as a log line
- *
- * A forum post ships as a card that stacks title, author, preview, media and footer
- * vertically. The card chrome is dropped and the post becomes one grid row, same
- * rhythm as a message row: [pin] title  nick: preview  [img] react [31] 7h
- * 
- * Structure: .container_faa96b [ .focusTarget, .left_faa96b, footer, media ]
- *            .body_faa96b      [ .tags, .header_faa96b, .message_faa96b ]
- * 
- * Grid, not flex: with three columns the footer keeps the same right edge whether or
- * not the post has media, so the counters line up down the whole list.
- * ========================================================================== */
-/* ============================================================================
- * 6. Forum posts as log lines
- *
- * A forum post is not a message row: it ships as a card (.mainCard_f369db) that
- * stacks title, author, preview, media and footer vertically. Here the card is
- * dropped and the post becomes one log line, same rhythm as section 5:
- *
- *   [pin] <title>  <nick>: preview                  [img] react [31] 7h
- *
- * Structure, from the live client:
- *   .container_faa96b  [ .focusTarget, .left_faa96b, footer wrapper, media wrapper ]
- *   .body_faa96b       [ .tags__08166, .header_faa96b, .message_faa96b ]
- *
- * Grid, not flex: with three columns the footer keeps the same right edge whether
- * or not the post has media, so "31" and the time line up down the whole list.
- * Hash _faa96b is the post module; re-check it after a Discord update.
- * ========================================================================== */
-/* Card chrome: no box, no gap, no border. The log line is the unit. */
+/* Forum post as one grid row: pin, title, nick and preview, media, counters.
+ * Grid keeps the footer's right edge fixed whether or not the post has media. */
 #app-mount li.card_f369db {
   margin: 0;
   padding: 0;
@@ -1536,18 +1473,12 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
 
 #app-mount .container_faa96b {
   display: grid;
-  /* text | metadata | thumbnail. The LAST track is a fixed width on purpose: the
-   * thumbnail keeps one x position down the whole list instead of riding on the
-   * variable width of the footer (one row has "👍3 [3] 38m ago", the next only
-   * "7h ago"). The footer sits in the middle track, right-aligned, so its right
-   * edge is fixed too and the counters line up. */
+  /* The last track is a fixed width so the thumbnail keeps one x position down the list. */
   grid-template-columns: minmax(0, 1fr) auto var(--irc-forum-stamp, 3.4em);
   align-items: baseline;
   gap: 0 1em;
   min-height: 0;
-  /* Same line rhythm as a message row (section 4). This is also the height of the
-   * thumbnail stamp: a taller stamp would set the row height and, being centred,
-   * poke above the preview text instead of sitting inside the line. */
+  /* Same line rhythm as a message row; a taller stamp would set the row height. */
   line-height: var(--irc-line-height, 1.25);
   padding: var(--irc-forum-row-pad, 2px) var(--space-xs);
   background: transparent;
@@ -1555,9 +1486,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   border-radius: 0;
 }
 
-/* Where one post ends and the next begins. Message rows are delimited by the clock
- * gutter (section 5); a forum row has no clock, so it gets a hairline instead.
- * --fg-secondary is 4.5% white: visible on the dark surface, invisible as "chrome". */
+/* A hairline delimits posts, since a forum row has no clock gutter. */
 #app-mount li.card_f369db + li.card_f369db {
   border-top: 1px solid var(--fg-secondary);
 }
@@ -1566,22 +1495,17 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   background: var(--background-message-hover);
 }
 
-/* .left_faa96b is the wrapper around BOTH the body and the footer, so the footer was
- * never a grid item: it stayed stacked under the preview and the third column measured
- * 0px. display: contents drops the wrapper's box and lets its children join the grid
- * above, which puts the footer back on the line, at the shared right edge. */
+/* .left_faa96b wraps body and footer, so display: contents is what puts the footer on the row. */
 #app-mount .left_faa96b {
   display: contents;
 }
 
-/* Click overlay: keep it out of the grid flow even if Discord ever ships it static. */
+/* Out of the grid flow even if Discord ever ships it static. */
 #app-mount .container_faa96b > .focusTarget_faa96b {
   grid-area: 1/1;
 }
 
-/* Footer and media are placed in fixed tracks. grid-row is explicit so the row can never
- * split in two; the media is also listed through .left_faa96b for builds that nest the
- * wrapper there (the DOM has moved between builds). */
+/* grid-row is explicit so a row can never split in two. */
 #app-mount .container_faa96b > div:has(> .footer_faa96b),
 #app-mount .left_faa96b > div:has(> .footer_faa96b) {
   grid-column: 2;
@@ -1595,9 +1519,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
-  /* Stretch, and bleed into the card's 2px vertical padding, so the stamp is exactly
-   * as tall as the row instead of floating inside it. Percentage heights contribute
-   * nothing to the row's intrinsic size, so the text still sets the height. */
+  /* Bleeds into the card padding so the stamp is exactly as tall as the row. */
   align-self: stretch;
   margin-block: calc(var(--irc-forum-row-pad, 2px) * -1);
   position: static;
@@ -1614,7 +1536,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   padding: 0;
 }
 
-/* Pinned marker: a dim flag in front of the title, not a tag row above it. */
+/* Dim flag in front of the title instead of a tag row. */
 #app-mount .tags__08166 {
   flex: 0 0 auto;
   color: var(--irc-dim);
@@ -1640,11 +1562,8 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   min-width: 0;
 }
 
-/* One line, always. Discord clamps the title with an INLINE
- * -webkit-line-clamp: 2, so the override needs !important (important beats
- * inline, a plain rule does not). heading-lg drops to the log rhythm.
- * Colour is left alone: Discord sets --text-strong on unread posts and
- * --text-muted on read ones with an inline style, and that state is useful. */
+/* !important because Discord clamps with an inline line-clamp. Colour is left alone:
+ * it carries the unread state. */
 #app-mount .postTitleText_faa96b {
   font-size: inherit;
   font-weight: 700;
@@ -1666,8 +1585,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   line-height: inherit;
 }
 
-/* Same <nick> brackets as a message row (section 5). The ": " after the name is
- * Discord's own text node, so the line reads "<nick>: preview", as in IRC. */
+/* The ": " after the nick is Discord's own text node, so only the brackets are drawn. */
 #app-mount .message_faa96b .author_d3eee8 a::before {
   content: "<";
   color: var(--irc-dim);
@@ -1680,8 +1598,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   opacity: 0.75;
 }
 
-/* Forum nicks get the same halo as message nicks (--irc-nick-glow in the entry file);
- * gradients are skipped for the same reason: they already carry their own glow copy. */
+/* Gradients already carry their own glow, so they are skipped. */
 #app-mount .message_faa96b .author_d3eee8 .username__703b9:not([class*=Gradient]):not([data-username-has-gradient]) {
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }
@@ -1696,20 +1613,14 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   display: block;
   min-width: 0;
   max-width: 100%;
-  /* Discord's text-* utilities carry their own line-height; without this the preview
-   * line is shorter than the thumbnail and the stamp pokes above it again. */
+  /* text-* utilities carry their own line-height, which would make the stamp poke above. */
   line-height: inherit;
-  /* an inline --text-default / --text-muted would beat an inherited colour */
+  /* An inline --text-* would beat an inherited colour. */
   color: var(--irc-dim) !important;
 }
 
-/* The preview is clamped with -webkit-line-clamp, the same mechanism Discord uses for
- * the title, instead of white-space: nowrap. Reason: `.markup__75297` ships
- * `white-space: break-spaces`, so the preview was wrapping into several lines (measured:
- * scrollWidth == clientWidth, i.e. no horizontal overflow at all), the row grew tall and
- * the text ended where it should not. line-clamp limits the number of line boxes and
- * draws the ellipsis itself, no matter what white-space resolves to. min-width/max-width
- * keep the box at the width left by the metadata column, which is where "..." appears. */
+/* line-clamp, not white-space: Discord ships break-spaces on markup, so nowrap is not enough.
+ * min/max-width keep the box inside the column the metadata leaves. */
 #app-mount .messageContent_faa96b {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -1721,23 +1632,13 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   overflow-wrap: anywhere;
 }
 
-/* "(edited)" is noise here: the footer already carries the relative time. */
+/* The footer already carries the relative time. */
 #app-mount .messageContent_faa96b .timestamp_c19a55 {
   display: none;
 }
 
-/* Thumbnail: a right-hand stamp as tall as the row, one per post. The width is
- * --irc-forum-stamp and the height comes from the row (stretch + the negative margin
- * above), so the text block always ends before it, with the grid gap as the margin.
- * object-fit: cover fills the box; at this size the alternative is a letterboxed
- * sliver, which reads worse than a crop. object-position can be moved to top center
- * if the interesting part of a screenshot is its header.
- *
- * Discord nests five boxes around every image (thumbnailContainer/imageContent >
- * imageContainer > imageWrapper > clickableWrapper > loadingOverlay > img) and writes
- * a px width/height inline on BOTH the wrapper and the img. The four inner boxes are
- * flattened with display: contents so the .imageWrapper is the only box between the
- * media row and the bitmap, and !important is what beats the inline sizes. */
+/* Width is --irc-forum-stamp and height comes from the row; display: contents flattens the
+ * five nested boxes so !important can beat the inline sizes Discord writes. */
 #app-mount .bodyMedia_faa96b {
   display: flex;
   align-items: center;
@@ -1775,7 +1676,6 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
      object-position: center;
 }
 
-/* Footer: dim, small, one row, right edge shared by every post. */
 #app-mount .footer_faa96b {
   display: flex;
   align-items: baseline;
@@ -1797,7 +1697,6 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   display: none;
 }
 
-/* Reactions as plain "emoji count", no chips. */
 #app-mount .footer_faa96b .reaction_f8896c,
 #app-mount .footer_faa96b .reactionInner_f8896c {
   background: transparent;
@@ -1813,7 +1712,6 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   margin: 0;
 }
 
-/* Message counter as [31]. */
 #app-mount .messageCountIcon_faa96b {
   display: none;
 }
@@ -1832,7 +1730,6 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   content: "]";
 }
 
-/* "new" pill -> dim word. */
 #app-mount .newBadge_faa96b {
   background: transparent;
   border: none;
@@ -1841,16 +1738,8 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   font-weight: 400;
 }
 
-/* ============================================================================
- * Presence ring
- *
- * The ring reuses Discord's own SVG mask: the status rect keeps the fill Discord
- * gives it, the mask is dropped and the rect is stroked instead. That is enough to
- * pick up online / idle / dnd / streaming / offline without extra data.
- *
- * Derived from RadialStatus, Copyright (c) 2020 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* The ring reuses Discord's own SVG mask: the mask is dropped and the status rect stroked,
+ * which is enough to pick up every state. Derived from RadialStatus, Copyright (c) 2020 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 #app-mount .wrapper__44b0c {
   border-radius: var(--irc-status-avatar-shape);
 }
@@ -2217,19 +2106,8 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   width: calc(100% - 9px) !important;
 }
 
-/* ============================================================================
- * Font wiring
- *
- * "gg sans, Noto Sans" shows up as the computed value of --font in Discord, which
- * means Discord itself owns that variable name and a plain :root declaration loses
- * to it (its stylesheets can mount after Vencord's theme style element). So we do
- * NOT compete for a generic name: the family lives in --irc-font (entry file),
- * everything Discord reads is mapped to it with !important, and the app root gets
- * the family directly.
- *
- * This is not configuration. It is the wiring that makes --irc-font reach the app,
- * so it lives with the layout: the entry file stays a list of values.
- * ========================================================================== */
+/* Maps --irc-font onto the names Discord reads, with !important because Discord owns --font.
+ * Not configuration: it is what makes the user variable reach the app. */
 :root {
   --font: var(--irc-font) !important;
   --font-primary: var(--irc-font) !important;

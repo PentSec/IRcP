@@ -1,18 +1,6 @@
-/* ============================================================================
- * 3. Iosevka Term Slab Nerd Font (subset, embedded)
- * ========================================================================== */
-/*
- * Iosevka Term Slab Nerd Font v34.8.0 — SIL OFL 1.1, see THIRD-PARTY-NOTICES.md
- *
- * Subset per face: Latin-1/Ext-A/Ext-B, Greek, Cyrillic, punctuation, arrows, math,
- * box drawing, blocks and geometric shapes.
- * Dropped to keep the payload small: CJK and the Nerd Font PUA icon glyphs.
- * TTF -> WOFF2 via pyftsubset, no TT hinting, ccmp/locl/kern kept, no ligatures (calt).
- *
- * Embedded as base64 data: URIs on purpose: Vencord serves local themes over the
- * vencord:// protocol without Access-Control-Allow-Origin headers, and font loads
- * are CORS-mode requests, so an external .woff2 next to this file would fail silently.
- */
+/* Iosevka Term Slab NF, subsets embedded as base64. */
+/* SIL OFL 1.1, see THIRD-PARTY-NOTICES.md. CJK and PUA icons are dropped to keep the payload small.
+ * Base64 on purpose: Vencord serves themes over vencord:// without CORS, so an external .woff2 fails silently. */
 @font-face {
   font-family: "Iosevka Term Slab NF";
   font-style: normal;
