@@ -13,6 +13,16 @@
   box-shadow: none;
 }
 
+/* The jump-to-present bar: panel surface, accent edge and a glow behind it. */
+#app-mount .jumpToPresentBar__0f481 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 12px) hsl(from var(--accent) h s l/0.35);
+  -webkit-backdrop-filter: blur(var(--foreground-blur));
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
 #app-mount .barButtonBase__0f481 {
   filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3))
     drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--accent) h s l/0.2));
