@@ -58,19 +58,27 @@
   background: var(--bg-primary);
 }
 
-/* Active Now cards paint their own opaque surfaces; swapped for the translucent overlay so
- * they read as part of the panel. */
+/* Active Now cards in the friends list paint an opaque surface; replaced with the panel overlay. */
 #app-mount .refresh-active-now .wrapper__00943 {
   background: var(--fg-primary);
   border-color: var(--fg-border);
 }
 
 #app-mount .refresh-active-now .wrapper__00943:hover {
-  background: hsl(0 0% 100% / 0.12); /* keep the card's own hover feedback */
+  background: hsl(0 0% 100% / 0.12); /* the card's own hover feedback */
 }
 
 #app-mount .refresh-active-now .header__00943 {
   background: transparent;
+}
+
+/* The activity card is a separate module and needs the same treatment. */
+#app-mount .container__0f2e8 {
+  background: var(--fg-primary);
+}
+
+#app-mount .container__0f2e8:hover {
+  background: hsl(0 0% 100% / 0.12); /* the card's own hover feedback */
 }
 
 #app-mount .sectionDivider_e6b769 {
