@@ -30,7 +30,8 @@
   display: none;
 }
 
-#app-mount div.stack_dbd263:not([role='group']) {
+/* Scoped to the rail: unscoped, it also flattened the gap of every stack in the client. */
+#app-mount .guilds__5e434 div.stack_dbd263:not([role='group']) {
   gap: 0 !important;
 }
 
