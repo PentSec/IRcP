@@ -36,3 +36,29 @@
   --background-message-hover: hsl(0 0% 100% / 0.02) !important;
   --guildbar-folder-size: var(--server-size);
 }
+
+/* Discord redeclares these on every .theme-dark root, so the override has to sit on the
+ * theme classes themselves, doubled so a later-loaded chunk cannot outrank them. */
+:root,
+.theme-dark.theme-dark,
+.theme-light.theme-light,
+.theme-midnight.theme-midnight,
+.theme-darker.theme-darker {
+  /* Discord and Vencord paint buttons, switches and focus rings from these tokens, so the
+   * accent is set here instead of per component. */
+  --brand-500: var(--accent);
+  --control-primary-background-default: var(--accent);
+  --control-primary-background-hover: hsl(from var(--accent) h s calc(l * 0.88));
+  --control-primary-background-active: hsl(from var(--accent) h s calc(l * 0.78));
+  --control-primary-border-default: var(--accent);
+  --control-primary-border-hover: hsl(from var(--accent) h s calc(l * 0.88));
+  --control-primary-text-default: var(--accent-text);
+  --control-primary-text-hover: var(--accent-text);
+  --control-secondary-background-default: hsl(from var(--accent) h s l/0.12);
+  --control-secondary-background-hover: hsl(from var(--accent) h s l/0.2);
+  --control-secondary-background-active: hsl(from var(--accent) h s l/0.16);
+  --control-secondary-border-default: hsl(from var(--accent) h s l/0.35);
+  --control-secondary-border-hover: hsl(from var(--accent) h s l/0.55);
+  --control-secondary-text-default: var(--accent);
+  --control-secondary-text-hover: var(--accent);
+}

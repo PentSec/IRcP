@@ -1,0 +1,8 @@
+// Controls
+//
+// Buttons and switches whose colour Discord computes instead of styling.
+
+/* Mana switches write their colour inline; only the checked state carries the brand value. */
+#app-mount .switchIndicator_a28278[style*='88, 101, 242'] {
+  background-color: var(--accent) !important;
+}
