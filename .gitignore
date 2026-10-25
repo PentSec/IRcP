@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build output. dist/ is what CI publishes to the deploy branch; never commit it.
+dist/
+.dev/
+
+# `dev` writes the single-file theme into the client's themes folder; that is usually
+# outside the repository, but a themes folder symlinked here would land the file at the root.
+irc.theme.css
+
+# Editor / OS
+.DS_Store
+*.log

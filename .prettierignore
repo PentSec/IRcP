@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.dev/
+bun.lock
+# Base64 payload: one unbreakable line per face, nothing to format, slow to parse.
+src/addons/_fonts.scss
