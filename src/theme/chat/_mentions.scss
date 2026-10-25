@@ -1,8 +1,7 @@
 // Mentions, tags and embeds
 //
-// Channel and user tags, embed wrappers, and the neutralised chat bubble. The bubble
-// experiment is kept switched off: it adds padding and switches the body to
-// inline-block, which is exactly what breaks the one-line layout if it ever matches.
+// Channel and user tags, embed wrappers, and the chat-bubble rule that is kept switched
+// off by the variables right below it.
 
 /* The old chat-bubble experiment is neutralised: a bubble adds 10px/14px of padding and
  * switches the body to inline-block, which is exactly what breaks the one-line layout if
