@@ -313,8 +313,6 @@
   --members-glow-intensity: var(--glow-intensity);
   --input-glow-intensity: var(--glow-intensity);
   --server-glow-intensity: var(--glow-intensity);
-  --talking-bar: rgb(var(--accent));
-  --talking-glow: rgb(var(--accent));
   --foreground-blur: 20px;
   --foreground-brightness: 1;
   --shadow: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);
@@ -327,9 +325,6 @@
   --fg-primary: hsl(0 0% 100% / 0.075);
   --fg-secondary: hsl(0 0% 100% / 0.045);
   --toolbar-height: 64px;
-  --chat-bubble-bg: hsl(0 0% 100% / 0.04);
-  --chat-bubble-padding: 10px 14px;
-  --chat-bubble-display: inline-block;
   --channel-unread-colour: hsl(0 0% 100%);
   --channel-pill-width: 3px;
   --channel-pill-height: 35%;
@@ -343,8 +338,6 @@
   --custom-message-avatar-size: var(--irc-avatar-size, 1em);
   --custom-message-margin-horizontal: var(--space-xxl);
   --text-link: var(--accent) !important;
-  --font-primary: var(--font, "Whitney");
-  --font-display: var(--font, "Whitney");
   --background-mentioned: var(--accent);
   --background-message-hover: hsl(0 0% 100% / 0.02) !important;
   --guildbar-folder-size: var(--server-size);
@@ -917,7 +910,6 @@ body,
 }
 #app-mount .cozyMessage__5126c .messageContent_c19a55:not(.repliedTextContent_c19a55):not(:empty) {
   background: var(--chat-bubble-bg);
-  margin-left: var(----custom-message-margin-left-content-cozy);
   padding: var(--chat-bubble-padding);
   border-radius: var(--radius-xs);
   display: var(--chat-bubble-display);

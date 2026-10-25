@@ -25,6 +25,9 @@
     --accent
   ); /* member-list role headers. Discord does not expose the per-role colour in the DOM, so this is a theme colour, not the role's */
   --irc-forum-stamp: 3.4em; /* Forum list: width of the right-hand thumbnail column. Its height matches the row, and object-fit: cover fills the box. */
+  --irc-forum-row-pad: 2px; /* Forum list: vertical padding of a log row. 0 makes rows touch each other */
+  --irc-status-members-width: 30px; /* member-list avatar box the presence ring is drawn around */
+  --irc-status-self-speaking-colour: #57d39b; /* ring colour while your own voice is transmitting */
   --irc-theme: 1; /* marker: if the computed value reads 1, this file parsed and applied */
 
   /*
