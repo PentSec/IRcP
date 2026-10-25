@@ -9,17 +9,18 @@
   padding: var(--space-md);
 }
 
-/* The frame stays on .mainContent: .wrapper also contains the children, so the box would
- * cover the whole category. border-image keeps it square. */
-#app-mount .mainContent__29444 {
+/* The frame sits on the wrapper so it also covers the create-channel button. No left edge,
+ * and border-image keeps the corners square. */
+#app-mount .wrapper__29444 {
   border: 1px solid transparent;
+  border-left-width: 0;
   border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l / 0.5) 30%, transparent 78%) 1;
   border-radius: 0;
   background: linear-gradient(270deg, hsl(from var(--accent) h s l / 0.22) 0%, transparent 78%);
   box-shadow: 0 0 calc(var(--glow-intensity, 1) * 8px) hsl(from var(--accent) h s l / 0.22);
 }
 
-#app-mount .mainContent__29444:hover {
+#app-mount .wrapper__29444:hover {
   background: linear-gradient(270deg, hsl(from var(--accent) h s l / 0.32) 0%, transparent 82%);
 }
 
