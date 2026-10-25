@@ -98,14 +98,14 @@
  * Gated on :has(.header_c19a55): a grouped row has no header and no avatar, so a bracket
  * would hang there with nothing to wrap. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:has(.header_c19a55) .contents_c19a55::before {
-  content: "<";
+  content: '<';
   color: var(--irc-dim);
   opacity: 0.75;
   margin-inline-end: 0.15em;
 }
 
 :is(.cozy_c19a55, .compact_c19a55) .header_c19a55::after {
-  content: ">";
+  content: '>';
   color: var(--irc-dim);
   opacity: 0.75;
   margin-inline: 0 0.35em;
@@ -118,7 +118,7 @@
 }
 
 :is(.cozy_c19a55, .compact_c19a55):has(.repliedMessage_c19a55) .header_c19a55::before {
-  content: "<";
+  content: '<';
   color: var(--irc-dim);
   opacity: 0.75;
   margin-inline-end: 0.15em;
@@ -129,17 +129,25 @@
  * Direct children of .header/.contents only: the "(edited)" marker is ALSO a
  * .timestamp_c19a55, but it lives inside .messageContent_c19a55 and must stay in the text
  * flow — matching it dragged it into the gutter, on top of the real clock. */
-:is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55) :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55.alt_c19a55,
-:is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55) :is(.header_c19a55, .contents_c19a55) > .timestampVisibleOnHover_c19a55 {
+:is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55)
+  :is(.header_c19a55, .contents_c19a55)
+  > .timestamp_c19a55.alt_c19a55,
+:is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55)
+  :is(.header_c19a55, .contents_c19a55)
+  > .timestampVisibleOnHover_c19a55 {
   display: none;
 }
 
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55))
+  :is(.header_c19a55, .contents_c19a55)
+  > .timestamp_c19a55 {
   opacity: 0;
   transition: opacity 0.1s ease;
 }
 
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)):hover :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)):hover
+  :is(.header_c19a55, .contents_c19a55)
+  > .timestamp_c19a55 {
   opacity: 0.75;
 }
 
@@ -156,7 +164,7 @@
  * instead of :not(:has(.header)) — the class prefix survives hash changes.
  */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
-  content: "└";
+  content: '└';
   display: inline-block;
   color: var(--irc-dim);
   opacity: 0.75;
@@ -165,8 +173,10 @@
   transform-origin: center;
 }
 
-li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
-  content: "│";
+li:has(+ li > .wrapper_c19a55:not([class*='groupStart']))
+  > .wrapper_c19a55:not(:has(.header_c19a55))
+  .contents_c19a55::before {
+  content: '│';
 }
 
 /* No connector curves: the reply spine is absolutely positioned off the old avatar gutter
@@ -190,7 +200,7 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
 }
 
 :is(.cozy_c19a55, .compact_c19a55) .repliedMessage_c19a55::before {
-  content: "⤹";
+  content: '⤹';
   flex: 0 0 auto;
   color: var(--irc-dim);
   margin-inline-end: 0.35em;
@@ -242,7 +252,9 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
  * Gradients are the opposite: they paint with background-clip and would be flattened by a
  * solid colour, hence the explicit exclusions (data attribute, gradient classes, and any
  * inline colour at all). Limit it to the header so quoted nicks stay quiet. */
-:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55:not([style*=color]):not([data-username-has-gradient]):not([class*=Gradient]) {
+:is(.cozy_c19a55, .compact_c19a55)
+  .headerText_c19a55
+  .username_c19a55:not([style*='color']):not([data-username-has-gradient]):not([class*='Gradient']) {
   color: var(--irc-nick, var(--accent));
 }
 
@@ -251,7 +263,9 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
  * excluded: Discord already draws a blurred duplicate (nameGlow__703b9) for those, and
  * stacking our shadow on top makes them bloom. Strength and radius live in the entry
  * file as --irc-nick-glow / --irc-nick-glow-size. */
-:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55:not([class*=Gradient]):not([data-username-has-gradient]) {
+:is(.cozy_c19a55, .compact_c19a55)
+  .headerText_c19a55
+  .username_c19a55:not([class*='Gradient']):not([data-username-has-gradient]) {
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }
 
@@ -444,19 +458,19 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
 /* Same <nick> brackets as a message row (section 5). The ": " after the name is
  * Discord's own text node, so the line reads "<nick>: preview", as in IRC. */
 #app-mount .message_faa96b .author_d3eee8 a::before {
-  content: "<";
+  content: '<';
   color: var(--irc-dim);
   opacity: 0.75;
 }
 #app-mount .message_faa96b .author_d3eee8 a::after {
-  content: ">";
+  content: '>';
   color: var(--irc-dim);
   opacity: 0.75;
 }
 
 /* Forum nicks get the same halo as message nicks (--irc-nick-glow in the entry file);
  * gradients are skipped for the same reason: they already carry their own glow copy. */
-#app-mount .message_faa96b .author_d3eee8 .username__703b9:not([class*=Gradient]):not([data-username-has-gradient]) {
+#app-mount .message_faa96b .author_d3eee8 .username__703b9:not([class*='Gradient']):not([data-username-has-gradient]) {
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }
 
@@ -521,7 +535,15 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   padding: 0;
   overflow: hidden; /* extra images clip instead of widening the track */
 }
-#app-mount .bodyMedia_faa96b :is(.thumbnailContainer_faa96b, .imageContent__0f481, .imageContainer__0f481, .clickableWrapper_af017a, .loadingOverlay_af017a) {
+#app-mount
+  .bodyMedia_faa96b
+  :is(
+    .thumbnailContainer_faa96b,
+    .imageContent__0f481,
+    .imageContainer__0f481,
+    .clickableWrapper_af017a,
+    .loadingOverlay_af017a
+  ) {
   display: contents;
 }
 #app-mount .bodyMedia_faa96b .imageWrapper_af017a {
@@ -583,8 +605,12 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   color: var(--irc-dim);
   white-space: nowrap;
 }
-#app-mount .messageCountText_faa96b::before { content: "["; }
-#app-mount .messageCountText_faa96b::after { content: "]"; }
+#app-mount .messageCountText_faa96b::before {
+  content: '[';
+}
+#app-mount .messageCountText_faa96b::after {
+  content: ']';
+}
 
 /* "new" pill -> dim word. */
 #app-mount .newBadge_faa96b {
@@ -594,4 +620,3 @@ li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:h
   color: var(--irc-dim);
   font-weight: 400;
 }
-
