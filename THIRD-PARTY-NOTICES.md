@@ -5,9 +5,12 @@ and their notices are reproduced here as their licenses require. The copyright o
 reused portion stays with its authors; the theme's own code and modifications are
 PentSec's.
 
+File paths below point at the sources in `src/`. The built files that ship to users
+(`irc.theme.css`, `irc.css`, `fonts.css`) are generated from them by `bun run build`.
+
 ## SoftX
 
-Files: `irc.theme.css` (variable block and surface rules) and `irc/02-ui.css`.
+Files: `src/root.scss` (variable block and surface rules) and `src/theme/_ui.scss`.
 
 Copyright (c) 2021 DiscordStyles
 https://github.com/DiscordStyles/SoftX
@@ -39,7 +42,7 @@ SOFTWARE.
 
 ## RadialStatus
 
-Files: `irc/01-status.css`.
+Files: `src/theme/_status.scss`.
 
 Copyright (c) 2020 DiscordStyles
 https://github.com/DiscordStyles/RadialStatus
@@ -71,7 +74,8 @@ SOFTWARE.
 
 ## Iosevka
 
-Files: `irc/03-fonts.css` (embedded WOFF2 subsets of Iosevka Term Slab Nerd Font).
+Files: `src/addons/_fonts.scss` (embedded WOFF2 subsets of Iosevka Term Slab Nerd Font),
+published as `fonts.css`.
 
 Copyright (c) 2015-2026, Renzhi Li (aka. Belleve Invis, belleve@typeof.net)
 
@@ -93,7 +97,7 @@ with others.
 
 The OFL allows the licensed fonts to be used, studied, modified and
 redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded, 
+fonts, including any derivative works, can be bundled, embedded,
 redistributed and/or sold with any software provided that any reserved
 names are not used by derivative works. The fonts and derivatives,
 however, cannot be released under any other type of license. The
@@ -168,7 +172,7 @@ not met.
 
 
     DISCLAIMER
-    
+
     THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
@@ -182,7 +186,7 @@ not met.
 
 ## Font Awesome Free
 
-Files: `irc/01-status.css` (the "mobile-alt" icon path reused as the phone badge mask).
+Files: `src/theme/_status.scss` (the "mobile-alt" icon path reused as the phone badge mask).
 
 Font Awesome Free, by Fonticons, Inc. Icons are licensed under CC BY 4.0:
 https://creativecommons.org/licenses/by/4.0/

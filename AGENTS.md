@@ -1,82 +1,105 @@
 # AGENTS.md
 
-Vencord local themes for a personal Discord install. No build, no tests: the deliverable
-is CSS that Vencord injects into the Discord renderer at runtime.
+Vencord theme for a personal Discord install, built with `bd-scss`. No tests: the
+deliverable is CSS that Vencord injects into the renderer. `main` holds sources; `deploy`
+holds generated files and is written only by CI.
 
 ## Layout
 
-One entry point plus four imported files. The entry point holds the metadata and the
-variables worth editing; everything else is layout.
+| Path                       | What it is                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| `bd-scss.config.js`        | `meta` (the `@name`/`@version` header), `github`, the fonts addon, `deploy.origin` |
+| `src/root.scss`            | compiles to `irc.theme.css`: user variables only, no selectors                     |
+| `src/main.scss`            | compiles to `irc.css`: `@use` of the partials, in cascade order                    |
+| `src/theme/_status.scss`   | presence rings around avatars                                                      |
+| `src/theme/_ui.scss`       | app shell: background layer, sidebars, header, composer, member list, popouts      |
+| `src/theme/_messages.scss` | one-line message rows and the forum post list                                      |
+| `src/theme/_wiring.scss`   | maps `--irc-font` onto the variables Discord reads; not configuration              |
+| `src/addons/_fonts.scss`   | Iosevka `@font-face` with base64 subsets (460 KB), generated                       |
+| `src/assets/bg.png`        | wallpaper, published next to the theme                                             |
+| `scripts/postbuild.mjs`    | everything bd-scss does not do (see below)                                         |
+| `scripts/dev.mjs`          | forces the initial dev build, which bd-scss skips                                  |
+| `THIRD-PARTY-NOTICES.md`   | MIT texts for the reused CSS, OFL/CC-BY for font and icon                          |
 
-- `irc.theme.css` — the enabled theme. Metadata, four `@import`s and the user variables
-  (section 4). Nothing else: this is the file a theme toggle re-reads.
-- `irc/01-status.css` — presence rings around avatars.
-- `irc/02-ui.css` — app shell: background layer, sidebars, header, composer, member list,
-  popouts.
-- `irc/03-fonts.css` — Iosevka `@font-face` with base64 subsets (the 460 KB one).
-- `irc/05-messages.css` — one-line message rows and the forum post list.
-- `THIRD-PARTY-NOTICES.md` — MIT texts for the reused CSS and OFL/CC-BY notices for the
-  embedded font and icon. Required by their licenses; never delete it.
-- `README.md` — install and configuration instructions for users.
-- `irc/bg.png` — background image, referenced by a stylesheet-relative URL (see gotchas).
-- `fonts/` — upstream Nerd Font TTFs (641 MB) used to generate the embedded subsets.
-  Only `IosevkaTermSlabNerdFont-{Regular,Bold,Italic,BoldItalic}.ttf` are used.
-- Vencord runtime lives in `~/.config/Vencord/dist` — it is the source of truth for how
-  themes load (`renderer.js`, `patcher.js`). `~/.config/Vencord/settings/settings.json`
-  holds `enabledThemes`, and the themes folder is a symlink:
-  `~/.config/Vencord/themes -> /home/jeff/Github/IRcP`.
+`dist/` and a dev build at the repository root are generated and gitignored.
+
+## What bd-scss does (verified in `node_modules/bd-scss/src`)
+
+- `build` writes `dist/<meta.name>.theme.css` = generated meta + `@import` of
+  `<meta.name>.css` + imports of `dist:true` addons + compiled `root.scss`, and
+  `dist/<meta.name>.css` = compiled `main.scss`. Output names come from `meta.name`, so it
+  stays `irc`.
+- `generateImport()` hardcodes `https://<profile>.github.io/<repo>/<name>.css`. There is
+  no hook and no override.
+- It writes CSS only: no assets, no `.nojekyll`, no header edits.
+- `dev` writes **one** file with the body and the `dev:true` addons inlined, into the
+  client's themes folder. That folder is resolved in `bd-scss.config.js`
+  (`$XDG_CONFIG_HOME/Vencord/themes`, created on demand) because bd-scss resolves it to an
+  empty string when the client is missing and then dies in `mkdir ''`; with no client it
+  falls back to `.dev/`. `scripts/dev.mjs` wraps it because bd-scss compiles only from the
+  watcher's `change` event and never on `ready`, so an unwrapped `dev` sits idle until the
+  first save; the wrapper triggers that first build once the ready banner appears.
+- `reroll` rewrites hashed classes only in `src/**/_*.scss`.
+
+`scripts/postbuild.mjs` covers the gap: it rewrites the `github.io` import to
+`deploy.origin`, restores `@name IRcP`, copies `bg.png` and the license notices, writes
+`.nojekyll` and fails the build if any of that did not happen. Never hand-edit `dist/`.
+A dev build skips postbuild, so it keeps `@name irc`; only the published file is renamed.
 
 ## How Vencord loads a theme (verified in `~/.config/Vencord/dist`)
 
 - `renderer.js` injects `@import url("vencord:///themes/<file>?v=<Date.now()>")` into a
   `<style id="vencord-themes">`.
-- `patcher.js` registers `protocol.handle("vencord")`: `/themes/<rest>` maps to this
-  directory with a path-traversal guard, so subfolders are servable for assets.
-- **Only the theme file URL carries the cache-buster.** `irc.theme.css` is re-fetched on a
-  theme toggle because Vencord appends `?v=<Date.now()>`, but the four `@import` targets
-  keep their URL and are served from Chromium's cache. So: edits to `irc.theme.css` (the
-  variables) apply on a toggle; edits to anything under `irc/` need a **full app restart**.
-  That is the trade-off of the split, and the reason the variables stay in the entry
-  point.
-- Vencord rewrites the mainFrame CSP (`Cn` in `patcher.js`): adds `vencord:` and `data:`
-  to `style-src`, `img-src`, `font-src`, `connect-src`, `media-src`, `worker-src`, and
-  forces `Content-Type: text/css` on stylesheet responses. So `vencord://` imports,
-  base64 fonts and `vencord://` images are all allowed. CSP is not a suspect.
-- The theme list is a **non-recursive** `readdir` filtered to top-level `*.css`, so
-  asset subdirectories never show up as themes.
+- `patcher.js` registers `protocol.handle("vencord")`: `/themes/<rest>` maps to the themes
+  directory with a path-traversal guard.
+- **Only the theme file URL carries the cache buster.** The entry is re-fetched on every
+  toggle, but `irc.css` and `fonts.css` are ordinary HTTP resources on Pages/Cloudflare
+  with `max-age=600`. So a body change reaches the client within ten minutes, with no
+  restart; a variable change is instant.
+- Vencord rewrites the mainFrame CSP (`Cn` in `patcher.js`): `vencord:` and `data:` are
+  allowed for `style-src`, `img-src`, `font-src`, `connect-src`, `media-src`,
+  `worker-src`, and stylesheet responses get `Content-Type: text/css`. CSP is not a
+  suspect.
+- The theme list is a **non-recursive** `readdir` filtered to top-level `*.css`.
 
 ## Gotchas that already cost time
 
+- **GitHub answers `pentsec.github.io/IRcP/*` with `301 http://jeff.is-a.dev/*`**, which
+  redirects again to HTTPS. Chromium blocks a stylesheet load that downgrades to plain
+  HTTP, so a `github.io` import is broken, not merely slow. That is why postbuild
+  rewrites it and why `deploy.origin` lives in `bd-scss.config.js`.
 - `url()` inside a **custom property** resolves against the document base
-  (`https://discord.com`), not against the stylesheet. That is why the shipped background
-  is set in `02-ui.css` as `var(--background-image, url("bg.png"))`: the fallback is a
-  normal declaration and resolves next to that file locally and on jsDelivr. An override
-  in the entry point must be an absolute URL or it silently 404s.
-- Distribution: `raw.githubusercontent.com` serves `.css` as `text/plain` with `nosniff`,
-  and Blink refuses that as a stylesheet (verified in Chromium and in Electron: the same
-  bytes applied when served `text/css`, ignored when served `text/plain`). SoftX's README
-  still advertises a raw Vencord link, but its deployed theme actually works because the
-  entry imports `discordstyles.github.io/SoftX/SoftX.css`, which GitHub Pages serves as
-  `text/css`. This repo is published from GitHub Pages on the user site's custom domain:
-  `https://jeff.is-a.dev/IRcP/irc.theme.css` (a project site inherits the custom domain of
-  the account's user site, so no extra DNS is needed). Pages serves `.css` as `text/css`.
-  The entry imports the other files with absolute URLs to that deployment, so a single
-  downloaded file is enough and jsDelivr is no longer needed.
+  (`https://discord.com`), not against the stylesheet. `_ui.scss` uses that distinction:
+  `var(--background-image, url('bg.png'))` is a normal declaration, so the fallback
+  resolves next to the CSS — which is why `dev` copies `bg.png` into the themes folder and
+  postbuild copies it into `dist/`. An override in `root.scss` _is_ a custom property, so
+  it must be absolute or it silently 404s.
+- `raw.githubusercontent.com` serves `.css` as `text/plain` with `nosniff`, and Blink
+  refuses that as a stylesheet (verified in Chromium and in Electron: the same bytes
+  applied when served `text/css`, ignored when `text/plain`). GitHub Pages serves
+  `text/css` and is the only host that matters here.
 - Generic custom-property names collide in a live client (observed: `--font` computed to
-  `"gg sans", "Noto Sans"` even though only the theme declared it, so something loaded
-  later wins). Namespace everything with `--irc-*` and use `!important` for font wiring.
-  `--irc-theme: 1` is a marker proving the file parsed.
-- Fonts stay base64 `data:` URIs. Do not split them into `.woff2` files: assets would
-  need per-file cache busting and the protocol sends no CORS headers.
+  `"gg sans", "Noto Sans"` even though only the theme declared it). Namespace everything
+  with `--irc-*` and use `!important` for font wiring. `--irc-theme: 1` is a marker
+  proving the entry file parsed.
+- Sass rewrites some modern syntax on the way out: `hsl(0 0% 100% / 0.12)` becomes
+  `hsla(0, 0%, 100%, 0.12)` and `center / contain` becomes `center/contain`. Same
+  meaning, so do not "fix" the output.
+- Autoprefixer runs with the default browserslist, so `-o-` prefixes (Opera) appear in
+  `dist/`. They are dead weight for Electron; adding a `browserslist` field to
+  `package.json` would remove them, but it is a deliberate change, not a cleanup.
+- Fonts stay base64 `data:` URIs. Vencord serves local themes over `vencord://` without
+  CORS headers, and font loads are CORS-mode requests, so an external `.woff2` would fail
+  silently. Splitting them would also need per-file cache busting.
 - Two other styles are active and can outrank this theme when debugging a "rule doesn't
   apply": `~/.config/Vencord/settings/quickCss.css` (DiscordRecolor) and `themeLinks`
-  (ClearVision). Both load in stylesheets after/around the theme.
+  (ClearVision).
 
 ## Discord DOM class hashes
 
-Discord uses BEM-ish hashed classes (`.avatar_c19a55`, `.header_c19a55`, `.wrapper_c19a55`).
-The hash changes between builds; a layout rule that silently stops working usually means
-the hash moved. To find the current one without logging in:
+Discord ships BEM-ish hashed classes (`.avatar_c19a55`, `.header_c19a55`). The hash
+changes between builds; a rule that silently stops working usually means the hash moved.
+To find the current one without logging in:
 
 ```bash
 curl -s https://discord.com/app -o /tmp/app.html
@@ -86,8 +109,8 @@ grep -l 'cozy' /tmp/dcss/*.css      # the message component lives in exactly one
 grep -o '\.[a-z]*_c19a55' FILE.css | sort -u
 ```
 
-Discord's own rules in that chunk are the reference for the message rows and the forum
-list: copy their values instead of inventing them.
+Discord's own rules in that chunk are the reference: copy their values instead of
+inventing them. `bun run reroll` applies the community map to `src/**/_*.scss`.
 
 ## Debugging layout bugs
 
@@ -104,21 +127,21 @@ carries the perception the CSS has to satisfy.
 Vencord → Open DevTools, then:
 
 ```js
-[getComputedStyle(document.documentElement).getPropertyValue('--irc-theme').trim(),
- getComputedStyle(document.documentElement).getPropertyValue('--font-primary').trim(),
- getComputedStyle(document.body).fontFamily]
+[
+  getComputedStyle(document.documentElement).getPropertyValue('--irc-theme').trim(),
+  getComputedStyle(document.documentElement).getPropertyValue('--font-primary').trim(),
+  getComputedStyle(document.body).fontFamily
+];
 ```
 
-`--irc-theme` empty means the file did not load; `1` plus `gg sans` means a cascade
-fight, not a load failure.
-
-To apply edits: toggle the theme off/on in Vencord (the theme file URL carries the
-cache buster). Changes to the imported files always need a full app restart.
+`--irc-theme` empty means the entry did not load; `1` plus `gg sans` means a cascade
+fight, not a load failure. Toggle the theme off/on to re-fetch the entry from the dev
+build; the body follows the cache rules above.
 
 ## Regenerating the embedded fonts
 
 `pyftsubset` (fonttools + brotli are installed), one run per face, then base64 into
-`irc/03-fonts.css`:
+`src/addons/_fonts.scss`:
 
 ```
 pyftsubset fonts/IosevkaTermSlabNerdFont-Regular.ttf \
@@ -128,20 +151,21 @@ pyftsubset fonts/IosevkaTermSlabNerdFont-Regular.ttf \
 
 Use the plain `IosevkaTermSlabNerdFont-*` builds (Term metrics), not `-Mono` (forces 1ch
 on every glyph) or `-Propo` (proportional). Ligatures (`calt`) are intentionally dropped
-so `->` and `!=` stay literal in chat.
+so `->` and `!=` stay literal in chat. The upstream TTFs are not in the repository.
 
 ## Conventions
 
-- Bump `@version` (`2.0.0-irc.N`) on every change so the loaded build is identifiable.
-- Keep `THIRD-PARTY-NOTICES.md`. The reused CSS is MIT (the notice and permission text
-  must travel with copies or substantial portions) and the embedded font is SIL OFL 1.1
-  (the copyright line and the license must accompany the font). Renaming the theme or
-  rewriting the comments does not remove those obligations; the theme's own code and
-  modifications are still yours.
-- `@import` only in `irc.theme.css`, only **absolute URLs to this theme's own Pages
-  deployment** (`https://jeff.is-a.dev/IRcP/irc/01-status.css`), and all of them before the
-  first rule (CSS requires it). Absolute URLs make the entry self-sufficient: a downloaded
-  `irc.theme.css` pulls the layout from Pages and works alone. The cost is that edits to
-  the imported files only reach the client after a push; the entry's variables stay
-  instant. Never import anything else: the only remote files are the ones this repository
-  serves.
+- Bump `meta.version` in `bd-scss.config.js` (`2.0.0-irc.N`) on every change so the loaded
+  build is identifiable.
+- Variables the user is meant to touch go in `src/root.scss` and in the README table.
+  Anything else is internal and lives in the partial that uses it.
+- Keep `THIRD-PARTY-NOTICES.md` and the `Derived from …` headers. The reused CSS is MIT
+  (notice and permission text must travel with copies or substantial portions) and the
+  embedded font is SIL OFL 1.1 (copyright line and license must accompany the font).
+  Renaming the theme or rewriting comments does not remove those obligations.
+- One `@use` per partial in `src/main.scss`, in cascade order. No `@import` anywhere in
+  `src/`: it would be hoisted out of the body by bd-scss.
+- `bun` only. One lockfile. `format:check` must pass; formatting changes get their own
+  commit.
+- The deployed URLs are part of the contract: `irc.theme.css` is what users paste into
+  Vencord. Do not rename files without a migration plan.
