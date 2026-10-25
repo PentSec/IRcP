@@ -1,0 +1,18 @@
+// Search
+//
+// The box in the chat header and the suggestions list under it.
+
+/* The box takes an accent edge so it reads as the entry point. */
+#app-mount .searchBar__25bec {
+  border: 1px solid var(--accent);
+}
+
+/* The suggestions list has no surface of its own, so it floats on whatever is behind. */
+#app-mount .container__16eb0 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
