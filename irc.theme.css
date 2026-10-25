@@ -1,0 +1,109 @@
+/**
+ * @name IRcP
+ * @author PentSec
+ * @version 2.0.0-irc.57
+ * @description A Discord theme shaped like a terminal IRC client: monospace log lines, dim metadata, translucent panels.
+ *
+ * This is the entry point: metadata, the imports that pull the layout, and the variables
+ * worth touching. The heavy machinery lives in the imported files.
+ *
+ *   irc/01-status.css     presence rings around avatars
+ *   irc/02-ui.css         app shell: background, sidebars, member list, popouts
+ *   irc/03-fonts.css      Iosevka Term Slab subsets, embedded as base64
+ *   irc/05-messages.css   message rows and the forum post list
+ *   irc/bg.png            background image
+ *
+ * The imports are ABSOLUTE, pointing at this theme's own GitHub Pages deployment. That
+ * makes this single file self-sufficient: someone can download only irc.theme.css and the
+ * layout still loads. The trade-off while developing: edits to the imported files reach
+ * the client only after a push, while edits to this file apply instantly.
+ *
+ * Third-party notices: SoftX (c) 2021 DiscordStyles, RadialStatus (c) 2020 DiscordStyles,
+ * both MIT; Iosevka (c) Renzhi Li, SIL OFL 1.1; Font Awesome icons (c) Fonticons, Inc.,
+ * CC BY 4.0. Full texts in THIRD-PARTY-NOTICES.md.
+ */
+
+@import url("https://jeff.is-a.dev/IRcP/irc/01-status.css");
+@import url("https://jeff.is-a.dev/IRcP/irc/02-ui.css");
+@import url("https://jeff.is-a.dev/IRcP/irc/03-fonts.css");
+@import url("https://jeff.is-a.dev/IRcP/irc/05-messages.css");
+
+/* ============================================================================
+ * 4. User variables
+ *
+ * The theme ships with irc/bg.png (set in 02-ui.css as a stylesheet-relative URL, so it
+ * works locally and online). To point at another image, define --background-image here
+ * with an ABSOLUTE URL: Chromium resolves url() inside a custom property against the
+ * document base (discord.com), not against this file, so a relative path would 404.
+ * ========================================================================== */
+
+/*
+ * Font wiring.
+ *
+ * "gg sans, Noto Sans" shows up as the computed value of --font in Discord, which
+ * means Discord itself owns that variable name and our :root declaration loses to
+ * it (its stylesheets can mount after Vencord's theme style element). So we do NOT
+ * compete for a generic name: the family lives in --irc-font, everything Discord
+ * reads is mapped to it with !important, and the app root gets the family directly.
+ *
+ * --irc-theme: 1 is a marker: if it reads 1, this file parsed and applied.
+ */
+:root {
+  --irc-font: "Iosevka Term Slab NF", ui-monospace, monospace;
+  --irc-line-height: 1.25; /* one line of a terminal: keep nick, timestamp and text on the same baseline */
+  --irc-ts-width: 8ch; /* the clock column. 12-hour clock ("9:45 AM" = 7 chars): 8ch. 24-hour clock ("13:38"): 5ch */
+  --irc-ts-gutter: calc(var(--irc-ts-width) * 0.75 + 1em); /* clock column + two spaces before the "<" */
+  --irc-dim: var(--chat-text-muted, #8b8f96); /* gray for the clock and the < > brackets */
+  --irc-nick: var(--accent); /* nick colour for people with no role colour and no gradient */
+  --irc-nick-glow: 1; /* glow behind nicks, in the nick's own colour. 0 disables it */
+  --irc-nick-glow-size: 6px; /* blur radius of that glow at strength 1 */
+  --irc-role-group-color: var(--accent); /* member-list role headers. Discord does not expose the per-role colour in the DOM, so this is a theme colour, not the role's */
+  --irc-forum-stamp: 3.4em; /* Forum list: width of the right-hand thumbnail column. Its height matches the row, and object-fit: cover fills the box. */
+  --irc-theme: 1;
+
+  --font: var(--irc-font) !important;
+  --font-primary: var(--irc-font) !important;
+  --font-display: var(--irc-font) !important;
+  --font-code: var(--irc-font) !important;
+}
+
+body,
+#app-mount {
+  font-family: var(--irc-font) !important;
+}
+
+:root {
+  /*
+   * App surface
+   */
+  /* --background-image: url("https://example.com/wallpaper.png"); */ /* optional override; must be an absolute URL */
+  --background-blur: 8px; /* Blur intensity of --background-image | Must end in px | Default: 0px */
+  --accent: hsl(164 100% 45%); /* Colour used around the app. | Any valid CSS unit. | Default: hsl(164 100% 45%) */
+  --accent-text: hsl(0 0 0%); /* Colour used on solid or high contrast accent backgrounds. | hsl(0 0 10%) */
+  --glow-intensity: 1; /* Intensity of the glow used around the app. | Set to 0 to disable the glow. | Decimals allowed | Default: 1 */
+  --members-width: 230px; /* Width of the members list. | Default: 280px */
+  --guilds-width: 80px; /* Width of the server list. | Default: 105px */
+  --irc-guilds-zoom: 0.8; /* Scale of the whole server list (nav + icons + spacing). 1 = Discord's size, 0.7 = 30% smaller, 0.5 = half size */
+  --server-icon-size: 40; /* Size of the servers inside the server list. | Default: 46px */
+  --irc-avatar-size: 1.2em; /* avatar box in a message row. 1em keeps it inside the line; anything larger grows the row */
+  --opacity: 0.78; /* Opacity of overall app. | Default: .85 */
+  /*
+   * Presence rings
+   */
+  --irc-status-small-spacing: 2px; /* gap between avatar and ring on small avatars (member list) */
+  --irc-status-medium-spacing: 4px; /* same, medium avatars (popouts) */
+  --irc-status-large-spacing: 4px; /* same, fullscreen profile */
+  --irc-status-small-width: 1.5px; /* ring thickness: small, medium, large */
+  --irc-status-medium-width: 2px;
+  --irc-status-large-width: 2px;
+  --irc-status-avatar-shape: var(--avatar-roundness, 50%); /* shape shared by the ring and the avatar */
+  /* one colour per presence state */
+  --irc-status-online-color: #43b581;
+  --irc-status-idle-color: #faa61a;
+  --irc-status-dnd-color: #f04747;
+  --irc-status-offline-color: #636b75;
+  --irc-status-streaming-color: #643da7;
+  --irc-status-invisible-color: #747f8d;
+  --irc-status-phone-color: var(--irc-status-online-color); /* ring colour while the user is on mobile */
+  --irc-status-phone-visible: block; /* set to none to hide the phone badge */
+}

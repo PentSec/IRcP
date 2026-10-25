@@ -1,0 +1,597 @@
+/* ============================================================================
+ * 5. Message layout: one line per message (IRC)
+ *
+ * Discord ships two densities: "cozy" (2.5rem avatar on its own line, nick above
+ * the text) and "compact" (1em avatar inline, everything on one line). Compact is
+ * the layout we want, so these rules reuse Discord's own compact values, and also
+ * apply them to cozy so the look does not depend on the Appearance > Message
+ * Display setting. Resulting row: [avatar] HH:MM nick text
+ *
+ * Selectors and hash (_c19a55) come from Discord 1.0.166,
+ * assets/738015.5eb905013e1dd7a5.css. Re-check that hash after a Discord update.
+ * ========================================================================== */
+
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 {
+  padding-top: 0;
+  padding-bottom: 0;
+  /* Discord reserves 44px of height per row (2.5rem avatar + 4px) because in cozy the
+   * avatar sits on its own 40px line. Here the avatar is inline and 1em tall, so the
+   * reservation only adds dead space below every one-line message: the row grows to
+   * 44px around 23px of content. Let the content set the height; multi-line messages,
+   * replies and attachments are unaffected because they overflow it anyway. */
+  min-height: 0;
+  line-height: var(--irc-line-height);
+}
+
+/* Discord gives the body line-height: var(--chat-markup-line-height) (22px) while the
+ * header keeps 16px, so the text sits on a taller line box than the nick. Force one
+ * line-height for every inline piece so the whole row shares a baseline. */
+:is(.cozy_c19a55, .compact_c19a55) :is(.header_c19a55, .messageContent_c19a55) {
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+}
+
+/* Terminal log: HH:MM in a fixed left gutter, then avatar, nick and text.
+ *
+ * The timestamp lives inside .header_c19a55 in the DOM, after the avatar, so it cannot
+ * be reordered by selector. It is taken out of the flow and right-aligned in a gutter
+ * instead: making .contents_c19a55 a flex container would also drag replies and embeds
+ * into the row. Gutter width lives in --irc-ts-gutter (section 4). */
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 {
+  position: relative;
+  padding-inline-start: var(--irc-ts-gutter);
+}
+
+:is(.cozy_c19a55, .compact_c19a55) .contents_c19a55 {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  text-indent: 0;
+}
+
+/* Timestamp column.
+ *
+ * Discord renders TWO time nodes per message:
+ *   - .timestamp_c19a55            short, inline, lives in the header (HH:MM)
+ *   - .timestamp_c19a55.alt_c19a55 long variant, absolutely positioned, hover-only
+ * A grouped row (same author, not interrupted) has NO header and NO avatar: only the alt
+ * node survives, so that is what feeds the gutter there. Rows WITH a header hide it as a
+ * duplicate. Position, width and clipping come from the rule below, which already matches
+ * every .timestamp inside the wrapper, whichever variant it is.
+ *
+ * The text is NOT always HH:MM. Discord formats a message from another day with
+ * dateStyle:short + timeStyle:short ("18/10/26, 13:38"), not time-only, and both parts
+ * live in ONE text node inside <time> — no selector can reach the date alone.
+ * So the column is a fixed window anchored to the RIGHT that clips the overflow on the
+ * left: a time-only stamp fits whole, "18/10/26, 13:38" gets its date cut and the clock
+ * lands where it belongs. That is why direction is rtl (overflow goes start-wards) and
+ * why <time> is isolated back to ltr (otherwise the numeric runs get reordered).
+ * With a 12-hour clock the clock is 7 chars ("9:45 AM"): --irc-ts-width is 8ch in
+ * section 4 for exactly that reason, and the gutter follows.
+ */
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
+  position: absolute;
+  inset-inline-start: auto; /* the alt variant sets inset-inline-start: 0, which direction:rtl would read as right:0 */
+  left: 0; /* physical on purpose: direction:rtl below would flip inset-inline-start */
+  top: 0;
+  width: var(--irc-ts-width, 8ch); /* exactly the clock: the rest of the gutter is the gap */
+  height: auto; /* Discord's 1.25rem would clip the line box once overflow is hidden */
+  overflow: hidden;
+  margin-inline-start: 0; /* Discord's .timestampInline adds .25rem; the gutter already spaces it */
+  direction: rtl;
+  text-align: start;
+  font-size: 0.75em;
+  line-height: calc(var(--irc-line-height) / 0.75);
+  white-space: nowrap;
+  color: var(--irc-dim);
+  opacity: 0.75;
+}
+
+:is(.cozy_c19a55, .compact_c19a55) .timestamp_c19a55 time {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* <nick> brackets in the same gray as the clock. The opening one hangs off .contents
+ * (the avatar is an <img>, replaced elements cannot have pseudo-elements) and the closing
+ * one off the header, so the pair wraps avatar + nick + badges: HH:MM <avatar nick> text
+ * Gated on :has(.header_c19a55): a grouped row has no header and no avatar, so a bracket
+ * would hang there with nothing to wrap. */
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:has(.header_c19a55) .contents_c19a55::before {
+  content: "<";
+  color: var(--irc-dim);
+  opacity: 0.75;
+  margin-inline-end: 0.15em;
+}
+
+:is(.cozy_c19a55, .compact_c19a55) .header_c19a55::after {
+  content: ">";
+  color: var(--irc-dim);
+  opacity: 0.75;
+  margin-inline: 0 0.35em;
+}
+
+/* With a reply the first line is the quoted message, so the opening bracket would hang
+ * off it instead of the avatar. Move it to the header for those rows. */
+:is(.cozy_c19a55, .compact_c19a55):has(.repliedMessage_c19a55) .contents_c19a55::before {
+  content: none;
+}
+
+:is(.cozy_c19a55, .compact_c19a55):has(.repliedMessage_c19a55) .header_c19a55::before {
+  content: "<";
+  color: var(--irc-dim);
+  opacity: 0.75;
+  margin-inline-end: 0.15em;
+}
+
+/* Hide the duplicate clock only where a header exists (the inline node already feeds the
+ * gutter). Grouped rows keep theirs, but only on hover: in a run, the clock is noise.
+ * Direct children of .header/.contents only: the "(edited)" marker is ALSO a
+ * .timestamp_c19a55, but it lives inside .messageContent_c19a55 and must stay in the text
+ * flow — matching it dragged it into the gutter, on top of the real clock. */
+:is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55) :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55.alt_c19a55,
+:is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55) :is(.header_c19a55, .contents_c19a55) > .timestampVisibleOnHover_c19a55 {
+  display: none;
+}
+
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)):hover :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
+  opacity: 0.75;
+}
+
+/* A run of messages from the same author has no header, so nothing says "same person".
+ * Draw it as a tree instead: .contents::before already holds the "<" of the nick, and the
+ * two selectors are mutually exclusive (one needs a header, the other forbids it).
+ * transform: scaleY(--irc-line-height) makes the glyph fill the whole row, otherwise a
+ * 1em bar inside a 1.25em line leaves a 4px gap between rows and the spine looks dashed.
+ *
+ * BASELINE IS "└": any headerless row is the end of its run until proven otherwise.
+ * Only the row whose NEXT <li> is not a groupStart becomes "│". That needs :has() with a
+ * relative selector, and :has() cannot be nested inside :has() (Chromium drops the whole
+ * rule, not just the inner part), so the next row is identified by its groupStart class
+ * instead of :not(:has(.header)) — the class prefix survives hash changes.
+ */
+:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
+  content: "└";
+  display: inline-block;
+  color: var(--irc-dim);
+  opacity: 0.75;
+  margin-inline-end: 0.35em;
+  transform: scaleY(var(--irc-line-height, 1.25));
+  transform-origin: center;
+}
+
+li:has(+ li > .wrapper_c19a55:not([class*=groupStart])) > .wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
+  content: "│";
+}
+
+/* No connector curves: the reply spine is absolutely positioned off the old avatar gutter
+ * and lands on top of the timestamp column once the avatar is inline. A terminal does not
+ * draw them; the "replying to" line above the message stays. */
+:is(.cozy_c19a55, .compact_c19a55) :is(.repliedMessageClickableSpine_c19a55, .messageSpine_c19a55),
+:is(.cozy_c19a55, .compact_c19a55) :is(.repliedMessageClickableSpine_c19a55, .messageSpine_c19a55)::before {
+  display: none;
+}
+
+/* Reply marker.
+ * ⤹ (U+2939, Supplemental Arrows-B) is what the user picked. Heads up: Iosevka does NOT
+ * ship this block — the TTF has no glyph for it (it stops at U+21FF), so this one glyph
+ * comes from the system's symbol fallback (Noto Sans Symbols / DejaVu). That is why it may
+ * read bigger than the ↶ that came from the embedded face.
+ * It sits in the same column as "<" and the run tree (│ └) so the three markers line up.
+ * The whole quote is dimmed: it is context, not another message. One opacity on the block
+ * keeps avatar, nick, clan tag and preview at the same level. */
+:is(.cozy_c19a55, .compact_c19a55) .repliedMessage_c19a55 {
+  opacity: 0.6;
+}
+
+:is(.cozy_c19a55, .compact_c19a55) .repliedMessage_c19a55::before {
+  content: "⤹";
+  flex: 0 0 auto;
+  color: var(--irc-dim);
+  margin-inline-end: 0.35em;
+}
+
+/* avatar exactly one line tall, inline before the nick */
+:is(.cozy_c19a55, .compact_c19a55) .avatar_c19a55 {
+  height: var(--irc-avatar-size, 1em);
+  width: var(--irc-avatar-size, 1em);
+  position: relative;
+  inset-inline-start: 0;
+  top: 0.18em;
+  margin: 0 0.4em 0 0;
+}
+
+/* nick, timestamp and body on the same line.
+ * position: static matters: Discord's cozy header is position: relative, which makes it
+ * the containing block of the absolutely positioned timestamp (it would sit after the
+ * avatar instead of in the gutter).
+ * !important because Discord re-declares position: relative on the same header with
+ * HIGHER specificity whenever the message has extras: .gradient_c19a55 (display name
+ * styles / gradient), .zalgo_c19a55, .withDisplayNameStyles_c19a55. Those arrive as
+ * (0,3,0) and (0,5,0) selectors and beat this (0,2,0) rule, so the clock abandoned the
+ * gutter and, with the inline header split over two lines by a clan tag, landed under
+ * the nick. */
+:is(.cozy_c19a55, .compact_c19a55) .header_c19a55 {
+  display: inline;
+  min-height: 0;
+  line-height: inherit;
+  white-space: normal;
+  position: static !important;
+}
+
+:is(.cozy_c19a55, .compact_c19a55) .messageContent_c19a55 {
+  display: inline;
+}
+
+/* Nick legibility. Discord sets the nick at font-weight-medium and --text-strong is
+ * almost the same grey as --text-default, so on a monospace line the nick disappears into
+ * the body text. Bold gives the hierarchy back without touching colour, and the embedded
+ * Iosevka Bold is a real face, so nothing shifts. */
+:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55 {
+  font-weight: 700;
+}
+
+/* Nicks with no role colour and no gradient also get the accent.
+ * Role colours arrive as an INLINE style (Discord writes style="color: rgb(...)"), and an
+ * inline style beats any rule without !important, so no colour here can override a role.
+ * Gradients are the opposite: they paint with background-clip and would be flattened by a
+ * solid colour, hence the explicit exclusions (data attribute, gradient classes, and any
+ * inline colour at all). Limit it to the header so quoted nicks stay quiet. */
+:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55:not([style*=color]):not([data-username-has-gradient]):not([class*=Gradient]) {
+  color: var(--irc-nick, var(--accent));
+}
+
+/* Nick glow. text-shadow paints behind the glyphs, so it reads as a halo in the nick's
+ * own colour; an inline role colour reaches it through currentColor. Gradient nicks are
+ * excluded: Discord already draws a blurred duplicate (nameGlow__703b9) for those, and
+ * stacking our shadow on top makes them bloom. Strength and radius live in the entry
+ * file as --irc-nick-glow / --irc-nick-glow-size. */
+:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55:not([class*=Gradient]):not([data-username-has-gradient]) {
+  text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
+}
+
+/* cozy fallback: the 4.5rem avatar gutter is not needed, the timestamp owns the gutter.
+ * position: static on .contents_c19a55 in BOTH densities (compact sets relative too),
+ * otherwise it becomes the containing block of the absolute timestamp. */
+:is(.cozy_c19a55, .compact_c19a55) .contents_c19a55 {
+  position: static;
+}
+
+.cozy_c19a55 .messageContent_c19a55 {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.cozy_c19a55 .timestampVisibleOnHover_c19a55 {
+  opacity: 1;
+}
+
+/* The old chat-bubble experiment is neutralised: a bubble adds 10px/14px of padding and
+ * switches the body to inline-block, which is exactly what breaks the one-line layout if
+ * the rule ever matches again. */
+:root {
+  --chat-bubble-padding: 0;
+  --chat-bubble-display: inline;
+  --chat-bubble-bg: transparent;
+}
+
+/* avatar decorations break the one-line rhythm */
+.avatarDecoration_c19a55 {
+  display: none !important;
+}
+
+/* ============================================================================
+ * 6. Forum posts as log lines
+ *
+ * A forum post is not a message row: it ships as a card (.mainCard_f369db) that
+ * stacks title, author, preview, media and footer vertically. Here the card is
+ * dropped and the post becomes one log line, same rhythm as section 5:
+ *
+ *   [pin] <title>  <nick>: preview                  [img] react [31] 7h
+ *
+ * Structure, from the live client:
+ *   .container_faa96b  [ .focusTarget, .left_faa96b, footer wrapper, media wrapper ]
+ *   .body_faa96b       [ .tags__08166, .header_faa96b, .message_faa96b ]
+ *
+ * Grid, not flex: with three columns the footer keeps the same right edge whether
+ * or not the post has media, so "31" and the time line up down the whole list.
+ * Hash _faa96b is the post module; re-check it after a Discord update.
+ * ========================================================================== */
+
+/* Card chrome: no box, no gap, no border. The log line is the unit. */
+#app-mount li.card_f369db {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+#app-mount .container_faa96b {
+  display: grid;
+  /* text | metadata | thumbnail. The LAST track is a fixed width on purpose: the
+   * thumbnail keeps one x position down the whole list instead of riding on the
+   * variable width of the footer (one row has "👍3 [3] 38m ago", the next only
+   * "7h ago"). The footer sits in the middle track, right-aligned, so its right
+   * edge is fixed too and the counters line up. */
+  grid-template-columns: minmax(0, 1fr) auto var(--irc-forum-stamp, 3.4em);
+  align-items: baseline;
+  gap: 0 1em;
+  min-height: 0;
+  /* Same line rhythm as a message row (section 4). This is also the height of the
+   * thumbnail stamp: a taller stamp would set the row height and, being centred,
+   * poke above the preview text instead of sitting inside the line. */
+  line-height: var(--irc-line-height, 1.25);
+  padding: var(--irc-forum-row-pad, 2px) var(--space-xs);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+/* Where one post ends and the next begins. Message rows are delimited by the clock
+ * gutter (section 5); a forum row has no clock, so it gets a hairline instead.
+ * --fg-secondary is 4.5% white: visible on the dark surface, invisible as "chrome". */
+#app-mount li.card_f369db + li.card_f369db {
+  border-top: 1px solid var(--fg-secondary);
+}
+
+#app-mount .container_faa96b:hover {
+  background: var(--background-message-hover);
+}
+
+/* .left_faa96b is the wrapper around BOTH the body and the footer, so the footer was
+ * never a grid item: it stayed stacked under the preview and the third column measured
+ * 0px. display: contents drops the wrapper's box and lets its children join the grid
+ * above, which puts the footer back on the line, at the shared right edge. */
+#app-mount .left_faa96b {
+  display: contents;
+}
+
+/* Click overlay: keep it out of the grid flow even if Discord ever ships it static. */
+#app-mount .container_faa96b > .focusTarget_faa96b {
+  grid-area: 1 / 1;
+}
+
+/* Footer and media are placed in fixed tracks. grid-row is explicit so the row can never
+ * split in two; the media is also listed through .left_faa96b for builds that nest the
+ * wrapper there (the DOM has moved between builds). */
+#app-mount .container_faa96b > div:has(> .footer_faa96b),
+#app-mount .left_faa96b > div:has(> .footer_faa96b) {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  position: static;
+}
+
+#app-mount .container_faa96b > div:has(> .bodyMedia_faa96b),
+#app-mount .left_faa96b > div:has(> .bodyMedia_faa96b) {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  /* Stretch, and bleed into the card's 2px vertical padding, so the stamp is exactly
+   * as tall as the row instead of floating inside it. Percentage heights contribute
+   * nothing to the row's intrinsic size, so the text still sets the height. */
+  align-self: stretch;
+  margin-block: calc(var(--irc-forum-row-pad, 2px) * -1);
+  position: static;
+}
+
+#app-mount .body_faa96b {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.75em;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pinned marker: a dim flag in front of the title, not a tag row above it. */
+#app-mount .tags__08166 {
+  flex: 0 0 auto;
+  color: var(--irc-dim);
+  opacity: 0.8;
+}
+#app-mount .tags__08166 svg {
+  width: 12px;
+  height: 12px;
+}
+#app-mount .tags__08166 path {
+  fill: currentColor;
+}
+
+#app-mount .header_faa96b {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 55%; /* the title is a topic, not the whole line */
+}
+#app-mount .headerText_faa96b {
+  min-width: 0;
+}
+
+/* One line, always. Discord clamps the title with an INLINE
+ * -webkit-line-clamp: 2, so the override needs !important (important beats
+ * inline, a plain rule does not). heading-lg drops to the log rhythm.
+ * Colour is left alone: Discord sets --text-strong on unread posts and
+ * --text-muted on read ones with an inline style, and that state is useful. */
+#app-mount .postTitleText_faa96b {
+  font-size: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  -webkit-line-clamp: 1 !important;
+}
+
+#app-mount .message_faa96b {
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.35em;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+#app-mount .message_faa96b .author_d3eee8 {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  line-height: inherit;
+}
+
+/* Same <nick> brackets as a message row (section 5). The ": " after the name is
+ * Discord's own text node, so the line reads "<nick>: preview", as in IRC. */
+#app-mount .message_faa96b .author_d3eee8 a::before {
+  content: "<";
+  color: var(--irc-dim);
+  opacity: 0.75;
+}
+#app-mount .message_faa96b .author_d3eee8 a::after {
+  content: ">";
+  color: var(--irc-dim);
+  opacity: 0.75;
+}
+
+/* Forum nicks get the same halo as message nicks (--irc-nick-glow in the entry file);
+ * gradients are skipped for the same reason: they already carry their own glow copy. */
+#app-mount .message_faa96b .author_d3eee8 .username__703b9:not([class*=Gradient]):not([data-username-has-gradient]) {
+  text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
+}
+
+#app-mount .messageFocusBlock_faa96b {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+#app-mount .messageFocusBlock_faa96b > div {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  /* Discord's text-* utilities carry their own line-height; without this the preview
+   * line is shorter than the thumbnail and the stamp pokes above it again. */
+  line-height: inherit;
+  /* an inline --text-default / --text-muted would beat an inherited colour */
+  color: var(--irc-dim) !important;
+}
+
+/* The preview is clamped with -webkit-line-clamp, the same mechanism Discord uses for
+ * the title, instead of white-space: nowrap. Reason: `.markup__75297` ships
+ * `white-space: break-spaces`, so the preview was wrapping into several lines (measured:
+ * scrollWidth == clientWidth, i.e. no horizontal overflow at all), the row grew tall and
+ * the text ended where it should not. line-clamp limits the number of line boxes and
+ * draws the ellipsis itself, no matter what white-space resolves to. min-width/max-width
+ * keep the box at the width left by the metadata column, which is where "..." appears. */
+#app-mount .messageContent_faa96b {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* "(edited)" is noise here: the footer already carries the relative time. */
+#app-mount .messageContent_faa96b .timestamp_c19a55 {
+  display: none;
+}
+
+/* Thumbnail: a right-hand stamp as tall as the row, one per post. The width is
+ * --irc-forum-stamp and the height comes from the row (stretch + the negative margin
+ * above), so the text block always ends before it, with the grid gap as the margin.
+ * object-fit: cover fills the box; at this size the alternative is a letterboxed
+ * sliver, which reads worse than a crop. object-position can be moved to top center
+ * if the interesting part of a screenshot is its header.
+ *
+ * Discord nests five boxes around every image (thumbnailContainer/imageContent >
+ * imageContainer > imageWrapper > clickableWrapper > loadingOverlay > img) and writes
+ * a px width/height inline on BOTH the wrapper and the img. The four inner boxes are
+ * flattened with display: contents so the .imageWrapper is the only box between the
+ * media row and the bitmap, and !important is what beats the inline sizes. */
+#app-mount .bodyMedia_faa96b {
+  display: flex;
+  align-items: center;
+  position: static;
+  width: var(--irc-forum-stamp, 3.4em);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* extra images clip instead of widening the track */
+}
+#app-mount .bodyMedia_faa96b :is(.thumbnailContainer_faa96b, .imageContent__0f481, .imageContainer__0f481, .clickableWrapper_af017a, .loadingOverlay_af017a) {
+  display: contents;
+}
+#app-mount .bodyMedia_faa96b .imageWrapper_af017a {
+  flex: 0 0 auto;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 2px;
+  overflow: hidden;
+}
+#app-mount .bodyMedia_faa96b img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Footer: dim, small, one row, right edge shared by every post. */
+#app-mount .footer_faa96b {
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.75em;
+  position: static;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85em;
+  color: var(--irc-dim);
+  opacity: 0.9;
+}
+#app-mount .footer_faa96b > div[data-text-variant] {
+  color: var(--irc-dim) !important;
+  white-space: nowrap;
+}
+#app-mount .footer_faa96b .bullet_faa96b {
+  display: none;
+}
+
+/* Reactions as plain "emoji count", no chips. */
+#app-mount .footer_faa96b .reaction_f8896c,
+#app-mount .footer_faa96b .reactionInner_f8896c {
+  background: transparent;
+  border: none;
+  min-width: 0;
+  padding: 0;
+  gap: 0.15em;
+}
+#app-mount .footer_faa96b .emoji {
+  width: 1em;
+  height: 1em;
+  margin: 0;
+}
+
+/* Message counter as [31]. */
+#app-mount .messageCountIcon_faa96b {
+  display: none;
+}
+#app-mount .messageCountBox_faa96b {
+  gap: 0;
+  color: var(--irc-dim);
+  white-space: nowrap;
+}
+#app-mount .messageCountText_faa96b::before { content: "["; }
+#app-mount .messageCountText_faa96b::after { content: "]"; }
+
+/* "new" pill -> dim word. */
+#app-mount .newBadge_faa96b {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--irc-dim);
+  font-weight: 400;
+}
+
