@@ -1,0 +1,9 @@
+/* Menus ship an opaque surface and shadow of their own, which hides the theme.
+ * Replaced here, on the wrapper, so every menu follows the panels. */
+#app-mount .menu_c1e9c4 {
+  background: var(--bg-primary);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(var(--foreground-blur));
+  backdrop-filter: blur(var(--foreground-blur));
+}

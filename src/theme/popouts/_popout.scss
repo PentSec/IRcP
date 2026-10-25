@@ -25,3 +25,18 @@
   border-color: var(--fg-border);
   padding: var(--space-sm);
 }
+
+/* Hover popouts paint an opaque surface one level down, so the panel goes on both boxes
+ * and the radius is explicit, or the accent border would run square. */
+#app-mount .popout_af3b89 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md, 8px);
+}
+
+/* The dialog's surface is painted by its content sections; every one of them stays
+ * transparent so the panel above shows through, top and bottom. */
+#app-mount .popout_af3b89 [class*='popoutContent'],
+#app-mount .popout_af3b89 .interactionsContainer_af3b89 {
+  background: transparent;
+}

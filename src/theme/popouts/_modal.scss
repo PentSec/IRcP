@@ -1,0 +1,54 @@
+/* Settings and other full modals paint an opaque surface; replaced with the panel and
+ * an accent edge. */
+#app-mount .container__8a031 {
+  background: var(--bg-primary);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Layout wrappers stay transparent so the frame shows through in the sidebar. */
+#app-mount .container__8a031 .modalContent_e44912,
+#app-mount .container__8a031 .modalContentInner_e44912,
+#app-mount .container__8a031 .container_abd9a8,
+#app-mount .container__8a031 .sidebar__409aa,
+#app-mount .container__8a031 .contentBody_e9e3ed {
+  background: transparent;
+}
+
+/* Frosted separation from the content column. */
+#app-mount .container__8a031 .sidebar__409aa {
+  backdrop-filter: blur(8px);
+}
+
+/* The content stacks a second panel, so it reads denser than the sidebar. */
+#app-mount .container__8a031 .content_e9e3ed {
+  background: var(--bg-secondary);
+}
+
+/* The header is its own bar. */
+#app-mount .container__8a031 .contentHeader_e9e3ed {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+}
+
+/* The active settings entry carries the same signal as a selected channel: tint, pill
+ * and accent text. */
+#app-mount .item_caf372.active_caf372,
+#app-mount .item_e4d939.active_e4d939 {
+  position: relative;
+  background: hsl(from var(--accent) h s l/0.1);
+  color: var(--accent);
+}
+
+#app-mount .item_caf372.active_caf372::before,
+#app-mount .item_e4d939.active_e4d939::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--channel-pill-width);
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 calc(var(--channel-glow-intensity) * 15px) calc(var(--channel-glow-intensity) * 5px)
+    hsl(from var(--accent) h s l/0.2);
+}
