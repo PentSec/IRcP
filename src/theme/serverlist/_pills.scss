@@ -1,9 +1,5 @@
-// Unread pill
-//
-// The pill left of a server. Discord draws it as a stack of spans whose inline height
-// encodes the unread state, so each height gets a matching thumb. Forty-one rules, three
-// buckets: 0-8 unread, 9-20 hovered, 21-40 selected (at full scale). Written as three
-// @for loops because the rules differ only in that number.
+// Discord encodes the unread state in the inline height of a stack of spans:
+// 0-8 unread, 9-20 hovered, 21-40 selected.
 
 #app-mount .listItem__650eb [class*='pill'] {
   --__ring-size: calc(

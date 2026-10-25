@@ -1,7 +1,3 @@
-// Forum title
-//
-// One line, always: the title is clamped, never wrapped.
-
 #app-mount .header_faa96b {
   flex: 0 1 auto;
   min-width: 0;
@@ -12,11 +8,8 @@
   min-width: 0;
 }
 
-/* One line, always. Discord clamps the title with an INLINE
- * -webkit-line-clamp: 2, so the override needs !important (important beats
- * inline, a plain rule does not). heading-lg drops to the log rhythm.
- * Colour is left alone: Discord sets --text-strong on unread posts and
- * --text-muted on read ones with an inline style, and that state is useful. */
+/* !important because Discord clamps with an inline line-clamp. Colour is left alone:
+ * it carries the unread state. */
 #app-mount .postTitleText_faa96b {
   font-size: inherit;
   font-weight: 700;

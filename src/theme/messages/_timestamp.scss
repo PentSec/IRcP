@@ -1,29 +1,5 @@
-// Clock gutter
-//
-// The timestamp is absolutely positioned into a fixed-width left gutter, anchored to
-// the right and clipped on the left: Discord writes "Yesterday at 13:38" for older
-// messages, and the column must not widen. Width lives in --irc-ts-width.
-
-/* Timestamp column.
- *
- * Discord renders TWO time nodes per message:
- *   - .timestamp_c19a55            short, inline, lives in the header (HH:MM)
- *   - .timestamp_c19a55.alt_c19a55 long variant, absolutely positioned, hover-only
- * A grouped row (same author, not interrupted) has NO header and NO avatar: only the alt
- * node survives, so that is what feeds the gutter there. Rows WITH a header hide it as a
- * duplicate. Position, width and clipping come from the rule below, which already matches
- * every .timestamp inside the wrapper, whichever variant it is.
- *
- * The text is NOT always HH:MM. Discord formats a message from another day with
- * dateStyle:short + timeStyle:short ("18/10/26, 13:38"), not time-only, and both parts
- * live in ONE text node inside <time> — no selector can reach the date alone.
- * So the column is a fixed window anchored to the RIGHT that clips the overflow on the
- * left: a time-only stamp fits whole, "18/10/26, 13:38" gets its date cut and the clock
- * lands where it belongs. That is why direction is rtl (overflow goes start-wards) and
- * why <time> is isolated back to ltr (otherwise the numeric runs get reordered).
- * With a 12-hour clock the clock is 7 chars ("9:45 AM"): --irc-ts-width is 8ch in
- * section 4 for exactly that reason, and the gutter follows.
- */
+/* A fixed window anchored right and clipped left: older messages carry "18/10/26, 13:38"
+ * in one text node, so the date is cut instead of widening the column. Width: --irc-ts-width. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
   position: absolute;
   inset-inline-start: auto; /* the alt variant sets inset-inline-start: 0, which direction:rtl would read as right:0 */
@@ -47,11 +23,8 @@
   unicode-bidi: isolate;
 }
 
-/* <nick> brackets in the same gray as the clock. The opening one hangs off .contents
- * (the avatar is an <img>, replaced elements cannot have pseudo-elements) and the closing
- * one off the header, so the pair wraps avatar + nick + badges: HH:MM <avatar nick> text
- * Gated on :has(.header_c19a55): a grouped row has no header and no avatar, so a bracket
- * would hang there with nothing to wrap. */
+/* Brackets hang off .contents and the header (an <img> takes no pseudo-element) so they wrap
+ * avatar and nick; gated on :has(.header), since a grouped row has neither. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:has(.header_c19a55) .contents_c19a55::before {
   content: '<';
   color: var(--irc-dim);

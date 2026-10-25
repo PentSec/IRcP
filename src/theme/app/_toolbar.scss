@@ -1,12 +1,5 @@
-// Toolbar icons
-//
-// Discord glyphs are hidden and redrawn as masks, in Tabler outline style.
-
-/* Chat toolbar icons. Discord's glyphs are hidden and redrawn as a mask: the shape comes
- * from the SVG, the colour stays a CSS value. White with a white halo by default; on
- * hover and while active (selected) they switch to the accent and its halo. Scoped to
- * .toolbar__9293f and matched by aria-label because the buttons carry no stable per-icon
- * class; if the client language changes, those labels change with it. */
+/* Discord glyphs are hidden and redrawn as masks. Matched by aria-label: the buttons
+ * carry no stable per-icon class. */
 #app-mount .toolbar__9293f .iconWrapper__9293f[aria-label='Threads'] {
   --irc-toolbar-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdibGFjaycgc3Ryb2tlLXdpZHRoPScxJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxwYXRoIGQ9J00zIDIxYy0uNjY3LS42NjcgMy4yNjItNi4yMzYgMTEuNzg1LTE2LjcwOWEzLjUgMy41IDAgMSAxIDUuMDc4IDQuNzkxYy0xMC41NzUgOC42MTItMTYuMTk2IDEyLjU4NS0xNi44NjMgMTEuOTE4Jy8+PHBhdGggZD0nTTE3LjUgNi41bC0xIDEnLz48cGF0aCBkPSdNMTcgN2MtMi4zMzMtMi42NjctMy41LTQtNS00cy0yIDEtMiAyYzAgNCA4LjE2MSA4LjQwNiA2IDExLTEuMDU2IDEuMjY4LTMuMzYzIDEuMjg1LTUuNzUuODA4Jy8+PHBhdGggZD0nTTUuNzM5IDE1LjQyNWMtMS4zOTMtLjU2NS0zLjczOS0xLjkyNS0zLjczOS0zLjQyNScvPjxwYXRoIGQ9J00xOS41IDkuNWwxLjUgMS41Jy8+PC9zdmc+');
 }
@@ -59,8 +52,7 @@
   mask: var(--irc-toolbar-icon) center / contain no-repeat;
 }
 
-/* Hover and active switch the glyph and its halo to the accent. The background and the
- * shadow have to be set together: the shadow is what reads as "on" here. */
+/* Glyph and halo switch to the accent; the shadow is what reads as "on". */
 #app-mount
   .toolbar__9293f
   .iconWrapper__9293f:is(

@@ -1,22 +1,13 @@
-// Role groups
-//
-// The role-group headers. Discord does not expose the per-role colour in the DOM, so
-// the colour is a theme variable (--irc-role-group-color), not the role's own.
+// Role-group headers. The colour is --irc-role-group-color, not the role's own.
 
-/* Role-group headers in the member list: bold, coloured, with the same halo as nicknames.
- * Discord itself does not expose the per-role colour here, so the fallback colour is the
- * --irc-role-group-color variable. Vencord's RoleColorEverywhere plugin writes an inline
- * style on this same <h2>; inline beats this rule, so enabling that plugin replaces the
- * fallback with the member's real role colour and the glow follows through currentColor.
- * The colour is set on the <h2>, never on the name span: an explicit colour there would
- * override the inherited one and block the plugin. */
+/* Set on the <h2> so RoleColorEverywhere's inline style beats it and currentColor follows;
+ * colouring the name span would block that. */
 #app-mount .membersGroup_c8ffbb {
   color: var(--irc-role-group-color, var(--accent));
 }
 
 #app-mount .membersGroupName_c8ffbb {
-  /* Discord ships overflow: hidden on this span (a blockified flex item), which clips
-   * text-shadow at the padding edge and cuts the halo off. Visible lets the glow breathe. */
+  /* overflow: hidden clips the halo, so it is released. */
   overflow: visible;
   font-weight: 700;
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;

@@ -1,16 +1,5 @@
-/* ============================================================================
- * 4. User variables
- *
- * This file is the only one worth editing for personal setup. Everything else under
- * src/ is layout. It compiles into irc.theme.css, the file the client loads, so a
- * theme toggle re-reads it; the body (irc.css) is a separate request.
- *
- * The background ships as src/assets/bg.png and is published next to the theme, so the
- * default in _ui.scss is a relative url('bg.png') that resolves beside the stylesheet.
- * This is the one place where a relative path would NOT work: Chromium resolves url()
- * inside a custom property against the document base (discord.com), not against the
- * stylesheet. If you set --background-image here, use an absolute URL.
- * ========================================================================== */
+/* User variables. Everything else under src/ is layout.
+ * An override of --background-image must be absolute: url() in a custom property resolves against discord.com. */
 
 :root {
   --irc-font: 'Iosevka Term Slab NF', ui-monospace, monospace;
@@ -23,30 +12,26 @@
   --irc-nick-glow-size: 6px; /* blur radius of that glow at strength 1 */
   --irc-role-group-color: var(
     --accent
-  ); /* member-list role headers. Discord does not expose the per-role colour in the DOM, so this is a theme colour, not the role's */
-  --irc-forum-stamp: 3.4em; /* Forum list: width of the right-hand thumbnail column. Its height matches the row, and object-fit: cover fills the box. */
+  ); /* Role headers: Discord does not expose the role colour, so this is a theme colour */
+  --irc-forum-stamp: 3.4em; /* Forum list: thumbnail column width; the image covers the box */
   --irc-forum-row-pad: 2px; /* Forum list: vertical padding of a log row. 0 makes rows touch each other */
   --irc-status-members-width: 30px; /* member-list avatar box the presence ring is drawn around */
   --irc-status-self-speaking-colour: #57d39b; /* ring colour while your own voice is transmitting */
   --irc-theme: 1; /* marker: if the computed value reads 1, this file parsed and applied */
 
-  /*
-   * App surface
-   */
+  /* App surface */
   /* --background-image: url("https://example.com/wallpaper.png"); */ /* optional override; must be an absolute URL */
   --background-blur: 8px; /* Blur intensity of --background-image | Must end in px | Default: 0px */
   --accent: hsl(164 100% 45%); /* Colour used around the app. | Any valid CSS unit. | Default: hsl(164 100% 45%) */
   --accent-text: hsl(0 0 0%); /* Colour used on solid or high contrast accent backgrounds. | hsl(0 0 10%) */
-  --glow-intensity: 1; /* Intensity of the glow used around the app. | Set to 0 to disable the glow. | Decimals allowed | Default: 1 */
+  --glow-intensity: 1; /* Glow intensity around the app; 0 disables it. Default: 1 */
   --members-width: 230px; /* Width of the members list. | Default: 280px */
   --guilds-width: 80px; /* Width of the server list. | Default: 105px */
-  --irc-guilds-zoom: 0.8; /* Scale of the whole server list (nav + icons + spacing). 1 = Discord's size, 0.7 = 30% smaller, 0.5 = half size */
+  --irc-guilds-zoom: 0.8; /* Scale of the whole server list. 1 = Discord's size, 0.5 = half */
   --server-icon-size: 40; /* Size of the servers inside the server list. | Default: 46px */
   --irc-avatar-size: 1.2em; /* avatar box in a message row. 1em keeps it inside the line; anything larger grows the row */
   --opacity: 0.78; /* Opacity of overall app. | Default: .85 */
-  /*
-   * Presence rings
-   */
+  /* Presence rings */
   --irc-status-small-spacing: 2px; /* gap between avatar and ring on small avatars (member list) */
   --irc-status-medium-spacing: 4px; /* same, medium avatars (popouts) */
   --irc-status-large-spacing: 4px; /* same, fullscreen profile */
@@ -54,7 +39,6 @@
   --irc-status-medium-width: 2px;
   --irc-status-large-width: 2px;
   --irc-status-avatar-shape: var(--avatar-roundness, 50%); /* shape shared by the ring and the avatar */
-  /* one colour per presence state */
   --irc-status-online-color: #43b581;
   --irc-status-idle-color: #faa61a;
   --irc-status-dnd-color: #f04747;

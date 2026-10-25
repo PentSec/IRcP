@@ -1,6 +1,4 @@
-// Phone badge
-//
-// The mobile badge is a mask; its visibility is --irc-status-phone-visible.
+// The badge is a mask; --irc-status-phone-visible switches it.
 
 #app-mount .wrapper__44b0c foreignObject[mask*='mobile'] {
   property: inherit;

@@ -1,6 +1,4 @@
-// Ring sizes
-//
-// Per avatar size: the rect and the image offsets. Discord encodes the size in an inline style.
+// Discord encodes the size in an inline style, so each size needs its own offsets.
 
 #app-mount .wrapper__44b0c rect[x='16'] {
   width: 24px;

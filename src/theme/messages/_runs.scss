@@ -1,8 +1,3 @@
-// Grouped runs
-//
-// A run of messages from the same author has no header, so nothing says "same
-// person". Drawn as a tree: └ closes a run, │ continues it.
-
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55))
   :is(.header_c19a55, .contents_c19a55)
   > .timestamp_c19a55 {
@@ -16,18 +11,8 @@
   opacity: 0.75;
 }
 
-/* A run of messages from the same author has no header, so nothing says "same person".
- * Draw it as a tree instead: .contents::before already holds the "<" of the nick, and the
- * two selectors are mutually exclusive (one needs a header, the other forbids it).
- * transform: scaleY(--irc-line-height) makes the glyph fill the whole row, otherwise a
- * 1em bar inside a 1.25em line leaves a 4px gap between rows and the spine looks dashed.
- *
- * BASELINE IS "└": any headerless row is the end of its run until proven otherwise.
- * Only the row whose NEXT <li> is not a groupStart becomes "│". That needs :has() with a
- * relative selector, and :has() cannot be nested inside :has() (Chromium drops the whole
- * rule, not just the inner part), so the next row is identified by its groupStart class
- * instead of :not(:has(.header)) — the class prefix survives hash changes.
- */
+/* A headerless row is drawn as an end (└); it becomes │ only when the next row is not a
+ * groupStart, because :has() cannot be nested and the class prefix survives hash changes. */
 :is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
   content: '└';
   display: inline-block;

@@ -1,11 +1,5 @@
-/* ============================================================================
- * Sidebar container
- *
- * Channel sidebar, its scroller, the private-channel list and the Friends view that shares it.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Channel sidebar, its scroller, the private-channel list and the Friends view.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 
 #app-mount .sidebar__5e434 {
   border-radius: 0;
@@ -44,11 +38,8 @@
   display: none;
 }
 
-/* Friends / "Online" tab. It is not the chat area: Discord paints three opaque layers
- * that the theme never targeted, so the tab ignored the skin. main.container__133bf only
- * needs its frame border removed; the surface is tabBody__133bf, which wraps BOTH
- * columns and paints --background-base-lower. The header section is a separate bar.
- * Painting main as well would stack two translucent layers and make the panel opaque. */
+/* The Friends tab paints opaque layers the theme never targeted; only the frame and the
+ * tabBody surface are replaced, or the whole panel turns opaque. */
 #app-mount .container__133bf {
   background: transparent;
   border: none;
@@ -67,10 +58,8 @@
   background: var(--bg-primary);
 }
 
-/* The Active Now cards paint their own opaque surfaces: --background-base-low for the
- * card and --background-mod-muted for its header, plus a --border-subtle outline. Swap
- * them for the theme's translucent overlay and hairline so the card reads as part of the
- * panel instead of a Discord block. The quest card uses the same wrapper classes. */
+/* Active Now cards paint their own opaque surfaces; swapped for the translucent overlay so
+ * they read as part of the panel. */
 #app-mount .refresh-active-now .wrapper__00943 {
   background: var(--fg-primary);
   border-color: var(--fg-border);

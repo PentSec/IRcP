@@ -1,11 +1,5 @@
-/* ============================================================================
- * Server items
- *
- * The item box: spacing and the inline-style spacer between groups.
- *
- * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT.
- * See THIRD-PARTY-NOTICES.md for the license text.
- * ========================================================================== */
+/* Item box: spacing and the inline-style spacer between groups.
+ * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 
 #app-mount .scroller_ef3116 > div[style]:not([class]) {
   margin-bottom: var(--server-spacing);

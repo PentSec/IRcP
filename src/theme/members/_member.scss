@@ -1,10 +1,4 @@
-// Member row
-//
-// One member: selected state, name, activity text and the avatar box.
-
-/* Two row components exist: the channel list uses member_c8ffbb, the thread / forum
- * post sidebar uses member__5d473 (its default has an 8px inline margin and a reduced
- * max-width). Both are reset the same way so the two lists read alike. */
+/* Two row components exist, one per list; both are reset alike so they read the same. */
 #app-mount .member_c8ffbb,
 #app-mount .member__5d473 {
   background: transparent;

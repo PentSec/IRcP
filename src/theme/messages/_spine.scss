@@ -1,23 +1,11 @@
-// Reply spine
-//
-// The vertical line that ties a reply to the message it answers.
-
-/* No connector curves: the reply spine is absolutely positioned off the old avatar gutter
- * and lands on top of the timestamp column once the avatar is inline. A terminal does not
- * draw them; the "replying to" line above the message stays. */
+/* No connector curves: the spine would land on the clock column; the reply line stays. */
 :is(.cozy_c19a55, .compact_c19a55) :is(.repliedMessageClickableSpine_c19a55, .messageSpine_c19a55),
 :is(.cozy_c19a55, .compact_c19a55) :is(.repliedMessageClickableSpine_c19a55, .messageSpine_c19a55)::before {
   display: none;
 }
 
-/* Reply marker.
- * ⤹ (U+2939, Supplemental Arrows-B) is what the user picked. Heads up: Iosevka does NOT
- * ship this block — the TTF has no glyph for it (it stops at U+21FF), so this one glyph
- * comes from the system's symbol fallback (Noto Sans Symbols / DejaVu). That is why it may
- * read bigger than the ↶ that came from the embedded face.
- * It sits in the same column as "<" and the run tree (│ └) so the three markers line up.
- * The whole quote is dimmed: it is context, not another message. One opacity on the block
- * keeps avatar, nick, clan tag and preview at the same level. */
+/* ⤹ is U+2939, which Iosevka does not ship, so it renders from the system fallback.
+ * One opacity dims avatar, nick and preview together. */
 :is(.cozy_c19a55, .compact_c19a55) .repliedMessage_c19a55 {
   opacity: 0.6;
 }

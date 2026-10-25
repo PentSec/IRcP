@@ -1,23 +1,5 @@
-// Body of the theme: compiles to irc.css and is imported by irc.theme.css.
-//
-// The @use order is the cascade. It is also, roughly, reading order: tokens, the app
-// shell, then each surface from the outside in, then the cross-cutting avatar rings.
-//
-//   tokens      internal custom properties shared by everything
-//   app         outermost box: background, titlebar, toolbar, window controls
-//   serverlist  guild rail
-//   sidebar     channel and DM lists, user panel
-//   chat        message area, composer, dividers, notice bars
-//   members     member list column
-//   popouts     server and channel popouts
-//   messages    one-line message rows
-//   forum       forum posts as log lines
-//   status      presence rings; last because they decorate every avatar above
-//   wiring      maps --irc-font onto the variables Discord reads; nothing may outrank it
-//
-// Moving a file changes the cascade. Before reordering, check that no rule that shares a
-// class and a property with another rule flips its relative order (the audit used for this
-// split lives in the commit message of the refactor).
+// Body entry. The @use order is the cascade, not alphabetical order.
+// Reordering can flip a rule past one it can fight with: prove it with bun run verify:cascade.
 @use './theme/tokens';
 
 @use './theme/app';

@@ -1,11 +1,4 @@
-// Mentions, tags and embeds
-//
-// Channel and user tags, embed wrappers, and the chat-bubble rule that is kept switched
-// off by the variables right below it.
-
-/* The old chat-bubble experiment is neutralised: a bubble adds 10px/14px of padding and
- * switches the body to inline-block, which is exactly what breaks the one-line layout if
- * the rule ever matches again. */
+/* Off by default: a bubble adds padding and switches to inline-block, which breaks the row. */
 :root {
   --chat-bubble-padding: 0;
   --chat-bubble-display: inline;
@@ -19,11 +12,8 @@
   display: var(--chat-bubble-display);
 }
 
-/* Mentions: channel tags and @user tags. Discord paints them with --mention-background
- * and --mention-foreground; here they take the accent tint and a halo in the text colour.
- * A user tag that carries a role colour keeps it: Discord writes that colour inline, which
- * beats this rule, and currentColor makes the halo follow it, so coloured tags glow in
- * their own colour while colourless ones use the accent. */
+/* Accent tint and halo instead of --mention-background; currentColor lets a role-coloured
+ * tag glow in its own colour. */
 #app-mount .wrapper__4106a,
 #app-mount .wrapper_f61d60 {
   background: hsl(from var(--accent) h s l / 0.15);

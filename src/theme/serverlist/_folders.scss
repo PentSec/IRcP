@@ -1,6 +1,4 @@
-// Folders
-//
-// A folder is a group of servers; the rail must grow instead of clipping it.
+// A folder must grow the rail, not be clipped by it.
 
 #app-mount .folderGroup__48112 {
   --server-folder-offset: 6px;

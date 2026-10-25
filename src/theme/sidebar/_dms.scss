@@ -1,7 +1,3 @@
-// Direct messages
-//
-// DM rows and the private-channel header.
-
 #app-mount .channel__972a0:not(.dm__972a0) {
   max-width: unset;
   margin: 0;
@@ -13,11 +9,8 @@
   padding: var(--space-md);
 }
 
-/* Channel categories. The clickable row is .mainContent__29444; the outer .wrapper__29444
- * also contains the children, so the frame has to stay on the row or it would box the
- * whole category. border-image draws the gradient on the border AND ignores border-radius,
- * which is what keeps the frame square. Both gradients run 270deg: accent on the right,
- * fading out to the left, matching the theme's neon channels. */
+/* The frame stays on .mainContent: .wrapper also contains the children, so the box would
+ * cover the whole category. border-image keeps it square. */
 #app-mount .mainContent__29444 {
   border: 1px solid transparent;
   border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l / 0.5) 30%, transparent 78%) 1;

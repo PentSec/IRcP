@@ -1,8 +1,3 @@
-// Forum footer
-//
-// Reactions, reply count and the relative time.
-
-/* Footer: dim, small, one row, right edge shared by every post. */
 #app-mount .footer_faa96b {
   display: flex;
   align-items: baseline;
@@ -24,7 +19,6 @@
   display: none;
 }
 
-/* Reactions as plain "emoji count", no chips. */
 #app-mount .footer_faa96b .reaction_f8896c,
 #app-mount .footer_faa96b .reactionInner_f8896c {
   background: transparent;
@@ -40,7 +34,6 @@
   margin: 0;
 }
 
-/* Message counter as [31]. */
 #app-mount .messageCountIcon_faa96b {
   display: none;
 }
@@ -59,7 +52,6 @@
   content: ']';
 }
 
-/* "new" pill -> dim word. */
 #app-mount .newBadge_faa96b {
   background: transparent;
   border: none;

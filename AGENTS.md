@@ -161,6 +161,14 @@ Use the plain `IosevkaTermSlabNerdFont-*` builds (Term metrics), not `-Mono` (fo
 on every glyph) or `-Propo` (proportional). Ligatures (`calt`) are intentionally dropped
 so `->` and `!=` stay literal in chat. The upstream TTFs are not in the repository.
 
+## Comments
+
+- Comment only non-obvious decisions: the why, never the what.
+- Two lines per comment, maximum.
+- No narrative, no comparisons with other selectors, no references to sections or line numbers.
+- One idea per comment.
+- If the code is clear, do not comment.
+
 ## Conventions
 
 - Bump `meta.version` in `bd-scss.config.js` (`2.0.0-irc.N`) on every change so the loaded

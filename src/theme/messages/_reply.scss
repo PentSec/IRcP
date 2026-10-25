@@ -1,9 +1,4 @@
-// Reply header
-//
-// With a reply the first line is the quoted message; the gutter shifts down.
-
-/* With a reply the first line is the quoted message, so the opening bracket would hang
- * off it instead of the avatar. Move it to the header for those rows. */
+/* With a reply the first line is the quote, so the bracket moves to the header. */
 :is(.cozy_c19a55, .compact_c19a55):has(.repliedMessage_c19a55) .contents_c19a55::before {
   content: none;
 }
@@ -15,11 +10,7 @@
   margin-inline-end: 0.15em;
 }
 
-/* Hide the duplicate clock only where a header exists (the inline node already feeds the
- * gutter). Grouped rows keep theirs, but only on hover: in a run, the clock is noise.
- * Direct children of .header/.contents only: the "(edited)" marker is ALSO a
- * .timestamp_c19a55, but it lives inside .messageContent_c19a55 and must stay in the text
- * flow — matching it dragged it into the gutter, on top of the real clock. */
+/* Direct children only: the "(edited)" marker is also a .timestamp and must stay in the text. */
 :is(.cozy_c19a55, .compact_c19a55):has(.header_c19a55)
   :is(.header_c19a55, .contents_c19a55)
   > .timestamp_c19a55.alt_c19a55,

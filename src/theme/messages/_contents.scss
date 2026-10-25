@@ -1,11 +1,4 @@
-// Contents box
-//
-// The contents box holds the header and the body of a row. It must not become the
-// containing block of the absolute timestamp, and the cozy gutter is not needed.
-
-/* cozy fallback: the 4.5rem avatar gutter is not needed, the timestamp owns the gutter.
- * position: static on .contents_c19a55 in BOTH densities (compact sets relative too),
- * otherwise it becomes the containing block of the absolute timestamp. */
+/* static: a positioned box would become the containing block of the absolute clock. */
 :is(.cozy_c19a55, .compact_c19a55) .contents_c19a55 {
   position: static;
 }

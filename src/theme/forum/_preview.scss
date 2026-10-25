@@ -1,7 +1,3 @@
-// Forum preview
-//
-// Same <nick> brackets as a message row; the ": " after the name is Discord's own text node.
-
 #app-mount .message_faa96b {
   display: flex;
   align-items: baseline;
@@ -16,8 +12,7 @@
   line-height: inherit;
 }
 
-/* Same <nick> brackets as a message row (section 5). The ": " after the name is
- * Discord's own text node, so the line reads "<nick>: preview", as in IRC. */
+/* The ": " after the nick is Discord's own text node, so only the brackets are drawn. */
 #app-mount .message_faa96b .author_d3eee8 a::before {
   content: '<';
   color: var(--irc-dim);
@@ -30,8 +25,7 @@
   opacity: 0.75;
 }
 
-/* Forum nicks get the same halo as message nicks (--irc-nick-glow in the entry file);
- * gradients are skipped for the same reason: they already carry their own glow copy. */
+/* Gradients already carry their own glow, so they are skipped. */
 #app-mount .message_faa96b .author_d3eee8 .username__703b9:not([class*='Gradient']):not([data-username-has-gradient]) {
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }
@@ -46,20 +40,14 @@
   display: block;
   min-width: 0;
   max-width: 100%;
-  /* Discord's text-* utilities carry their own line-height; without this the preview
-   * line is shorter than the thumbnail and the stamp pokes above it again. */
+  /* text-* utilities carry their own line-height, which would make the stamp poke above. */
   line-height: inherit;
-  /* an inline --text-default / --text-muted would beat an inherited colour */
+  /* An inline --text-* would beat an inherited colour. */
   color: var(--irc-dim) !important;
 }
 
-/* The preview is clamped with -webkit-line-clamp, the same mechanism Discord uses for
- * the title, instead of white-space: nowrap. Reason: `.markup__75297` ships
- * `white-space: break-spaces`, so the preview was wrapping into several lines (measured:
- * scrollWidth == clientWidth, i.e. no horizontal overflow at all), the row grew tall and
- * the text ended where it should not. line-clamp limits the number of line boxes and
- * draws the ellipsis itself, no matter what white-space resolves to. min-width/max-width
- * keep the box at the width left by the metadata column, which is where "..." appears. */
+/* line-clamp, not white-space: Discord ships break-spaces on markup, so nowrap is not enough.
+ * min/max-width keep the box inside the column the metadata leaves. */
 #app-mount .messageContent_faa96b {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -71,7 +59,7 @@
   overflow-wrap: anywhere;
 }
 
-/* "(edited)" is noise here: the footer already carries the relative time. */
+/* The footer already carries the relative time. */
 #app-mount .messageContent_faa96b .timestamp_c19a55 {
   display: none;
 }

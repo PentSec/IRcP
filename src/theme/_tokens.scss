@@ -1,10 +1,4 @@
-/* ============================================================================
- * Design tokens
- *
- * Internal custom properties shared by every partial: surfaces, borders, shadows,
- * textbox and the Discord variables the theme maps onto. Everything a user is meant
- * to change lives in src/root.scss instead; this file is the theme talking to itself.
- * ========================================================================== */
+/* Internal tokens. Anything a user should touch lives in root.scss. */
 
 :root {
   --transition: 0.15s ease;
