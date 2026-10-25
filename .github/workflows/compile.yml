@@ -33,6 +33,15 @@ jobs:
       - name: Build
         run: bun run build
 
+      # verify:cascade compares the build against the published irc.css and fails if a
+      # pair of rules that share a class and a property swapped places. The baseline lives
+      # on the deploy branch, so fetch it (and carry on if this is the first deploy).
+      - name: Fetch the published build
+        run: git fetch --depth=1 origin deploy:refs/remotes/origin/deploy || echo 'no deploy branch yet'
+
+      - name: Check the cascade
+        run: bun run verify:cascade
+
       - name: Check formatting
         run: bun run format:check
 
