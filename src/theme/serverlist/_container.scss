@@ -1,7 +1,3 @@
-// Server list container
-//
-// Rail background, separators, scroller and the folder backdrop.
-
 #app-mount .folderGroupBackground__48112 {
   left: 50%;
   translate: -50%;
@@ -11,20 +7,18 @@
 #app-mount .guilds__5e434 {
   background: var(--bg-primary);
   border-right: 1px solid var(--bg-border);
-  /* The guild list renders scaled down (IRC-minimal). zoom scales the element AND the
-   * space it reserves, so the nav, its icons and the column width all shrink together
-   * instead of needing every inline 40px/padding re-declared. Tune with
-   * --irc-guilds-zoom in section 4. */
+  /* The Discord button has no gap above it. --server-spacing matches the item spacing, and
+ * padding inside the zoom scales with it, so it is not divided. */
+  padding-top: var(--server-spacing, 16px);
+  /* The rail is scaled with zoom so icons, nav and column width shrink together.
+ * Tuned by --irc-guilds-zoom. */
   zoom: var(--irc-guilds-zoom, 0.7);
-  /* margin-bottom lives inside the zoom, so it would shrink with everything else and let
-   * the bar grow over the user panel: divide by the zoom to keep the real gap. */
+  /* Divided by the zoom: margin-bottom sits inside the scaled box. */
   margin-bottom: calc(var(--custom-app-panels-height) / var(--irc-guilds-zoom, 0.7));
 }
 
-/* The scroller is narrower than the nav: it ships scrollbar-gutter: stable, which
- * reserves ~8px for a scrollbar that is never visible, so every icon sits 4px left of the
- * nav's centre. Give the scroll area the full width and hide the bar (the wheel still
- * scrolls), like the channel sidebar already does. */
+/* scrollbar-gutter: stable reserves width for a bar that is never visible and pushes the
+ * icons off centre; the bar is hidden instead. */
 #app-mount .guilds__5e434 .scroller_ef3116 {
   scrollbar-gutter: auto;
   scrollbar-width: none;
