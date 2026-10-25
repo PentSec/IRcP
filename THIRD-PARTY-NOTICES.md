@@ -10,7 +10,9 @@ File paths below point at the sources in `src/`. The built files that ship to us
 
 ## SoftX
 
-Files: `src/root.scss` (variable block and surface rules) and `src/theme/_ui.scss`.
+Files: `src/root.scss` (variable block and surface rules) and `src/theme/app/`,
+`src/theme/serverlist/`, `src/theme/sidebar/`, `src/theme/chat/`, `src/theme/members/`,
+`src/theme/popouts/`.
 
 Copyright (c) 2021 DiscordStyles
 https://github.com/DiscordStyles/SoftX
@@ -42,7 +44,7 @@ SOFTWARE.
 
 ## RadialStatus
 
-Files: `src/theme/_status.scss`.
+Files: `src/theme/status/`.
 
 Copyright (c) 2020 DiscordStyles
 https://github.com/DiscordStyles/RadialStatus
@@ -186,7 +188,7 @@ not met.
 
 ## Font Awesome Free
 
-Files: `src/theme/_status.scss` (the "mobile-alt" icon path reused as the phone badge mask).
+Files: `src/theme/status/` (the "mobile-alt" icon path reused as the phone badge mask).
 
 Font Awesome Free, by Fonticons, Inc. Icons are licensed under CC BY 4.0:
 https://creativecommons.org/licenses/by/4.0/

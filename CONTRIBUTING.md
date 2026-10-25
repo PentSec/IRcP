@@ -22,14 +22,24 @@ goes to `.dev/`.
 
 ## Where things go
 
-| File                       | Holds                                                        |
-| -------------------------- | ------------------------------------------------------------ |
-| `src/root.scss`            | user variables only, the block at the top of `irc.theme.css` |
-| `src/theme/_status.scss`   | presence rings                                               |
-| `src/theme/_ui.scss`       | app shell, sidebars, composer, popouts                       |
-| `src/theme/_messages.scss` | message rows, forum post rows                                |
-| `src/theme/_wiring.scss`   | font wiring; not configuration                               |
-| `src/addons/_fonts.scss`   | embedded font, generated (do not hand-edit)                  |
+| Path                     | Holds                                                        |
+| ------------------------ | ------------------------------------------------------------ |
+| `src/root.scss`          | user variables only, the block at the top of `irc.theme.css` |
+| `src/theme/_tokens.scss` | internal custom properties                                   |
+| `src/theme/app/`         | background, titlebar, toolbar, window controls               |
+| `src/theme/serverlist/`  | guild rail                                                   |
+| `src/theme/sidebar/`     | channel and DM lists, user panel                             |
+| `src/theme/chat/`        | message area, composer, dividers, notices, mentions          |
+| `src/theme/members/`     | member list and role groups                                  |
+| `src/theme/popouts/`     | popouts                                                      |
+| `src/theme/messages/`    | message rows                                                 |
+| `src/theme/forum/`       | forum posts                                                  |
+| `src/theme/status/`      | presence rings                                               |
+| `src/theme/_wiring.scss` | font wiring; not configuration                               |
+| `src/addons/_fonts.scss` | embedded font, generated (do not hand-edit)                  |
+
+Each folder has an `index.scss`; it lists its partials with `@forward` in cascade order. A
+file that is not forwarded is not compiled.
 
 Rules:
 

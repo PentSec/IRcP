@@ -66,15 +66,26 @@ bun run format       # Prettier
 ```
 src/root.scss              metadata lives in bd-scss.config.js; this file is the variables
 src/main.scss              body entry: @use order = cascade order
-src/theme/_status.scss     presence rings around avatars
-src/theme/_ui.scss         app shell: background layer, sidebars, header, composer, popouts
-src/theme/_messages.scss   one-line message rows and the forum post list
+src/theme/_tokens.scss     internal custom properties shared by everything
+src/theme/app/             background, titlebar, toolbar, window controls
+src/theme/serverlist/      guild rail: folders, items, unread pill, icons
+src/theme/sidebar/         channel and DM lists, user panel
+src/theme/chat/            message area, composer, dividers, notices, mentions
+src/theme/members/         member list: column, rows, role groups
+src/theme/popouts/         server and channel popouts
+src/theme/messages/        one-line rows: row, clock, runs, reply, nick, avatar
+src/theme/forum/           forum posts as log lines
+src/theme/status/          presence rings, glow, avatar exceptions
 src/theme/_wiring.scss     maps --irc-font onto the variables Discord reads
 src/addons/_fonts.scss     Iosevka subsets, base64 (separate file: 460 KB)
 src/assets/bg.png          background, published next to the theme
 scripts/postbuild.mjs      asset copy, deploy URL, @name, .nojekyll
 scripts/dev.mjs            initial build + watcher (bd-scss skips the first one)
 ```
+
+Each folder has an `index.scss` that `@forward`s its partials in cascade order. Adding a
+file means adding its `@forward` in the right position: the order is the cascade, not
+alphabetical.
 
 `bun run dev` builds once and then rebuilds on every save: a single file with the fonts
 and the body inlined, dropped in your client's themes folder

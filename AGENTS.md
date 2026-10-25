@@ -6,20 +6,27 @@ holds generated files and is written only by CI.
 
 ## Layout
 
-| Path                       | What it is                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------------- |
-| `bd-scss.config.js`        | `meta` (the `@name`/`@version` header), `github`, the fonts addon, `deploy.origin` |
-| `src/root.scss`            | compiles to `irc.theme.css`: user variables only, no selectors                     |
-| `src/main.scss`            | compiles to `irc.css`: `@use` of the partials, in cascade order                    |
-| `src/theme/_status.scss`   | presence rings around avatars                                                      |
-| `src/theme/_ui.scss`       | app shell: background layer, sidebars, header, composer, member list, popouts      |
-| `src/theme/_messages.scss` | one-line message rows and the forum post list                                      |
-| `src/theme/_wiring.scss`   | maps `--irc-font` onto the variables Discord reads; not configuration              |
-| `src/addons/_fonts.scss`   | Iosevka `@font-face` with base64 subsets (460 KB), generated                       |
-| `src/assets/bg.png`        | wallpaper, published next to the theme                                             |
-| `scripts/postbuild.mjs`    | everything bd-scss does not do (see below)                                         |
-| `scripts/dev.mjs`          | forces the initial dev build, which bd-scss skips                                  |
-| `THIRD-PARTY-NOTICES.md`   | MIT texts for the reused CSS, OFL/CC-BY for font and icon                          |
+| Path                     | What it is                                                                         |
+| ------------------------ | ---------------------------------------------------------------------------------- |
+| `bd-scss.config.js`      | `meta` (the `@name`/`@version` header), `github`, the fonts addon, `deploy.origin` |
+| `src/root.scss`          | compiles to `irc.theme.css`: user variables only, no selectors                     |
+| `src/main.scss`          | compiles to `irc.css`: `@use` of the partials, in cascade order                    |
+| `src/theme/_tokens.scss` | internal custom properties shared by every partial                                 |
+| `src/theme/app/`         | background layer, titlebar, toolbar, window controls                               |
+| `src/theme/serverlist/`  | guild rail: folders, items, unread pill, icons                                     |
+| `src/theme/sidebar/`     | channel and DM lists, user panel                                                   |
+| `src/theme/chat/`        | message area, composer, dividers, notice bars, mentions                            |
+| `src/theme/members/`     | member list column, rows and role groups                                           |
+| `src/theme/popouts/`     | server and channel popouts                                                         |
+| `src/theme/messages/`    | one-line message rows: row, clock, runs, reply, nick, avatar                       |
+| `src/theme/forum/`       | forum posts as log lines                                                           |
+| `src/theme/status/`      | presence rings, glow and the avatar exceptions                                     |
+| `src/theme/_wiring.scss` | maps `--irc-font` onto the variables Discord reads; not configuration              |
+| `src/addons/_fonts.scss` | Iosevka `@font-face` with base64 subsets (460 KB), generated                       |
+| `src/assets/bg.png`      | wallpaper, published next to the theme                                             |
+| `scripts/postbuild.mjs`  | everything bd-scss does not do (see below)                                         |
+| `scripts/dev.mjs`        | forces the initial dev build, which bd-scss skips                                  |
+| `THIRD-PARTY-NOTICES.md` | MIT texts for the reused CSS, OFL/CC-BY for font and icon                          |
 
 `dist/` and a dev build at the repository root are generated and gitignored.
 
@@ -163,8 +170,14 @@ so `->` and `!=` stay literal in chat. The upstream TTFs are not in the reposito
   (notice and permission text must travel with copies or substantial portions) and the
   embedded font is SIL OFL 1.1 (copyright line and license must accompany the font).
   Renaming the theme or rewriting comments does not remove those obligations.
-- One `@use` per partial in `src/main.scss`, in cascade order. No `@import` anywhere in
-  `src/`: it would be hoisted out of the body by bd-scss.
+- One `@use` per folder in `src/main.scss`; each folder's `index.scss` `@forward`s its
+  partials in cascade order. A new file is not compiled until its `@forward` is added in
+  the right position. No `@import` anywhere in `src/`: it would be hoisted out of the
+  body by bd-scss.
+- **Moving a rule between files is a cascade change.** Rules that share a class and a
+  property must keep their relative order. Before reordering, diff the built CSS and
+  compare the declaration sequence; the split that produced this layout kept all 1274
+  class+property pairs in order.
 - `bun` only. One lockfile. `format:check` must pass; formatting changes get their own
   commit.
 - The deployed URLs are part of the contract: `irc.theme.css` is what users paste into
