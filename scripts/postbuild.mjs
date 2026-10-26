@@ -57,9 +57,12 @@ if (renamed === theme) fail(`could not find "@name ${name}" in ${themeFile}`);
 write(themeFile, renamed);
 
 // 3 -------------------------------------------------------------------------
-const asset = path.join(root, 'src', 'assets', 'bg.png');
-if (!fs.existsSync(asset)) fail('missing src/assets/bg.png');
-fs.copyFileSync(asset, path.join(dist, 'bg.png'));
+const assets = path.join(root, 'src', 'assets');
+const wallpapers = fs.existsSync(assets)
+  ? fs.readdirSync(assets).filter((file) => /[.](png|jpe?g|webp|avif|gif)$/i.test(file))
+  : [];
+if (!wallpapers.length) fail('no wallpaper found in src/assets');
+for (const file of wallpapers) fs.copyFileSync(path.join(assets, file), path.join(dist, file));
 
 // The published branch is a distribution, and the licenses require their notices to
 // travel with it: the CSS keeps "Derived from ... MIT" headers, these files keep the
@@ -72,7 +75,15 @@ for (const file of ['LICENSE', 'THIRD-PARTY-NOTICES.md']) {
 fs.writeFileSync(path.join(dist, '.nojekyll'), '');
 
 // 5 -------------------------------------------------------------------------
-const expected = [themeFile, `${name}.css`, 'fonts.css', 'bg.png', '.nojekyll', 'LICENSE', 'THIRD-PARTY-NOTICES.md'];
+const expected = [
+  themeFile,
+  `${name}.css`,
+  'fonts.css',
+  ...wallpapers,
+  '.nojekyll',
+  'LICENSE',
+  'THIRD-PARTY-NOTICES.md'
+];
 const missing = expected.filter((file) => !fs.existsSync(path.join(dist, file)));
 if (missing.length) fail(`missing from dist: ${missing.join(', ')}`);
 

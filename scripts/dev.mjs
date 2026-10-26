@@ -19,12 +19,30 @@ import config from '../bd-scss.config.js';
 const root = path.resolve(import.meta.dirname, '..');
 const trigger = path.join(root, 'src', 'main.scss');
 
-// The CSS points at url("bg.png"), relative to the stylesheet, so the background has to
-// sit next to the theme file. `build` copies it into dist/; `dev` has no such step.
+// The CSS points at the wallpapers in src/assets by file name, relative to the stylesheet,
+// so they have to sit next to the theme file. `build` copies them into dist/; `dev` has no
+// such step, so it does the same here.
 const themes = path.resolve(root, config.vencord.themeFolder);
-const background = path.join(root, 'src', 'assets', 'bg.png');
+const assets = path.join(root, 'src', 'assets');
+const wallpaper = /[.](png|jpe?g|webp|avif|gif)$/i;
+
+const copy = (file) => {
+  if (wallpaper.test(file)) fs.copyFileSync(path.join(assets, file), path.join(themes, file));
+};
+
 fs.mkdirSync(themes, { recursive: true });
-fs.copyFileSync(background, path.join(themes, 'bg.png'));
+for (const file of fs.readdirSync(assets)) copy(file);
+
+// A wallpaper added while the watcher is up has to reach the themes folder too, or the CSS
+// points at a file the client never sees.
+fs.watch(assets, (_event, file) => {
+  if (!file) return;
+  try {
+    copy(file);
+  } catch {
+    // `rename` fires after a delete as well; nothing to copy then.
+  }
+});
 
 const child = spawn('bd-scss', ['dev'], {
   cwd: root,

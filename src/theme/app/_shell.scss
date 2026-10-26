@@ -17,9 +17,9 @@ body,
 }
 
 #app-mount .bg__960e4 {
-  /* Relative on purpose: it resolves next to the stylesheet in dist and in the dev file.
- * An absolute --background-image in the entry file overrides it. */
-  background-image: var(--background-image, url('bg.png'));
+  /* Relative on purpose: it resolves next to this stylesheet, in dist and in the dev file.
+ * The entry file overrides it when another wallpaper number is selected there. */
+  background-image: var(--background-image, url('bg1.png'));
   background-color: transparent;
   background-attachment: var(--background-attachment, fixed);
   background-size: var(--background-size, cover);
