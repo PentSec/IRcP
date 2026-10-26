@@ -16,3 +16,64 @@
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
 }
+
+/* The results panel is a column of its own next to the chat, so it takes the panel surface
+ * and the same left edge as the channel and member lists. */
+#app-mount .searchResultsWrap_a98f3b {
+  background: var(--bg-primary);
+  border-left: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+#app-mount .searchHeader_ae7890 {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+/* The scroller paints nothing on its own; the wrap behind it is the surface. */
+#app-mount .scroller_a98f3b {
+  background: transparent;
+}
+
+#app-mount .paginationDock_a98f3b {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+/* Result rows keep Discord's card shape; the theme only replaces what it paints behind them. */
+#app-mount .container__80bf8 {
+  background: transparent;
+}
+
+#app-mount .searchResult__80bf8:hover {
+  background: var(--background-message-hover);
+}
+
+/* The channel heading of a group reads as a category: accent label over a hairline. */
+#app-mount .searchResultGroup_a7e67f > div[role='button'] {
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .searchResultGroup_a7e67f > div[role='button']:hover {
+  background: var(--background-message-hover);
+}
+
+#app-mount .channelNameText_a7e67f {
+  color: var(--accent) !important;
+  font-weight: normal;
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+}
+
+/* Jump is the only action in a result, so it carries the accent outline of the bars. */
+#app-mount .button__80bf8 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l / 0.25);
+}
+
+#app-mount .button__80bf8:hover {
+  background: hsl(from var(--accent) h s l / 0.15);
+}
