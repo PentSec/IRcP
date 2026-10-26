@@ -1,5 +1,10 @@
 # IRcP
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/042ce435-fb4d-454c-94f8-b52396326036" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/73b58800-7678-4452-a72f-12e9d1971446" />
+
+
+
 A Vencord theme that turns Discord into a terminal IRC client: one log line per message,
 a clock gutter, monospace type, dim metadata and translucent panels over a wallpaper.
 
