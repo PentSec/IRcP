@@ -32,9 +32,16 @@
   margin-inline-end: 0.15em;
 }
 
+/* Discord's own colon duplicates the closing bracket. */
+.compact_c19a55 .headerText_c19a55 > .separator_c19a55 {
+  display: none;
+}
+
+/* The trailing space in the header would push the bracket away from the nick: the bracket is
+ * pulled back by exactly one space glyph, which in a monospace font is one ch. */
 :is(.cozy_c19a55, .compact_c19a55) .header_c19a55::after {
   content: '>';
   color: var(--irc-dim);
   opacity: 0.75;
-  margin-inline: 0 0.35em;
+  margin-inline: -1ch 0.35em;
 }
