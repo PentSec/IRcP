@@ -32,3 +32,42 @@
 #app-mount .scrollableContainer__74017 {
   background: transparent;
 }
+
+/* Reply bar: the composer's own surface with the accent edge the theme uses for a quote. */
+#app-mount .replyBar__841c8 {
+  background: var(--textbox-background);
+  border-radius: 0;
+  box-shadow: inset 2px 0 calc(var(--glow-intensity) * 10px) hsl(from var(--accent) h s l / 0.25);
+}
+
+/* Dim on purpose: it is context for the composer, not content. */
+#app-mount .replyLabel__841c8 {
+  color: var(--irc-dim);
+}
+
+/* Bold restores the hierarchy the role colour would lose at this size. */
+#app-mount .replyBar__841c8 .username__703b9 {
+  font-weight: 700;
+}
+
+/* The mention toggle reads as on or off from its own switch state. */
+#app-mount .mentionButton__841c8 {
+  color: var(--irc-dim);
+}
+
+#app-mount [role='switch'][aria-checked='true'] .mentionButton__841c8 {
+  color: var(--accent);
+}
+
+#app-mount .separator__841c8 {
+  background: var(--bg-border);
+}
+
+#app-mount .closeButton_e876a8 {
+  color: var(--irc-dim);
+}
+
+#app-mount .closeButton_e876a8:hover {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.4));
+}
