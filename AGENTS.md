@@ -23,7 +23,7 @@ holds generated files and is written only by CI.
 | `src/theme/status/`          | presence rings, glow and the avatar exceptions                                     |
 | `src/theme/_wiring.scss`     | maps `--irc-font` onto the variables Discord reads; not configuration              |
 | `src/addons/_fonts.scss`     | Iosevka `@font-face` with base64 subsets (460 KB), generated                       |
-| `src/assets/bg.png`          | wallpaper, published next to the theme                                             |
+| `src/assets/bg*.png, *.jpg`  | wallpapers, published next to the theme                                            |
 | `scripts/postbuild.mjs`      | everything bd-scss does not do (see below)                                         |
 | `scripts/dev.mjs`            | forces the initial dev build, which bd-scss skips                                  |
 | `scripts/verify-cascade.mjs` | fails when a rule moves past a rule it can fight with                              |
@@ -50,7 +50,7 @@ holds generated files and is written only by CI.
 - `reroll` rewrites hashed classes only in `src/**/_*.scss`.
 
 `scripts/postbuild.mjs` covers the gap: it rewrites the `github.io` import to
-`deploy.origin`, restores `@name IRcP`, copies `bg.png` and the license notices, writes
+`deploy.origin`, restores `@name IRcP`, copies the wallpapers and the license notices, writes
 `.nojekyll` and fails the build if any of that did not happen. Never hand-edit `dist/`.
 A dev build skips postbuild, so it keeps `@name irc`; only the published file is renamed.
 
@@ -76,12 +76,13 @@ A dev build skips postbuild, so it keeps `@name irc`; only the published file is
   redirects again to HTTPS. Chromium blocks a stylesheet load that downgrades to plain
   HTTP, so a `github.io` import is broken, not merely slow. That is why postbuild
   rewrites it and why `deploy.origin` lives in `bd-scss.config.js`.
-- `url()` inside a **custom property** resolves against the document base
-  (`https://discord.com`), not against the stylesheet. `_ui.scss` uses that distinction:
-  `var(--background-image, url('bg.png'))` is a normal declaration, so the fallback
-  resolves next to the CSS — which is why `dev` copies `bg.png` into the themes folder and
-  postbuild copies it into `dist/`. An override in `root.scss` _is_ a custom property, so
-  it must be absolute or it silently 404s.
+- `url()` inside a **custom property** resolves against the stylesheet that declares the
+  property, so `src/root.scss` can name a wallpaper file and it resolves next to
+  `irc.theme.css` (verified in Chromium 153 with the built theme). A declaration injected as
+  a `<style>` in the document (QuickCSS, DevTools) does resolve against `https://discord.com`
+  and needs an absolute URL. `_shell.scss` keeps `url('bg1.png')` in a normal declaration so
+  the default still resolves next to the body, which is why `dev` and postbuild copy every
+  wallpaper next to the theme.
 - `raw.githubusercontent.com` serves `.css` as `text/plain` with `nosniff`, and Blink
   refuses that as a stylesheet (verified in Chromium and in Electron: the same bytes
   applied when served `text/css`, ignored when `text/plain`). GitHub Pages serves
@@ -192,3 +193,19 @@ so `->` and `!=` stay literal in chat. The upstream TTFs are not in the reposito
   commit.
 - The deployed URLs are part of the contract: `irc.theme.css` is what users paste into
   Vencord. Do not rename files without a migration plan.
+
+## References
+
+The BetterDiscord theme docs are the closest external reference, and they document a
+different loader: BD demands the `@name` meta at byte 0 and the `*.theme.css` name, while
+Vencord ignores meta and lists every top-level `*.css`. Only three pages apply:
+
+- <https://docs.betterdiscord.app/themes/tutorials/selectors> — class hunting, to
+  complement the `curl` recipe above.
+- <https://docs.betterdiscord.app/themes/concepts/performance> — the real cost of `:has()`,
+  `backdrop-filter` and filters on long lists.
+- <https://docs.betterdiscord.app/themes/concepts/accessibility> — contrast and
+  `prefers-reduced-motion`.
+
+Skip `/themes/publishing/*` (BD addon store) and `/themes/concepts/preprocessing` (it only
+confirms transpile-then-bundle, which `bd-scss` already does).
