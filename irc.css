@@ -924,6 +924,45 @@ body,
   background: transparent;
 }
 
+/* Reply bar: the composer's own surface with the accent edge the theme uses for a quote. */
+#app-mount .replyBar__841c8 {
+  background: var(--textbox-background);
+  border-radius: 0;
+  box-shadow: inset 2px 0 calc(var(--glow-intensity) * 10px) hsl(from var(--accent) h s l/0.25);
+}
+
+/* Dim on purpose: it is context for the composer, not content. */
+#app-mount .replyLabel__841c8 {
+  color: var(--irc-dim);
+}
+
+/* Bold restores the hierarchy the role colour would lose at this size. */
+#app-mount .replyBar__841c8 .username__703b9 {
+  font-weight: 700;
+}
+
+/* The mention toggle reads as on or off from its own switch state. */
+#app-mount .mentionButton__841c8 {
+  color: var(--irc-dim);
+}
+
+#app-mount [role=switch][aria-checked=true] .mentionButton__841c8 {
+  color: var(--accent);
+}
+
+#app-mount .separator__841c8 {
+  background: var(--bg-border);
+}
+
+#app-mount .closeButton_e876a8 {
+  color: var(--irc-dim);
+}
+
+#app-mount .closeButton_e876a8:hover {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.4));
+}
+
 #app-mount .divider__5126c {
   border: none;
   margin: 0;
@@ -1082,6 +1121,67 @@ body,
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
   backdrop-filter: blur(3px);
+}
+
+/* The results panel is a column of its own next to the chat, so it takes the panel surface
+ * and the same left edge as the channel and member lists. */
+#app-mount .searchResultsWrap_a98f3b {
+  background: var(--bg-primary);
+  border-left: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+#app-mount .searchHeader_ae7890 {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+/* The scroller paints nothing on its own; the wrap behind it is the surface. */
+#app-mount .scroller_a98f3b {
+  background: transparent;
+}
+
+#app-mount .paginationDock_a98f3b {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+/* Result rows keep Discord's card shape; the theme only replaces what it paints behind them. */
+#app-mount .container__80bf8 {
+  background: transparent;
+}
+
+#app-mount .searchResult__80bf8:hover {
+  background: var(--background-message-hover);
+}
+
+/* The channel heading of a group reads as a category: accent label over a hairline. */
+#app-mount .searchResultGroup_a7e67f > div[role=button] {
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .searchResultGroup_a7e67f > div[role=button]:hover {
+  background: var(--background-message-hover);
+}
+
+#app-mount .channelNameText_a7e67f {
+  color: var(--accent) !important;
+  font-weight: normal;
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3));
+}
+
+/* Jump is the only action in a result, so it carries the accent outline of the bars. */
+#app-mount .button__80bf8 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l/0.25);
+}
+
+#app-mount .button__80bf8:hover {
+  background: hsl(from var(--accent) h s l/0.15);
 }
 
 /* Member list column and its scroller.
@@ -1381,11 +1481,18 @@ body,
   margin-inline-end: 0.15em;
 }
 
+/* Discord's own colon duplicates the closing bracket. */
+.compact_c19a55 .headerText_c19a55 > .separator_c19a55 {
+  display: none;
+}
+
+/* The trailing space in the header would push the bracket away from the nick: the bracket is
+ * pulled back by exactly one space glyph, which in a monospace font is one ch. */
 :is(.cozy_c19a55, .compact_c19a55) .header_c19a55::after {
   content: ">";
   color: var(--irc-dim);
   opacity: 0.75;
-  margin-inline: 0 0.35em;
+  margin-inline: -1ch 0.35em;
 }
 
 /* With a reply the first line is the quote, so the bracket moves to the header. */
