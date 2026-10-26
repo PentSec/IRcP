@@ -1,7 +1,7 @@
 /**
  * @name IRcP
  * @author PentSec
- * @version 2.0.0-irc.61
+ * @version 2.0.0-irc.62
  * @description A Discord theme shaped like a terminal IRC client: monospace log lines, dim metadata, translucent panels.
  * @source https://github.com/PentSec/IRcP
 */
@@ -11,7 +11,11 @@
 @import url('https://jeff.is-a.dev/IRcP/fonts.css');
 
 /* User variables. Everything else under src/ is layout.
- * An override of --background-image must be absolute: url() in a custom property resolves against discord.com. */
+ * A wallpaper file name resolves next to this stylesheet, so the file has to be published there. */
+/* Wallpaper: the number to load. Everything below is just the list it picks from. */
+/* Files live in src/assets and the build copies them next to the theme. An entry may also
+ * be an absolute URL, which is the only way to point at something outside the deployment. */
+/* The body stylesheet loads this one by itself, so picking it changes nothing. */
 :root {
   --irc-font: 'Iosevka Term Slab NF', ui-monospace, monospace;
   --irc-line-height: 1.25; /* one line of a terminal: keep nick, timestamp and text on the same baseline */
@@ -26,11 +30,14 @@
   ); /* Role headers: Discord does not expose the role colour, so this is a theme colour */
   --irc-forum-stamp: 3.4em; /* Forum list: thumbnail column width; the image covers the box */
   --irc-forum-row-pad: 2px; /* Forum list: vertical padding of a log row. 0 makes rows touch each other */
+  --irc-category-background: 0; /* Strength of the channel-category background; 0 removes it */
   --irc-status-members-width: 30px; /* member-list avatar box the presence ring is drawn around */
   --irc-status-self-speaking-colour: #57d39b; /* ring colour while your own voice is transmitting */
   --irc-theme: 1; /* marker: if the computed value reads 1, this file parsed and applied */
   /* App surface */
-  /* --background-image: url("https://example.com/wallpaper.png"); */ /* optional override; must be an absolute URL */
+  /* Only declared when the choice differs from what the body already loads, so a single
+   * downloaded theme file still has a wallpaper. */
+  --background-image: url('bg6.png');
   --background-blur: 8px; /* Blur intensity of --background-image | Must end in px | Default: 0px */
   --accent: hsl(164 100% 45%); /* Colour used around the app. | Any valid CSS unit. | Default: hsl(164 100% 45%) */
   --accent-text: hsl(0 0 0%); /* Colour used on solid or high contrast accent backgrounds. | hsl(0 0 10%) */

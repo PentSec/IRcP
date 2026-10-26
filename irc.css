@@ -80,9 +80,9 @@ body,
 }
 
 #app-mount .bg__960e4 {
-  /* Relative on purpose: it resolves next to the stylesheet in dist and in the dev file.
-  * An absolute --background-image in the entry file overrides it. */
-  background-image: var(--background-image, url("bg.png"));
+  /* Relative on purpose: it resolves next to this stylesheet, in dist and in the dev file.
+  * The entry file overrides it when another wallpaper number is selected there. */
+  background-image: var(--background-image, url("bg1.png"));
   background-color: transparent;
   background-attachment: var(--background-attachment, fixed);
   background-size: var(--background-size, cover);
@@ -567,6 +567,30 @@ body,
   display: none;
 }
 
+/* The handle is 4px of hit area; the visible edge is a 1px line inside it, so the divider
+ * stays thin without shrinking the grab zone. */
+#app-mount .sidebarResizeHandle__5e434 {
+  border-radius: 0;
+  margin-top: 0;
+  background-color: transparent;
+}
+
+#app-mount .sidebarResizeHandle__5e434::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l/0.35);
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+#app-mount .sidebarResizeHandle__5e434:is(:hover, :active, :focus-visible)::after {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 16px) hsl(from var(--accent) h s l/0.6);
+}
+
 #app-mount .sidebarList__5e434 {
   border-radius: 0;
   border: none;
@@ -770,19 +794,19 @@ body,
 }
 
 /* The frame sits on the wrapper so it also covers the create-channel button. No left edge,
- * and border-image keeps the corners square. */
+ * and border-image keeps the corners square. Every alpha is scaled by the user variable. */
 #app-mount .wrapper__29444 {
   border: 1px solid transparent;
   border-left-width: 0;
-  -o-border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l/0.5) 30%, transparent 78%) 1;
-     border-image: linear-gradient(270deg, var(--accent) 0%, hsl(from var(--accent) h s l/0.5) 30%, transparent 78%) 1;
+  -o-border-image: linear-gradient(270deg, hsl(from var(--accent) h s l/var(--irc-category-background)) 0%, hsl(from var(--accent) h s l/calc(var(--irc-category-background) * 0.5)) 30%, transparent 78%) 1;
+     border-image: linear-gradient(270deg, hsl(from var(--accent) h s l/var(--irc-category-background)) 0%, hsl(from var(--accent) h s l/calc(var(--irc-category-background) * 0.5)) 30%, transparent 78%) 1;
   border-radius: 0;
-  background: linear-gradient(270deg, hsl(from var(--accent) h s l/0.22) 0%, transparent 78%);
-  box-shadow: 0 0 calc(var(--glow-intensity, 1) * 8px) hsl(from var(--accent) h s l/0.22);
+  background: linear-gradient(270deg, hsl(from var(--accent) h s l/calc(var(--irc-category-background) * 0.22)) 0%, transparent 78%);
+  box-shadow: 0 0 calc(var(--glow-intensity, 1) * 8px) hsl(from var(--accent) h s l/calc(var(--irc-category-background) * 0.22));
 }
 
 #app-mount .wrapper__29444:hover {
-  background: linear-gradient(270deg, hsl(from var(--accent) h s l/0.32) 0%, transparent 82%);
+  background: linear-gradient(270deg, hsl(from var(--accent) h s l/calc(var(--irc-category-background) * 0.32)) 0%, transparent 82%);
 }
 
 #app-mount .privateChannelsHeaderContainer__99e7c {
