@@ -1,7 +1,7 @@
 /**
  * @name IRcP
  * @author PentSec
- * @version 2.0.0-irc.63
+ * @version 2.0.0-irc.65
  * @description A Discord theme shaped like a terminal IRC client: monospace log lines, dim metadata, translucent panels.
  * @source https://github.com/PentSec/IRcP
 */
@@ -17,7 +17,7 @@
  * be an absolute URL, which is the only way to point at something outside the deployment. */
 /* The body stylesheet loads this one by itself, so picking it changes nothing. */
 :root {
-  --irc-font: 'Iosevka Term Slab NF', ui-monospace, monospace;
+  --irc-font: 'Cascadia Mono', ui-monospace, monospace;
   --irc-line-height: 1.25; /* one line of a terminal: keep nick, timestamp and text on the same baseline */
   --irc-ts-width: 8ch; /* the clock column. 12-hour clock ("9:45 AM" = 7 chars): 8ch. 24-hour clock ("13:38"): 5ch */
   --irc-ts-gutter: calc(var(--irc-ts-width) * 0.75 + 1em); /* clock column + two spaces before the "<" */
@@ -44,7 +44,6 @@
   --glow-intensity: 1; /* Glow intensity around the app; 0 disables it. Default: 1 */
   --members-width: 230px; /* Width of the members list. | Default: 280px */
   --guilds-width: 80px; /* Width of the server list. | Default: 105px */
-  --irc-guilds-zoom: 0.8; /* Scale of the whole server list. 1 = Discord's size, 0.5 = half */
   --server-icon-size: 40; /* Size of the servers inside the server list. | Default: 46px */
   --irc-avatar-size: 1.2em; /* avatar box in a message row. 1em keeps it inside the line; anything larger grows the row */
   --opacity: 0.78; /* Opacity of overall app. | Default: .85 */

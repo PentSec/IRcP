@@ -74,12 +74,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Iosevka
+## Cascadia Mono
 
-Files: `src/addons/_fonts.scss` (embedded WOFF2 subsets of Iosevka Term Slab Nerd Font),
-published as `fonts.css`.
+Files: `src/addons/_fonts.scss` (embedded WOFF2 subsets of Cascadia Mono), published as
+`fonts.css`. Subsets made with `pyftsubset` from the upstream WOFF2 release.
 
-Copyright (c) 2015-2026, Renzhi Li (aka. Belleve Invis, belleve@typeof.net)
+Copyright (c) 2023 Microsoft Corporation
 
 Licensed under the SIL Open Font License, Version 1.1:
 
