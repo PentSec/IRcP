@@ -1,0 +1,40 @@
+// Autocomplete
+//
+// The listbox above the composer: emoji, mention, channel and command results.
+
+/* The popup frame is the element one level above the listbox; the listbox itself paints nothing. */
+#app-mount [class*='autocomplete']:has(> .scroller__6b0e0) {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+}
+
+#app-mount .scroller__6b0e0 {
+  background: transparent;
+}
+
+/* The group title labels the list; it is not a row. */
+#app-mount .contentTitle__13533 {
+  color: var(--irc-dim);
+  font-weight: normal;
+}
+
+#app-mount .autocompleteRow__13533 {
+  border-radius: var(--radius-sm);
+}
+
+#app-mount .autocompleteRow__13533:hover {
+  background: var(--background-message-hover);
+}
+
+/* aria-selected is the row Enter picks, so it carries the accent the selected channel has. */
+#app-mount .autocompleteRow__13533[aria-selected='true'] {
+  background: hsl(from var(--accent) h s l / 0.1);
+  box-shadow: inset var(--channel-pill-width) 0 0 var(--accent);
+}
+
+/* Discord sets the server name inline, which is why this needs the flag. */
+#app-mount .autocompleteRowContentSecondary__13533 {
+  color: var(--irc-dim) !important;
+}
