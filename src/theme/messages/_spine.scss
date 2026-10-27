@@ -4,7 +4,7 @@
   display: none;
 }
 
-/* ⤹ is U+2939, which Iosevka does not ship, so it renders from the system fallback.
+/* ⤹ is U+2939, which Cascadia Mono does not ship, so it renders from the system fallback.
  * One opacity dims avatar, nick and preview together. */
 :is(.cozy_c19a55, .compact_c19a55) .repliedMessage_c19a55 {
   opacity: 0.6;

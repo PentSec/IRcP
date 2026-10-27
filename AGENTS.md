@@ -22,7 +22,7 @@ holds generated files and is written only by CI.
 | `src/theme/forum/`           | forum posts as log lines                                                           |
 | `src/theme/status/`          | presence rings, glow and the avatar exceptions                                     |
 | `src/theme/_wiring.scss`     | maps `--irc-font` onto the variables Discord reads; not configuration              |
-| `src/addons/_fonts.scss`     | Iosevka `@font-face` with base64 subsets (460 KB), generated                       |
+| `src/addons/_fonts.scss`     | Cascadia `@font-face` with base64 subsets (163 KB), generated                      |
 | `src/assets/bg*.png, *.jpg`  | wallpapers, published next to the theme                                            |
 | `scripts/postbuild.mjs`      | everything bd-scss does not do (see below)                                         |
 | `scripts/dev.mjs`            | forces the initial dev build, which bd-scss skips                                  |
@@ -98,8 +98,9 @@ A dev build skips postbuild, so it keeps `@name irc`; only the published file is
   `dist/`. They are dead weight for Electron; adding a `browserslist` field to
   `package.json` would remove them, but it is a deliberate change, not a cleanup.
 - Fonts stay base64 `data:` URIs. Vencord serves local themes over `vencord://` without
-  CORS headers, and font loads are CORS-mode requests, so an external `.woff2` would fail
-  silently. Splitting them would also need per-file cache busting.
+  CORS headers, and font loads are CORS-mode requests, so an external `.woff2` fails
+  silently: measured once, the face reports `error` in `document.fonts` while the base64
+  copy reports `loaded`. Splitting them would also need per-file cache busting.
 - Two other styles are active and can outrank this theme when debugging a "rule doesn't
   apply": `~/.config/Vencord/settings/quickCss.css` (DiscordRecolor) and `themeLinks`
   (ClearVision).
@@ -149,18 +150,20 @@ build; the body follows the cache rules above.
 
 ## Regenerating the embedded fonts
 
-`pyftsubset` (fonttools + brotli are installed), one run per face, then base64 into
+Cascadia Mono, from the WOFF2 folder of the `microsoft/cascadia-code` release. `pyftsubset`
+(fonttools + brotli are installed), one run per face, then base64 into
 `src/addons/_fonts.scss`:
 
 ```
-pyftsubset fonts/IosevkaTermSlabNerdFont-Regular.ttf \
+pyftsubset woff2/static/CascadiaMono-Regular.woff2 \
   --unicodes="U+0020-007E,U+00A0-024F,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-036F,U+0370-03FF,U+0400-04FF,U+2000-206F,U+20A0-20BF,U+2100-214F,U+2190-21FF,U+2200-22FF,U+2300-23FF,U+2500-257F,U+2580-259F,U+25A0-25FF,U+2C60-2C7F,U+A720-A7FF" \
   --layout-features='ccmp,locl,mark,mkmk,kern' --no-hinting --flavor=woff2 --output-file=regular.woff2
 ```
 
-Use the plain `IosevkaTermSlabNerdFont-*` builds (Term metrics), not `-Mono` (forces 1ch
-on every glyph) or `-Propo` (proportional). Ligatures (`calt`) are intentionally dropped
-so `->` and `!=` stay literal in chat. The upstream TTFs are not in the repository.
+Use `CascadiaMono-*`, not `CascadiaCode-*`: Code's ligatures are dropped here anyway, and
+`calt` is excluded below so `->` and `!=` stay literal in chat. `CascadiaCodePL-*` (Powerline)
+and `CascadiaCodeNF-*` (Nerd Font) only add glyphs this theme draws with CSS masks. The
+release archive is not in the repository.
 
 ## Comments
 

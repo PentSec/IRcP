@@ -3,6 +3,9 @@ node_modules/
 
 # Build output. dist/ is what CI publishes to the deploy branch; never commit it.
 dist/
+
+# Upstream font release, extracted by hand only when the embedded subsets are rebuilt.
+/woff2/
 .dev/
 
 # `dev` writes the single-file theme into the client's themes folder; that is usually

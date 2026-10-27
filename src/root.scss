@@ -28,7 +28,7 @@ $irc-background-file: map.get($irc-backgrounds, $irc-background);
 }
 
 :root {
-  --irc-font: 'Iosevka Term Slab NF', ui-monospace, monospace;
+  --irc-font: 'Cascadia Mono', ui-monospace, monospace;
   --irc-line-height: 1.25; /* one line of a terminal: keep nick, timestamp and text on the same baseline */
   --irc-ts-width: 8ch; /* the clock column. 12-hour clock ("9:45 AM" = 7 chars): 8ch. 24-hour clock ("13:38"): 5ch */
   --irc-ts-gutter: calc(var(--irc-ts-width) * 0.75 + 1em); /* clock column + two spaces before the "<" */

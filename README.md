@@ -81,7 +81,7 @@ src/theme/messages/        one-line rows: row, clock, runs, reply, nick, avatar
 src/theme/forum/           forum posts as log lines
 src/theme/status/          presence rings, glow, avatar exceptions
 src/theme/_wiring.scss     maps --irc-font onto the variables Discord reads
-src/addons/_fonts.scss     Iosevka subsets, base64 (separate file: 460 KB)
+src/addons/_fonts.scss     Cascadia subsets, base64 (separate file: 163 KB)
 src/assets/*.png           wallpapers, published next to the theme
 scripts/postbuild.mjs      asset copy, deploy URL, @name, .nojekyll
 scripts/dev.mjs            initial build + watcher (bd-scss skips the first one)
@@ -155,7 +155,7 @@ theme toggle, and the body is a normal cached HTTP resource with a ten-minute li
 
 ## Notes
 
-- The font (Iosevka Term Slab) is embedded as base64 subsets, so no font is fetched.
+- The font (Cascadia Mono) is embedded as base64 subsets, so no font is fetched.
 - Forum channels, the Friends tab and the member list are themed as well. Discord moves
   these class hashes between builds, so a layout touch-up may be needed after a large
   Discord update.
@@ -168,7 +168,7 @@ reuses work under these licenses:
 
 - SoftX, Copyright (c) 2021 DiscordStyles, MIT
 - RadialStatus, Copyright (c) 2020 DiscordStyles, MIT
-- Iosevka, Copyright (c) 2015-2026 Renzhi Li, SIL OFL 1.1
+- Cascadia Mono, Copyright (c) 2023 Microsoft Corporation, SIL OFL 1.1
 - Font Awesome Free icons, Copyright Fonticons, Inc., CC BY 4.0
 
 The full texts are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
