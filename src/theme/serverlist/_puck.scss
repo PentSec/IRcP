@@ -1,0 +1,102 @@
+// Puck
+//
+// The rail leaves the layout and becomes a puck anchored above the user panel. It grows
+// upward on hover and collapses when the pointer leaves.
+
+:root {
+  /* Nothing reserves the rail's column any more, so the channel list starts at the edge. */
+  --custom-guild-list-width: 0px;
+}
+
+#app-mount .guilds__5e434 {
+  position: fixed;
+  /* Above the channel list and the panels: both are translucent, and without this the rail
+   * shows through them while the pointer lands on them. */
+  z-index: 100;
+  top: auto;
+  left: calc(var(--server-spacing) / 2);
+  bottom: calc(var(--custom-app-panels-height, 0px) + var(--server-spacing));
+  /* Collapsed it is a circle around one icon; open it widens to fit a folder. */
+  width: calc(var(--server-size) + 2px);
+  /* max-height follows the content while clipping the collapsed state. */
+  max-height: calc(var(--server-size) + 2px);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* No zoom and no transform: zoom paints nothing outside its box and transform turns the rail
+   * into a backdrop root, which cuts the blur off from the app behind it. */
+  background: transparent;
+  /* Starting at 0 is what lets the blur travel with the same timing as the height. */
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+  /* Transparent at rest so the puck keeps its size when the hover edge appears. */
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transition:
+    max-height var(--transition),
+    width var(--transition),
+    border-radius var(--transition),
+    border-color var(--transition),
+    background-color var(--transition),
+    backdrop-filter var(--transition);
+  /* The delay is on the way out only: opening is immediate. */
+  transition-delay: 0.3s;
+}
+
+/* Open state: the whole treatment, with no delay so the hover answers at once. */
+#app-mount .guilds__5e434:hover {
+  max-height: min(80vh, 720px);
+  width: calc(var(--server-size) + var(--server-spacing));
+  border-radius: var(--radius-sm);
+  /* A folder popout is wider than the puck; clipping it would cut it in half. */
+  overflow: visible;
+  border-color: var(--accent);
+  /* Low alpha on purpose: at --bg-primary alpha the backdrop blur is invisible. */
+  background: hsl(0 0% 10% / calc(var(--opacity) * 0.7));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* The group needs a definite width: the item inside asks for 100%, and a percentage of an
+ * auto-width box collapses to zero, which left the folder hanging off the left edge. */
+#app-mount .guilds__5e434 .folderGroup__48112 {
+  width: 100%;
+}
+
+/* The folder header spans the rail and the button inside it is 48px, so the centring has to
+ * happen on the header: centring the 48px button itself leaves it at the left edge. */
+#app-mount .guilds__5e434 .folderHeader__48112 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Guilds and folders live in the tree's groups; the badge is what CSS can see, not its
+ * number, so among several the DOM order decides. */
+#app-mount
+  .tree_ef3116
+  .stack_dbd263[role='group']
+  > :is(.listItem__650eb, .folderGroup__48112):has([class*='numberBadge']) {
+  order: -1;
+}
+
+/* A dot on the corner: CSS cannot add up the numbers, but it can say one is pending. Kept
+ * inside the circle, or the rounded clip would eat it. */
+#app-mount .guilds__5e434:has([class*='numberBadge'])::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  inset-inline-end: 15%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--background-feedback-notification, hsl(359 87% 60%));
+  box-shadow: 0 0 0 2px hsl(0 0% 10%);
+}
+
+/* The list scrolls inside the puck; the rail's max-height is what animates. The scrollbar is
+ * already hidden by the rail rules. */
+#app-mount .guilds__5e434:hover .scroller_ef3116 {
+  max-height: min(80vh, 720px);
+  overflow-y: auto;
+}

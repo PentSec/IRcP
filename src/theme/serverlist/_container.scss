@@ -7,14 +7,9 @@
 #app-mount .guilds__5e434 {
   background: var(--bg-primary);
   border-right: 1px solid var(--bg-border);
-  /* The Discord button has no gap above it. --server-spacing matches the item spacing, and
- * padding inside the zoom scales with it, so it is not divided. */
+  /* The Discord button has no gap above it, so the rail carries the top spacing itself. */
   padding-top: var(--server-spacing, 16px);
-  /* The rail is scaled with zoom so icons, nav and column width shrink together.
- * Tuned by --irc-guilds-zoom. */
-  zoom: var(--irc-guilds-zoom, 0.7);
-  /* Divided by the zoom: margin-bottom sits inside the scaled box. */
-  margin-bottom: calc(var(--custom-app-panels-height) / var(--irc-guilds-zoom, 0.7));
+  margin-bottom: var(--custom-app-panels-height);
 }
 
 /* scrollbar-gutter: stable reserves width for a bar that is never visible and pushes the
