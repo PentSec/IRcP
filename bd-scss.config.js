@@ -1,5 +1,6 @@
 /** @type {import('bd-scss/lib/config').Config} */
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 
 // Where `dev` drops the single-file build.
@@ -9,11 +10,34 @@ import path from 'node:path';
 // `ENOENT: mkdir ''`. The folder can also simply not exist yet: Vencord only creates
 // `themes/` the first time it is opened. So resolve it here, creating it for dev, and
 // fall back to a local .dev/ instead of crashing anywhere else.
+//
+// The home folder comes from the environment or from the account database: HOME is unset in
+// plenty of CI images, and Electron keeps its data under %APPDATA% and Application Support.
+const CLIENTS = ['Vencord', 'vesktop', 'Vesktop'];
+
+const homeFolder = () => {
+  if (process.env.HOME) return process.env.HOME;
+  try {
+    return os.homedir();
+  } catch {
+    return undefined;
+  }
+};
+
+const configRoots = (home) => {
+  if (!home) return [];
+  const roots = [];
+  if (process.env.XDG_CONFIG_HOME) roots.push(process.env.XDG_CONFIG_HOME);
+  if (process.platform === 'darwin') roots.push(path.join(home, 'Library', 'Application Support'));
+  if (process.platform === 'win32') roots.push(process.env.APPDATA ?? path.join(home, 'AppData', 'Roaming'));
+  if (!process.env.XDG_CONFIG_HOME) roots.push(path.join(home, '.config'));
+  roots.push(path.join(home, '.local', 'share'));
+  return roots;
+};
+
 const resolveThemesFolder = () => {
-  const home = process.env.HOME;
-  const bases = [process.env.XDG_CONFIG_HOME || path.join(home, '.config'), path.join(home, '.local', 'share')];
-  for (const base of bases) {
-    for (const client of ['Vencord', 'vesktop', 'Vesktop']) {
+  for (const base of configRoots(homeFolder())) {
+    for (const client of CLIENTS) {
       const dir = path.join(base, client);
       if (fs.existsSync(dir)) return path.join(dir, 'themes');
     }
@@ -41,9 +65,10 @@ export default {
   github: { profile: 'PentSec', repo: 'IRcP' },
   deploy: { origin: 'https://jeff.is-a.dev' },
 
-  // Fonts are a separate file on purpose: 460 KB of base64 that nobody needs on every
-  // theme load. dist: true publishes fonts.css and imports it from irc.theme.css;
-  // dev: true inlines it so `dev` keeps producing one self-contained file.
+  // Fonts are a separate file on purpose: 163 KB of base64 (123 KB compressed) with its own
+  // cache entry, so a change to the body does not re-download them. dist: true publishes
+  // fonts.css and imports it from irc.theme.css; dev: true inlines it so `dev` keeps
+  // producing one self-contained file.
   addons: [{ target: 'src/addons/_fonts.scss', name: 'fonts', dist: true, dev: true }],
 
   // bd-scss always writes a BetterDiscord copy as well. Pointing both at the same folder

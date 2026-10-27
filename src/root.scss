@@ -47,20 +47,20 @@ $irc-background-file: map.get($irc-backgrounds, $irc-background);
   --irc-theme: 1; /* marker: if the computed value reads 1, this file parsed and applied */
 
   /* App surface */
-  /* Only declared when the choice differs from what the body already loads, so a single
-   * downloaded theme file still has a wallpaper. */
+  /* Only declared when the choice differs from the body's own fallback. The file it names has
+   * to sit next to the theme, so a copy of this file used on its own needs it too. */
   @if $irc-background-file != $irc-background-default {
     --background-image: url('#{$irc-background-file}');
   }
-  --background-blur: 8px; /* Blur intensity of --background-image | Must end in px | Default: 0px */
+  --background-blur: 8px; /* Blur applied to --background-image. Must end in px */
   --accent: hsl(164 100% 45%); /* Colour used around the app. | Any valid CSS unit. | Default: hsl(164 100% 45%) */
   --accent-text: hsl(0 0 0%); /* Colour used on solid or high contrast accent backgrounds. | hsl(0 0 10%) */
   --glow-intensity: 1; /* Glow intensity around the app; 0 disables it. Default: 1 */
-  --members-width: 230px; /* Width of the members list. | Default: 280px */
-  --guilds-width: 80px; /* Width of the server list. | Default: 105px */
-  --server-icon-size: 40; /* Size of the servers inside the server list. | Default: 46px */
+  --members-width: 230px; /* Width of the members list */
+  --guilds-width: 80px; /* No effect: nothing reads it, because the rail pins --custom-guild-list-width to 0. */
+  --server-icon-size: 40; /* Size of the servers inside the server list, in px */
   --irc-avatar-size: 1.2em; /* avatar box in a message row. 1em keeps it inside the line; anything larger grows the row */
-  --opacity: 0.78; /* Opacity of overall app. | Default: .85 */
+  --opacity: 0.78; /* Opacity of the app panels */
   /* Presence rings */
   --irc-status-small-spacing: 2px; /* gap between avatar and ring on small avatars (member list) */
   --irc-status-medium-spacing: 4px; /* same, medium avatars (popouts) */

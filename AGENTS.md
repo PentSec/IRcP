@@ -25,6 +25,7 @@ holds generated files and is written only by CI.
 | `src/addons/_fonts.scss`     | Cascadia `@font-face` with base64 subsets (163 KB), generated                      |
 | `src/assets/bg*.png, *.jpg`  | wallpapers, published next to the theme                                            |
 | `scripts/postbuild.mjs`      | everything bd-scss does not do (see below)                                         |
+| `scripts/minify-css.mjs`     | compacts the published body, refusing any output that is not equivalent            |
 | `scripts/dev.mjs`            | forces the initial dev build, which bd-scss skips                                  |
 | `scripts/verify-cascade.mjs` | fails when a rule moves past a rule it can fight with                              |
 | `THIRD-PARTY-NOTICES.md`     | MIT texts for the reused CSS, OFL/CC-BY for font and icon                          |
@@ -50,9 +51,17 @@ holds generated files and is written only by CI.
 - `reroll` rewrites hashed classes only in `src/**/_*.scss`.
 
 `scripts/postbuild.mjs` covers the gap: it rewrites the `github.io` import to
-`deploy.origin`, restores `@name IRcP`, copies the wallpapers and the license notices, writes
-`.nojekyll` and fails the build if any of that did not happen. Never hand-edit `dist/`.
-A dev build skips postbuild, so it keeps `@name irc`; only the published file is renamed.
+`deploy.origin`, restores `@name IRcP`, compacts the body through `scripts/minify-css.mjs`,
+copies the wallpapers and the license notices, writes `.nojekyll` and fails the build if any
+of that did not happen. Never hand-edit `dist/`.
+A dev build skips postbuild, so it keeps `@name irc` and keeps its readable body; only the
+published files are renamed and compacted.
+
+The minifier never rewrites a declaration value and never removes a `Derived from … MIT`
+notice: it drops the other comments and the indentation, then re-parses its own output and
+fails the build unless rules, selectors, properties, values and `!important` flags are
+unchanged and in the same order. `irc.theme.css` and `fonts.css` are left alone on purpose —
+the first is the file users open to change a variable, the second explains its licensing.
 
 ## How Vencord loads a theme (verified in `~/.config/Vencord/dist`)
 
@@ -191,7 +200,7 @@ release archive is not in the repository.
   property must keep their relative order, and the declaration set does not prove it.
   `bun run verify:cascade` diffs the build against the published `irc.css` (or
   `-- --baseline <file>`) and fails on an inverted pair; CI runs it before publishing.
-  The split that produced this layout kept all 1275 pairs in order.
+  The split that produced this layout kept every conflicting pair in order.
 - `bun` only. One lockfile. `format:check` must pass; formatting changes get their own
   commit.
 - The deployed URLs are part of the contract: `irc.theme.css` is what users paste into

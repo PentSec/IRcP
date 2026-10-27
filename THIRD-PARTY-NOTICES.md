@@ -10,9 +10,9 @@ File paths below point at the sources in `src/`. The built files that ship to us
 
 ## SoftX
 
-Files: `src/root.scss` (variable block and surface rules) and `src/theme/app/`,
+Files: `src/root.scss` (the variable block) and `src/theme/app/`,
 `src/theme/serverlist/`, `src/theme/sidebar/`, `src/theme/chat/`, `src/theme/members/`,
-`src/theme/popouts/`.
+`src/theme/messages/`, `src/theme/popouts/`.
 
 Copyright (c) 2021 DiscordStyles
 https://github.com/DiscordStyles/SoftX

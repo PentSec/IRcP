@@ -17,6 +17,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import config from '../bd-scss.config.js';
+import { minifyCss } from './minify-css.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -55,6 +56,17 @@ if (theme.includes('github.io')) {
 const renamed = theme.replace(`@name ${name}\n`, '@name IRcP\n');
 if (renamed === theme) fail(`could not find "@name ${name}" in ${themeFile}`);
 write(themeFile, renamed);
+
+// 2b ------------------------------------------------------------------------
+// irc.css is the body: nobody reads it, everybody downloads it. The entry file stays
+// readable because it is the one users open to change a variable. The minifier refuses to
+// publish an output whose rules, values or order differ from the build.
+const bodyFile = `${name}.css`;
+const body = read(bodyFile);
+const compactBody = minifyCss(body, bodyFile);
+write(bodyFile, compactBody);
+const bytes = (text) => Buffer.byteLength(text, 'utf8');
+console.log(`[postbuild] ${bodyFile}: ${bytes(body)} → ${bytes(compactBody)} bytes`);
 
 // 3 -------------------------------------------------------------------------
 const assets = path.join(root, 'src', 'assets');

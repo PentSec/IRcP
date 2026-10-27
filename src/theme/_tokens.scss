@@ -6,7 +6,6 @@
   --channel-glow-intensity: var(--glow-intensity);
   --members-glow-intensity: var(--glow-intensity);
   --input-glow-intensity: var(--glow-intensity);
-  --server-glow-intensity: var(--glow-intensity);
   --foreground-blur: 20px;
   --foreground-brightness: 1;
   --shadow: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);
@@ -27,7 +26,6 @@
   --textbox-hover-border: hsl(0 0% 100% / 0.1);
   --chat-bottom-spacing: 16px;
   --server-size: calc(var(--server-icon-size) * 1px);
-  --custom-guild-list-width: var(--guilds-width);
   --custom-member-list-width: var(--members-width);
   --custom-message-avatar-size: var(--irc-avatar-size, 1em);
   --custom-message-margin-horizontal: var(--space-xxl);
