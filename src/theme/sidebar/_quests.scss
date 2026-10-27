@@ -1,0 +1,50 @@
+// Quests
+//
+// The promo bar above the user panel. Discord paints it as a card with a blue wash and a
+// hover border drawn by an overlay; both are replaced so it reads like the rest of the rail.
+
+#app-mount .wrapper__0d616 {
+  background: var(--bg-secondary);
+  border-radius: 0;
+  position: relative;
+}
+
+/* The hover edge is a layer of its own: the card inside paints over its parent's border, so a
+ * border here would end up behind the card. */
+#app-mount .wrapper__0d616::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+#app-mount .wrapper__0d616:hover::after {
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l / 0.25);
+}
+
+#app-mount .overlay__0d616 {
+  display: none;
+}
+
+/* The wash is inline and blue; the accent keeps the bar inside the palette. */
+#app-mount .postEnrollmentBackground__1699b {
+  background-image: linear-gradient(90deg, transparent, hsl(from var(--accent) h s l / 0.12)) !important;
+}
+
+#app-mount .divider__1699b {
+  background: var(--bg-border);
+}
+
+/* Secondary copy is metadata; the hint above it stays at full strength. */
+#app-mount .questProgressHint_ae7810[data-text-variant='text-xs/normal'],
+#app-mount .headerText__1ba69 {
+  color: var(--irc-dim) !important;
+}
+
+/* The ring is the only state in the bar, so it carries the accent. */
+#app-mount .progressBar__146e2 circle:last-of-type {
+  stroke: var(--accent);
+}
