@@ -28,7 +28,7 @@ export default {
   meta: {
     name: 'irc',
     author: 'PentSec',
-    version: '2.0.0-irc.64',
+    version: '2.0.0-irc.65',
     description:
       'A Discord theme shaped like a terminal IRC client: monospace log lines, dim metadata, translucent panels.',
     source: 'https://github.com/PentSec/IRcP'
