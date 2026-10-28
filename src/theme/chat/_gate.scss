@@ -1,0 +1,27 @@
+@use '../mixins' as *;
+
+// Gated channel
+//
+// The age gate replaces the message list, so it belongs to the chat column and not to a
+// panel of its own.
+
+/* The gate paints nothing: the chat column behind it is the background, as in the rest of
+ * the theme. */
+#app-mount .scroller_f35c3c,
+#app-mount .wrapper_f35c3c,
+#app-mount .gatedContent__7184c {
+  background: transparent;
+  @include irc-blur;
+}
+
+/* The heading carries the accent the other panel headers use. */
+#app-mount .gatedContent__7184c .title__7184c {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+}
+
+/* The body copy is inline-coloured. Buttons need nothing: the control tokens already paint
+ * the secondary as an accent tint and the primary as an accent fill. */
+#app-mount .gatedContent__7184c .description__7184c {
+  color: var(--irc-dim) !important;
+}

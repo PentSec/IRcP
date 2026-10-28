@@ -1,0 +1,58 @@
+@use '../mixins' as *;
+
+// Voice connecting screen
+//
+// Shown in the chat area while a voice call connects. Discord's spinner is a webm asset, so
+// it stays as it is; the label below it is a pseudo-element, which is why it cannot hang
+// off the video (a replaced element takes no ::before).
+
+/* The screen paints nothing; the chat column behind it is the background. */
+#app-mount .container_a2f514,
+#app-mount .container_a2f514 .problems_a2f514 {
+  background: transparent;
+  @include irc-blur;
+}
+
+/* The stack keeps its distance from the container edges. */
+#app-mount .container_a2f514 .content_a2f514 {
+  padding: var(--space-md);
+}
+
+/* The spinner leads the stack, centred. */
+#app-mount .container_a2f514 .spinner_a2f514 {
+  display: block;
+  margin-inline: auto;
+}
+
+/* The label hangs off the tip block, not off the container: on the container it would be
+ * the first child and would render above the spinner. The padding is what separates it
+ * from the spinner above and from "Did you know" below. */
+#app-mount .container_a2f514 .text_a2f514::before {
+  content: '▊ RECONNECTION ';
+  display: block;
+  padding-block: var(--space-sm);
+  color: var(--accent);
+  font-size: 2em;
+  line-height: var(--irc-line-height);
+  animation: irc-cursor 1.1s steps(2, start) infinite;
+}
+
+@keyframes irc-cursor {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app-mount .container_a2f514 .text_a2f514::before {
+    animation: none;
+  }
+}
+
+/* The tip label and the footer line are metadata; the tip body keeps the normal text
+ * colour. The two links need nothing: --text-link is already mapped to the accent and both
+ * icons paint with currentColor. */
+#app-mount .container_a2f514 .tipTitle_a2f514,
+#app-mount .container_a2f514 .problemsText_a2f514 {
+  color: var(--irc-dim);
+}
