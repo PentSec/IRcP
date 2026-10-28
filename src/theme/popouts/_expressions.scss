@@ -1,0 +1,257 @@
+@use '../mixins' as *;
+
+// Expression picker
+//
+// The GIF, sticker and emoji panes. Only colours and surfaces change here: the picker's
+// shapes are Discord's and forcing them fights the rounded popout it already lives in. Each
+// pane is its own module (fed6d3, 8ef02/e94b8c, c0e32c), so a rule has to be scoped per pane
+// even when the class names look familiar.
+
+/* Tabs: the active pane is an accent label, not a box. */
+#app-mount .contentWrapper__08434 .navButton__08434 {
+  color: var(--irc-dim);
+}
+
+#app-mount .contentWrapper__08434 .navButton__08434:hover {
+  color: var(--text-normal);
+}
+
+#app-mount .contentWrapper__08434 .navButtonActive__08434 {
+  color: var(--accent);
+}
+
+/* Search field: the composer's textbox, as in every other picker and settings page. The focus
+ * state is set once for the whole picker further down, so it is not repeated here. */
+#app-mount .emojiPicker_c0e32c .container__75098 {
+  @include irc-field;
+}
+
+#app-mount .emojiPicker_c0e32c .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+/* A category header is a group label: a panel bar over the transparent frame, with the
+ * hairline that closes it, exactly like the sticker packs. */
+#app-mount .emojiPicker_c0e32c .wrapper__14245.header_c656ac {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .emojiPicker_c0e32c .headerLabel__14245,
+#app-mount .emojiPicker_c0e32c .headerIcon__14245,
+#app-mount .emojiPicker_c0e32c .headerCollapseIcon__14245 {
+  color: var(--irc-dim);
+}
+
+/* One cell: hover is the message tint, the picked one is the accent. The radius stays
+ * Discord's. */
+#app-mount .emojiPicker_c0e32c .emojiItem_fc7141:hover {
+  background: var(--background-message-hover);
+}
+
+#app-mount .emojiPicker_c0e32c .emojiItemSelected_fc7141 {
+  background: hsl(from var(--accent) h s l / 0.2);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+/* The rail on the right holds the guild icons; the selected one takes the accent. */
+#app-mount .categoryList_c0e32c .categoryItem_b9ee0c {
+  color: var(--irc-dim);
+}
+
+#app-mount .categoryList_c0e32c .categoryItem_b9ee0c:hover {
+  color: var(--text-normal);
+  background: var(--background-message-hover);
+}
+
+#app-mount .categoryList_c0e32c .categoryItemDefaultCategorySelected_b9ee0c,
+#app-mount .categoryList_c0e32c .categoryItemDefaultCategorySelected_b9ee0c .categoryIcon_b9ee0c {
+  color: var(--accent);
+}
+
+/* The inspector names the emoji under the cursor. */
+#app-mount .emojiPicker_c0e32c .inspector_aeaaeb {
+  background: transparent;
+  border-top: 1px solid var(--bg-border);
+  @include irc-blur;
+}
+
+#app-mount .emojiPicker_c0e32c .titlePrimary_aeaaeb {
+  color: var(--accent);
+}
+
+/* The picker is a bare panel: no surface of its own, so the wallpaper shows through, and the
+ * accent edge marks the frame. */
+#app-mount .contentWrapper__08434 {
+  background: transparent;
+  border: 1px solid var(--accent);
+  @include irc-blur;
+}
+
+/* Every wrapper inside paints nothing, or it would cover that transparent frame. */
+#app-mount .contentWrapper__08434 .wrapper_c0e32c,
+#app-mount .contentWrapper__08434 .emojiPicker_c0e32c,
+#app-mount .contentWrapper__08434 .header_c0e32c,
+#app-mount .contentWrapper__08434 .bodyWrapper_c0e32c,
+#app-mount .contentWrapper__08434 .categoryList_c0e32c {
+  background: transparent;
+  @include irc-blur;
+}
+
+/* Stickers pane --------------------------------------------------------------- */
+
+/* Same frame, same rule: the accent edge is the only border, so nothing inside paints. */
+#app-mount .wrapper__8ef02,
+#app-mount .wrapper__8ef02 .header__8ef02,
+#app-mount .wrapper__8ef02 .listWrapper__8ef02,
+#app-mount .wrapper__8ef02 .wrapper_e94b8c,
+#app-mount .wrapper__8ef02 .listWrapper_e94b8c,
+#app-mount .categoryList__3ad28 {
+  background: transparent;
+}
+
+/* Search field: the composer's textbox, as in the emoji pane. */
+#app-mount .wrapper__8ef02 .container__75098 {
+  @include irc-field;
+}
+
+#app-mount .wrapper__8ef02 .container__75098:focus-within {
+  border-color: var(--accent);
+}
+
+#app-mount .wrapper__8ef02 .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+/* Pack headers reuse the emoji header classes; only the wrapper class changes, so they get
+ * the same hairline and the same dim label. */
+#app-mount .wrapper__8ef02 .wrapper__14245.packHeader_e94b8c {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .wrapper__8ef02 .headerLabel__14245,
+#app-mount .wrapper__8ef02 .headerIcon__14245,
+#app-mount .wrapper__8ef02 .headerCollapseIcon__14245 {
+  color: var(--irc-dim);
+}
+
+/* One sticker: hover is the message tint, the inspected one is the accent. The inline size
+ * and padding stay, and so does Discord's radius. */
+#app-mount .wrapper__8ef02 .sticker_c6367b:hover .inspectedIndicator_c6367b {
+  background: var(--background-message-hover);
+}
+
+#app-mount .wrapper__8ef02 .stickerInspected_c6367b .inspectedIndicator_c6367b {
+  background: hsl(from var(--accent) h s l / 0.2);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+/* The inspector names the sticker, exactly like the emoji one. */
+#app-mount .wrapper__8ef02 .inspector_aeaaeb {
+  border-top: 1px solid var(--bg-border);
+  background: transparent;
+  @include irc-blur;
+}
+
+#app-mount .wrapper__8ef02 .titlePrimary_aeaaeb {
+  color: var(--accent);
+}
+
+#app-mount .wrapper__8ef02 .titleSecondary_aeaaeb {
+  color: var(--irc-dim);
+}
+
+/* The sticker rail: dim, hover tint, the selected entry in accent. */
+#app-mount .categoryList__3ad28 .stickerCategory__3ad28 {
+  color: var(--irc-dim);
+}
+
+#app-mount .categoryList__3ad28 .stickerCategory__3ad28:hover {
+  color: var(--text-normal);
+  background: var(--background-message-hover);
+}
+
+#app-mount .categoryList__3ad28 .stickerCategoryGenericSelected__3ad28,
+#app-mount .categoryList__3ad28 .stickerCategoryGenericSelected__3ad28 .stickerCategoryGenericIcon__3ad28 {
+  color: var(--accent);
+}
+
+#app-mount .categoryList__3ad28 .standardStickerShortcut__3ad28 {
+  color: var(--irc-dim);
+}
+
+#app-mount .categoryList__3ad28 .standardStickerShortcut__3ad28:hover {
+  color: var(--accent);
+}
+
+/* GIFs pane ------------------------------------------------------------------- */
+
+/* Same frame again: nothing inside paints, the accent edge stays the only border. */
+#app-mount .container_fed6d3,
+#app-mount .container_fed6d3 .header_fed6d3,
+#app-mount .container_fed6d3 .content_fed6d3,
+#app-mount .container_fed6d3 .container_d02962,
+#app-mount .container_fed6d3 .content__99f8c {
+  background: transparent;
+}
+
+/* Search and the provider select share the field recipe of the other panes. */
+#app-mount .container_fed6d3 .container__75098,
+#app-mount .container_fed6d3 .selectField__0edde {
+  @include irc-field;
+}
+
+#app-mount .container_fed6d3 .container__75098:focus-within,
+#app-mount .container_fed6d3 .selectField__0edde:hover {
+  border-color: var(--accent);
+}
+
+#app-mount .container_fed6d3 .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+#app-mount .container_fed6d3 .chevronIcon__0edde {
+  color: var(--irc-dim);
+}
+
+/* The Favorites tile ships a blurple wash under that name; it becomes the accent wash so
+ * the featured tile belongs to the theme. */
+#app-mount .container_fed6d3 .categoryFadeBlurple_d02962 {
+  background: linear-gradient(0deg, hsl(from var(--accent) h s l / 0.75), hsl(from var(--accent) h s l / 0.15));
+}
+
+/* A tile takes the accent as a ring when hovered or focused; its size stays inline. */
+#app-mount .container_fed6d3 .result__2dc39:hover,
+#app-mount .container_fed6d3 .result__2dc39[data-focused='true'] {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* The picker's text fields ---------------------------------------------------- */
+
+/* Discord paints its focus ring in blurple on the input itself, which is what shows as a blue
+ * edge next to the accent border. The ring is removed on both the wrapper and the input; the
+ * accent edge and its glow replace it. This is scoped to the picker so no other field moves. */
+#app-mount .contentWrapper__08434 .container__75098,
+#app-mount .contentWrapper__08434 .container__75098 .input__75098 {
+  box-shadow: none;
+  outline: none;
+  border-color: var(--textbox-border);
+}
+
+#app-mount .contentWrapper__08434 .container__75098:focus-within {
+  @include irc-field-focus;
+}
+
+/* The provider select draws the same blurple ring, and it comes from the focus target inside
+ * it, so the ring is cleared on the chain and the accent edge takes over. */
+#app-mount .contentWrapper__08434 .selectField__0edde,
+#app-mount .contentWrapper__08434 .selectField__0edde .focusTarget__54e4b {
+  box-shadow: none;
+  outline: none;
+}
+
+#app-mount .contentWrapper__08434 .selectField__0edde:hover,
+#app-mount .contentWrapper__08434 .selectField__0edde:focus-within {
+  @include irc-field-focus;
+}

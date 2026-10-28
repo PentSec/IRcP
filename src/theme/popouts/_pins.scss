@@ -1,0 +1,69 @@
+@use '../mixins' as *;
+
+// Pinned messages
+//
+// Discord reuses these classes for every message popout (inbox, mentions), so the skin
+// covers all of them. The rows reuse the chat row classes and already read as log lines;
+// only the frame, the header and the accessories are Discord's.
+
+/* The wrap paints an opaque surface with square children; the frame is the panel and
+ * clips the header bar to the same corner. */
+#app-mount .messagesPopoutWrap__432f4 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-lg);
+  @include irc-blur;
+  overflow: hidden;
+}
+
+/* Discord's header is its own bar, so it keeps the hairline the search panel uses. */
+#app-mount .messagesPopoutWrap__432f4 .header__432f4 {
+  background: transparent;
+  border-bottom: 1px solid var(--bg-border);
+  border-radius: 0;
+}
+
+/* The icon is a presentation attribute, which any CSS rule beats. */
+#app-mount .messagesPopoutWrap__432f4 .titleContainer__432f4 path {
+  fill: var(--accent);
+}
+
+/* The title colour is inline, hence the flag. The glow matches the channel names. */
+#app-mount .messagesPopoutWrap__432f4 .titleContainer__432f4 div {
+  color: var(--accent) !important;
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+}
+
+/* Only when there are pins: the rows carry their own clock gutter, so the card padding
+ * would double the left inset. The empty state keeps Discord's. */
+#app-mount .messagesPopoutWrap__432f4 .messagesPopout__432f4:has(.messageGroupWrapper__432f4) {
+  padding: 0;
+}
+
+/* One pin per block: no card box, and the gap between pins is the only separation the
+ * frame needs. */
+#app-mount .messagesPopoutWrap__432f4 .messageGroupWrapper__432f4 {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-xs);
+}
+
+#app-mount .messagesPopoutWrap__432f4 .messageGroupWrapper__432f4:hover {
+  background: var(--background-message-hover);
+}
+
+/* A hairline keeps two adjacent pins from reading as one group. */
+#app-mount .messagesPopoutWrap__432f4 .messageGroupWrapper__432f4 + .messageGroupWrapper__432f4 {
+  border-top: 1px solid var(--fg-secondary);
+}
+
+/* Discord paints a second panel behind an embed and caps it at 332px inline, which is most
+ * of a narrow popout. The left edge keeps its embed colour. */
+#app-mount .messagesPopoutWrap__432f4 .embedFull__623de {
+  background: var(--fg-primary);
+  border-radius: var(--radius-xs);
+  max-width: 100% !important;
+}

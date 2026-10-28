@@ -1,0 +1,83 @@
+@use '../mixins' as *;
+
+// Thread browser
+//
+// The popout that lists a channel's threads. Its frame class is shared by the other
+// browser popouts, so the panel is themed once and the rest hangs off it.
+
+/* The frame is the panel, and the header bar keeps the hairline the other panels use. */
+#app-mount .browser_d98031 {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-lg);
+  @include irc-blur;
+  overflow: hidden;
+}
+
+#app-mount .container_d9c882 .header_d9c882 {
+  background: transparent;
+  border-bottom: 1px solid var(--bg-border);
+}
+
+/* The icon paints with currentColor, so it follows the header. */
+#app-mount .container_d9c882 .threadIcon_d9c882 {
+  color: var(--accent);
+}
+
+/* The title colour comes from a shared heading class, not inline, so no flag is needed. */
+#app-mount .container_d9c882 .title_d9c882 {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+}
+
+#app-mount .container_d9c882 .divider_d9c882 {
+  background: var(--fg-border);
+}
+
+/* The search box is the composer textbox at header scale. */
+#app-mount .container_d9c882 .container__75098 {
+  @include irc-field;
+}
+
+#app-mount .container_d9c882 .container__75098:focus-within {
+  @include irc-field-focus;
+}
+
+#app-mount .container_d9c882 .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+/* The list paints nothing; the row hairlines delimit it. */
+#app-mount .browser_d98031 .list_c441f0 {
+  background: transparent;
+}
+
+/* The group label is inline-coloured, hence the flag. */
+#app-mount .browser_d98031 .sectionHeader_c441f0 {
+  color: var(--irc-dim) !important;
+  font-weight: normal;
+}
+
+/* A row is a log line, so it loses Discord's card. */
+#app-mount .browser_d98031 .container__6764b {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: var(--space-xs) var(--space-md);
+}
+
+#app-mount .browser_d98031 .container__6764b:hover {
+  background: var(--background-message-hover);
+}
+
+/* Adjacent rows separate with a hairline instead of a gap, as forum rows do. */
+#app-mount .browser_d98031 .container__6764b + .container__6764b {
+  border-top: 1px solid var(--fg-secondary);
+}
+
+/* The metadata line is inline-coloured too; a starter with a role colour keeps it
+ * because that colour is inline on an inner element. */
+#app-mount .browser_d98031 .subtext__6764b {
+  color: var(--irc-dim) !important;
+}
