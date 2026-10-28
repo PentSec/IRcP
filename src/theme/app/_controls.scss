@@ -6,3 +6,43 @@
 #app-mount .switchIndicator_a28278[style*='88, 101, 242'] {
   background-color: var(--accent) !important;
 }
+
+/* A select opens a floating listbox, so it takes the menu surface: panel, accent edge, blur
+ * and shadow, the same set .menu_c1e9c4 gets. */
+#app-mount .selectDropdown__0edde {
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(var(--foreground-blur));
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
+/* Rows keep Discord's shape; the tint and the pill carry the signal instead. */
+#app-mount .selectDropdown__0edde .listBoxItem__2e223 {
+  position: relative;
+}
+
+#app-mount .selectDropdown__0edde .listBoxItem__2e223:hover,
+#app-mount .selectDropdown__0edde .listBoxItem__2e223[data-focus-visible='true'] {
+  background: var(--background-message-hover);
+}
+
+#app-mount .selectDropdown__0edde .listBoxItem__2e223[aria-selected='true'] {
+  background: hsl(from var(--accent) h s l / 0.1);
+  color: var(--accent);
+}
+
+#app-mount .selectDropdown__0edde .listBoxItem__2e223[aria-selected='true']::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--channel-pill-width);
+  height: 100%;
+  background: var(--accent);
+}
+
+#app-mount .selectDropdown__0edde .selectedIcon__2e223 {
+  color: var(--accent);
+}
