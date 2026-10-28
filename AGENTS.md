@@ -15,10 +15,10 @@ holds generated files and is written only by CI.
 | `src/theme/app/`             | background layer, titlebar, toolbar, window controls                               |
 | `src/theme/serverlist/`      | guild rail: folders, items, unread pill, icons                                     |
 | `src/theme/sidebar/`         | channel and DM lists, user panel                                                   |
-| `src/theme/chat/`            | message area, composer, dividers, notice bars, mentions                            |
+| `src/theme/chat/`            | message area, composer, dividers, notice bars, mentions, gates, connecting screen  |
 | `src/theme/members/`         | member list column, rows and role groups                                           |
-| `src/theme/popouts/`         | server and channel popouts                                                         |
-| `src/theme/messages/`        | one-line message rows: row, clock, runs, reply, nick, avatar                       |
+| `src/theme/popouts/`         | server/channel/thread/pinned popouts, modals, menus, tooltips                      |
+| `src/theme/messages/`        | one-line message rows: row, clock, runs, reply, nick, avatar, skeleton             |
 | `src/theme/forum/`           | forum posts as log lines                                                           |
 | `src/theme/status/`          | presence rings, glow and the avatar exceptions                                     |
 | `src/theme/_wiring.scss`     | maps `--irc-font` onto the variables Discord reads; not configuration              |
@@ -140,6 +140,16 @@ right-click → Copy → Copy outerHTML) plus what they see on screen.
 That pairing — real DOM + what the user reports — is faster and more accurate than any
 reproduction, because the DOM carries the classes the build actually emits and the user
 carries the perception the CSS has to satisfy.
+
+Transient UI (select dropdowns, popovers, menus) closes the moment DevTools takes focus, so
+its classes cannot be copied by hand. Three ways to hold it still:
+
+- DevTools → Rendering → tick "Emulate a focused page": the document never loses focus, so
+  the menu stays open and the element picker works normally. Cheapest option.
+- Run `setTimeout(() => { debugger }, 4000)` in the console and open the menu within four
+  seconds. The pause freezes the DOM with the menu open; resume with `F8`.
+- A `MutationObserver` on `document.body` that snapshots added nodes works when neither is
+  available (non-debuggable builds), but it needs the snippet and a second call to read it.
 
 ## Verify without restarting Discord
 
