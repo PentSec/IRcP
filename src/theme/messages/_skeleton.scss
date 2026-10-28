@@ -1,0 +1,60 @@
+// Loading skeleton
+//
+// A channel with nothing loaded yet is filled with placeholder rows. Each blob keeps
+// Discord's inline width and its inline opacity, because the shimmer animates that
+// opacity, so only the shape and the row anatomy change here: a clock column, a nick
+// block and a body block, on the same one-line rhythm as a real message.
+
+/* One bar per line, sharp like a log row instead of Discord's rounded pills. The accent is
+ * the base colour, not white: the inline opacity dims it to 6-19%, which is exactly the
+ * shimmer, so anything neutral here ends up reading as Discord grey. */
+#app-mount .wrapper_d852db .blob_fc8177 {
+  height: 0.75em;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+/* The list gets a plate of its own while it loads. --fg-primary is white at 7,5%: lifts the
+ * block off the chat panel without hiding the wallpaper, which is the ceiling here. */
+#app-mount .wrapper_d852db {
+  background: var(--fg-primary);
+  border-radius: var(--radius-xs);
+}
+
+/* The row carries the clock gutter, exactly like .wrapper_c19a55 does. */
+#app-mount .wrapper_d852db .wrapper_fc8177 {
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-inline-start: var(--irc-ts-gutter);
+  min-height: 0;
+  line-height: var(--irc-line-height);
+}
+
+/* Nick and body share the line; baseline keeps the two bars level. */
+#app-mount .wrapper_d852db .contents_fc8177 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+/* The clock block is pulled into the gutter and clipped to the clock width, mirroring the
+ * real timestamp. The inline width is why the flag is needed. */
+#app-mount .wrapper_d852db .compactTimestamp_fc8177 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--irc-ts-width) !important;
+}
+
+#app-mount .wrapper_d852db .header_fc8177,
+#app-mount .wrapper_d852db .content_fc8177 {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+/* The attachment placeholder is a faint block, not a pill either. */
+#app-mount .wrapper_d852db .attachment_fc8177 {
+  border-radius: 2px;
+  background: hsl(0 0% 100%);
+}
