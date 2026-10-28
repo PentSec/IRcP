@@ -1,0 +1,25 @@
+// Mixins
+//
+// Each one exists because the same block was written by hand in at least three partials.
+// A mixin expands where it is included, so the emitted cascade order and every selector stay
+// exactly as they were: that is why this file uses @mixin and never @extend.
+// Mixins emit no CSS of their own, so this partial is @use'd by the others and never forwarded.
+
+/* The composer's textbox, at field scale. */
+@mixin irc-field($width: 1px) {
+  background: var(--textbox-background);
+  border: #{$width} solid var(--textbox-border);
+}
+
+/* Its focused state: the accent edge and the glow the composer uses. */
+@mixin irc-field-focus($alpha: 0.25) {
+  border-color: var(--accent);
+  box-shadow: 0 0 calc(var(--input-glow-intensity) * 20px) calc(var(--input-glow-intensity) * 5px)
+    hsl(from var(--accent) h s l / #{$alpha});
+}
+
+/* Frosted glass. Both prefixes stay: autoprefixer is not relied on for this one. */
+@mixin irc-blur($radius: var(--foreground-blur)) {
+  -webkit-backdrop-filter: blur(#{$radius});
+  backdrop-filter: blur(#{$radius});
+}
