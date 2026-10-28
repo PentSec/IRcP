@@ -1,0 +1,159 @@
+@use '../mixins' as *;
+
+// Server settings: Channels & Roles
+//
+// The browse page for a guild's channel list. Same shell as the Members page: the page
+// paints nothing, the header is a bar and the rows read as log lines.
+
+/* The page, its header bar and both scrollers paint nothing: the settings panel behind is
+ * the background. The compound selector is deliberate: .container__0b563 IS
+ * .content_f75fb0 on the same node, so a descendant selector would never match it. */
+
+#app-mount .content_f75fb0.container__0b563,
+#app-mount .header__0b563.container__9293f.themed__9293f,
+#app-mount .pageBody__41ed7 {
+  background: transparent !important;
+  @include irc-blur;
+}
+
+/* The page header is a bar with the hairline every other panel uses. */
+#app-mount .container__0b563 .header__0b563 {
+  background: transparent;
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .container__0b563 .icon__9293f {
+  color: var(--accent);
+}
+
+#app-mount .container__0b563 .title__9293f {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+}
+
+/* The selected tab takes the accent as a tint; the shape stays Discord's, because this is a
+ * page with rounded controls and not a log list. */
+#app-mount .container__0b563 .tabBarItem__0b563.item_aa8da2.selected_aa8da2 {
+  background: hsl(from var(--accent) h s l / 0.12);
+  color: var(--accent);
+}
+
+#app-mount .container__0b563 .tabBarItem__0b563.item_aa8da2:not(.selected_aa8da2):hover {
+  background: var(--background-message-hover);
+}
+
+/* The count next to the tab keeps its pill and takes the accent tint. */
+#app-mount .container__0b563 .numberBadge__0b563 {
+  background: hsl(from var(--accent) h s l / 0.15);
+  color: var(--accent);
+  font-weight: normal;
+}
+
+/* Search field: the composer's textbox at field scale, as in the other settings pages. */
+#app-mount .container__0b563 .container__75098 {
+  @include irc-field;
+}
+
+#app-mount .container__0b563 .container__75098:focus-within {
+  @include irc-field-focus;
+}
+
+#app-mount .container__0b563 .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+/* A category row is a group label: dim, with the hairline that separates groups. */
+#app-mount .container__0b563 .categoryRow_e4503a {
+  background: transparent;
+  border-bottom: 1px solid var(--bg-border);
+  padding-block: var(--space-xs);
+}
+
+#app-mount .container__0b563 .categoryText_e4503a {
+  color: var(--irc-dim) !important;
+}
+
+/* Rows keep their rounded shape and only gain the hover tint. */
+#app-mount .container__0b563 .channelRow_e4503a {
+  background: transparent;
+  padding: var(--space-xxs) var(--space-sm);
+}
+
+#app-mount .container__0b563 .channelRow_e4503a:hover {
+  background: var(--background-message-hover);
+}
+
+#app-mount .container__0b563 .separator_e4503a {
+  background: var(--fg-secondary);
+}
+
+/* The channel icon and the "Active N ago" line are metadata. The row name keeps the colour
+ * Discord gives it, because --text-muted there means "not in this channel". */
+#app-mount .container__0b563 .icon__2ea32,
+#app-mount .container__0b563 .channelSubtitle_e4503a {
+  color: var(--irc-dim);
+}
+
+/* View and Open are the row's only action, so they take the accent fill the theme uses for
+ * a primary button. No border and no glow: on a rounded page that reads as a box. */
+#app-mount .container__0b563 .overlay-primary_a22cb0 {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+#app-mount .container__0b563 .overlay-primary_a22cb0:hover {
+  background: hsl(from var(--accent) h s l / 0.85);
+}
+
+/* Customize tab -------------------------------------------------------------- */
+
+/* Every helper line under the questions is inline-coloured, so the flag is the only way in.
+ * This covers the intro copy, the earned-role note and the bio. */
+#app-mount .pageBody__5d7c9 [data-text-variant='text-xs/normal'] {
+  color: var(--irc-dim) !important;
+}
+
+#app-mount .pageBody__5d7c9 .title__5d7c9 {
+  color: var(--irc-dim) !important;
+}
+
+/* The chip's shape belongs to the wrapper — it is the rounded element. Painting the inner
+ * button added a second, square border on top of Discord's blurple one. */
+#app-mount .pageBody__5d7c9 .optionButtonWrapper__270d7 {
+  background: var(--fg-primary);
+  border: 1px solid var(--fg-border);
+}
+
+#app-mount .pageBody__5d7c9 .optionButtonWrapper__270d7:hover {
+  background: hsl(from var(--accent) h s l / 0.1);
+  border-color: var(--accent);
+}
+
+#app-mount .pageBody__5d7c9 .optionButtonWrapper__270d7.selected__270d7 {
+  background: hsl(from var(--accent) h s l / 0.15);
+  border-color: var(--accent);
+}
+
+/* The selected border Discord paints on the inner button is recoloured, not doubled: only
+ * border-color changes, so its width and radius stay as they are. */
+#app-mount .pageBody__5d7c9 .selected__270d7 .optionButton__270d7 {
+  background: transparent;
+  border-color: var(--accent);
+}
+
+#app-mount .pageBody__5d7c9 .selected__270d7 .buttonText__270d7 [data-text-variant] {
+  color: var(--accent) !important;
+}
+
+/* The preview card is accent-tinted, not white: a 7,5% white lift is invisible over this
+ * panel, which is why the card looked untouched. */
+#app-mount .pageBody__5d7c9 .profileCard__5d7c9 {
+  background: hsl(from var(--accent) h s l / 0.06);
+  border: 1px solid hsl(from var(--accent) h s l / 0.25);
+  border-radius: var(--radius-sm);
+}
+
+#app-mount .pageBody__5d7c9 .separator__5d7c9 {
+  background: var(--bg-border);
+  border: none;
+}

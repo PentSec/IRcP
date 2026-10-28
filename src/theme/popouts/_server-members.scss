@@ -1,0 +1,127 @@
+@use '../mixins' as *;
+
+// Server settings: Members
+//
+// The page shares the settings shell and the chat classes. It paints no surface: whatever
+// is behind it (the app, the wallpaper) is the background. The page and header rules apply
+// to every settings page; the table and pagination ones are specific to this one.
+
+/* The page paints nothing: the wallpaper and the app behind it are the background, as
+ * everywhere else in the theme. A panel here composited to 97% and hid the wallpaper. */
+#app-mount .page__5e434 {
+  background: transparent;
+}
+
+/* Every wrapper between the page and the rows is forced clear. In this subtree Discord
+ * paints a background on exactly two of them, .page_c791b2 and .mainTableContainer__09a38,
+ * and either one alone hides the wallpaper behind the page. The flag is required because
+ * they are painted with higher specificity. */
+// #app-mount .scrollerBase_d125d2,
+#app-mount .page_c791b2,
+#app-mount .mainTableContainer__09a38 {
+  background: var(--bg-primary) !important;
+  @include irc-blur;
+}
+
+/* The page header is a bar with the hairline every other panel uses. */
+#app-mount .page_c791b2 .header_c791b2 {
+  background: transparent;
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .page_c791b2 .icon__9293f {
+  color: var(--accent);
+}
+
+#app-mount .page_c791b2 .title__9293f {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+}
+
+/* The search field is the composer textbox, as in the channel modal. */
+#app-mount .page_c791b2 .container__75098 {
+  @include irc-field;
+}
+
+#app-mount .page_c791b2 .container__75098:focus-within {
+  @include irc-field-focus;
+}
+
+#app-mount .page_c791b2 .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+/* The section title labels the table; it is not a heading of its own. */
+#app-mount .page_c791b2 .searchHeader__98d1c h2 {
+  color: var(--irc-dim);
+}
+
+/* Column labels are metadata, and they are inline-coloured. */
+/* Column labels are metadata, and they are inline-coloured — hence the flag. */
+#app-mount .page_c791b2 .tableHeaderRow__9dd6b .eyebrow_cf4812 {
+  color: var(--irc-dim) !important;
+}
+
+#app-mount .page_c791b2 .tableHeaderCellContainer__9dd6b {
+  border-bottom: 1px solid var(--bg-border);
+}
+
+#app-mount .page_c791b2 .filterIcon__9dd6b path {
+  fill: var(--irc-dim);
+}
+
+/* Rows separate with a hairline instead of Discord's banding. The row background is left
+ * alone because the list writes its hover colour inline. */
+#app-mount .page_c791b2 .memberRowContainer__71c22 + .memberRowContainer__71c22 {
+  border-top: 1px solid var(--fg-secondary);
+}
+
+/* The metadata columns carry inline colour; the name keeps its role colour. */
+/* The metadata columns carry inline colour, so the flag is required; the name element is not
+ * selected here and keeps its role colour. */
+#app-mount .page_c791b2 .memberRowContainer__71c22 .smallCol__71c22 [data-text-variant],
+#app-mount .page_c791b2 .memberGlobalName__71c22 [data-text-variant] {
+  color: var(--irc-dim) !important;
+}
+
+/* The row actions and the add-role plus paint nothing until hovered. */
+#app-mount .page_c791b2 .actionCell__71c22 .button__71c22,
+#app-mount .page_c791b2 .addRoleIcon__71c22 {
+  color: var(--irc-dim);
+}
+
+#app-mount .page_c791b2 .actionCell__71c22 .button__71c22:hover,
+#app-mount .page_c791b2 .addRoleContainer__71c22:hover .addRoleIcon__71c22 {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.4));
+}
+
+/* Pagination: plain numbers, the current page in the accent. */
+#app-mount .page_c791b2 .roundButton_c15210.pageButton_c15210 {
+  background: transparent;
+  color: var(--irc-dim);
+}
+
+#app-mount .page_c791b2 .roundButton_c15210.pageButton_c15210:hover {
+  background: var(--background-message-hover);
+  color: var(--accent);
+}
+
+#app-mount .page_c791b2 .roundButton_c15210.activeButton_c15210 {
+  background: hsl(from var(--accent) h s l / 0.15);
+  color: var(--accent);
+}
+
+/* Previous and Next are labels, not boxes. */
+#app-mount .page_c791b2 .endButton_c15210 {
+  color: var(--irc-dim);
+}
+
+#app-mount .page_c791b2 .endButton_c15210:not([disabled]):hover {
+  color: var(--accent);
+}
+
+/* The progress bar carries the accent instead of Discord's blue. */
+#app-mount .page_c791b2 .loaderBar__09a38 {
+  background: var(--accent);
+}
