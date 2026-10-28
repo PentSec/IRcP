@@ -1,0 +1,273 @@
+@use '../mixins' as *;
+
+// Channel settings
+//
+// The channel modal already sits inside the generic modal frame, so only its own regions,
+// tabs and fields are themed here. It mirrors _modal.scss so both settings views agree.
+
+/* The view is the only surface: one translucent layer, the same one the popouts use.
+ * A second copy on a region composes the alpha to 97% and reads nearly black. */
+#app-mount .standardSidebarView__23e6b {
+  background: var(--bg-primary);
+}
+
+/* The frame keeps its accent edge but drops its own copy of the surface. The :has() makes
+ * this match only a container that actually holds this view. */
+#app-mount .container__8a031:has(.standardSidebarView__23e6b) {
+  background: transparent;
+}
+
+/* Every region and wrapper paints nothing, so nothing can stack on the panel. */
+#app-mount .standardSidebarView__23e6b .sidebarRegion__23e6b,
+#app-mount .standardSidebarView__23e6b .contentRegion__23e6b,
+#app-mount .standardSidebarView__23e6b .contentRegionScroller__23e6b,
+#app-mount .standardSidebarView__23e6b .toolsContainer__23e6b {
+  background: transparent;
+}
+
+#app-mount .standardSidebarView__23e6b .sidebarRegionScroller__23e6b {
+  background: var(--bg-primary);
+}
+
+/* The content column paints an opaque surface of its own, which would hide the view under
+ * it; the flag is what removes it. */
+#app-mount .standardSidebarView__23e6b .contentColumn__23e6b {
+  background: transparent !important;
+}
+
+/* The tab header labels the list, it is not a row. The category chip is inline-coloured. */
+#app-mount .standardSidebarView__23e6b .headerText_aa8da2 {
+  color: var(--irc-dim);
+}
+
+#app-mount .standardSidebarView__23e6b .headerText_aa8da2 .category__3ddc0 {
+  color: var(--irc-dim) !important;
+}
+
+#app-mount .standardSidebarView__23e6b .separator_aa8da2 {
+  background: var(--bg-border);
+}
+
+/* The active tab carries the same signal as a selected channel: tint, pill and accent
+ * text, exactly as the user-settings sidebar does. */
+#app-mount .standardSidebarView__23e6b .item_aa8da2.selected_aa8da2 {
+  position: relative;
+  background: hsl(from var(--accent) h s l / 0.1);
+  color: var(--accent);
+}
+
+#app-mount .standardSidebarView__23e6b .item_aa8da2.selected_aa8da2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--channel-pill-width);
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 calc(var(--channel-glow-intensity) * 15px) calc(var(--channel-glow-intensity) * 5px)
+    hsl(from var(--accent) h s l / 0.2);
+}
+
+#app-mount .standardSidebarView__23e6b .item_aa8da2:not(.selected_aa8da2):hover {
+  background: var(--background-message-hover);
+}
+
+/* Destructive entries keep Discord's red and take it as their hover tint. */
+#app-mount .standardSidebarView__23e6b .item_aa8da2.destructive_aa8da2:hover {
+  background: hsl(from var(--red-500) h s l / 0.1);
+}
+
+/* Text fields use the composer's textbox at field scale. */
+#app-mount .standardSidebarView__23e6b .container__75098 {
+  @include irc-field;
+}
+
+#app-mount .standardSidebarView__23e6b .container__75098:focus-within {
+  @include irc-field-focus;
+}
+
+/* A select is a box with the value and a chevron, so it takes the same surface. */
+#app-mount .standardSidebarView__23e6b .selectField__0edde {
+  @include irc-field;
+}
+
+#app-mount .standardSidebarView__23e6b .selectField__0edde:hover {
+  border-color: var(--textbox-hover-border);
+}
+
+#app-mount .standardSidebarView__23e6b .chevronIcon__0edde {
+  color: var(--irc-dim);
+}
+
+/* The topic editor is the composer component outside the chat, so it gets the textbox. */
+#app-mount .standardSidebarView__23e6b .topicContainer__0511a {
+  @include irc-field(2px);
+  border-radius: 6px;
+  transition: var(--transition);
+  transition-property: border-color, box-shadow;
+}
+
+#app-mount .standardSidebarView__23e6b .topicContainer__0511a:focus-within {
+  @include irc-field-focus;
+}
+
+/* The count is metadata, and its colour is inline. */
+#app-mount .standardSidebarView__23e6b .characterCount__795fb .tabularNumbers__4bd52 {
+  color: var(--irc-dim) !important;
+}
+
+/* The formatting toolbar sits inside the textbox, so its buttons paint nothing at rest. */
+#app-mount .standardSidebarView__23e6b .button_bba883 {
+  background: transparent;
+  color: var(--irc-dim);
+}
+
+#app-mount .standardSidebarView__23e6b .button_bba883:hover {
+  background: var(--background-message-hover);
+  color: var(--accent);
+}
+
+#app-mount .standardSidebarView__23e6b .divider_bba883 {
+  background: var(--bg-border);
+}
+
+/* The info callout is a quiet panel, not a second card. */
+#app-mount .standardSidebarView__23e6b .container__487a6 {
+  background: var(--fg-secondary);
+  border: 1px solid var(--fg-border);
+  border-radius: var(--radius-xs);
+}
+
+/* Close button and keybind hint, as in the reply bar. */
+#app-mount .standardSidebarView__23e6b .closeButton_c2b141 {
+  color: var(--irc-dim);
+}
+
+#app-mount .standardSidebarView__23e6b .closeButton_c2b141:hover {
+  color: var(--accent);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.4));
+}
+
+#app-mount .standardSidebarView__23e6b .keybind_c2b141 {
+  color: var(--irc-dim);
+  opacity: 0.8;
+}
+
+/* Cards are panels at the frame's scale, so they lose Discord's card styling. */
+#app-mount .standardSidebarView__23e6b .card_b5dd01,
+#app-mount .standardSidebarView__23e6b .settingCard__1a4ef {
+  background: var(--fg-primary);
+  border: 1px solid var(--fg-border);
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+}
+
+#app-mount .standardSidebarView__23e6b .cardIcon__1a4ef {
+  color: var(--irc-dim);
+}
+
+/* The description is inline-coloured. */
+#app-mount .standardSidebarView__23e6b .cardDescription_f62fce {
+  color: var(--irc-dim) !important;
+}
+
+#app-mount .standardSidebarView__23e6b .cardFolder__1a4ef {
+  background: transparent;
+}
+
+/* The folder header labels the access list below it. */
+#app-mount .standardSidebarView__23e6b .folderHeader__1a4ef {
+  border-bottom: 1px solid var(--bg-border);
+}
+
+/* The access list is a log: hairlines, no boxes. */
+#app-mount .standardSidebarView__23e6b .roleMemberList__1a4ef {
+  background: transparent;
+}
+
+#app-mount .standardSidebarView__23e6b .memberRow__1a4ef {
+  border-radius: 0;
+  padding-inline: var(--space-xs);
+}
+
+#app-mount .standardSidebarView__23e6b .memberRow__1a4ef:hover {
+  background: var(--background-message-hover);
+}
+
+#app-mount .standardSidebarView__23e6b .divider__1a4ef,
+#app-mount .standardSidebarView__23e6b .divider__1de9c {
+  background: var(--bg-border);
+}
+
+#app-mount .standardSidebarView__23e6b .removeIconContainer__1a4ef {
+  color: var(--irc-dim);
+}
+
+#app-mount .standardSidebarView__23e6b .removeIconContainer__1a4ef:hover {
+  color: var(--red-500);
+}
+
+#app-mount .standardSidebarView__23e6b .disabledRemoveIcon__1a4ef {
+  color: var(--irc-dim);
+  opacity: 0.4;
+}
+
+/* The disclosure title is a heading in a button, so it keeps its weight and loses any
+ * surface the button would paint. */
+#app-mount .standardSidebarView__23e6b .trigger__4914c {
+  background: transparent;
+  border-radius: 0;
+}
+
+#app-mount .standardSidebarView__23e6b .advancedModeDivider__4914c {
+  background: var(--bg-border);
+}
+
+/* The nested role sidebar labels itself with an image and a word. */
+#app-mount .standardSidebarView__23e6b .sidebarHeader__0ab2c {
+  color: var(--irc-dim);
+}
+
+/* The nested role sidebar is a column of its own inside the content region, the same
+ * relationship the channel sidebar has with the chat. It paints nothing, so only its
+ * border separates it. */
+#app-mount .standardSidebarView__23e6b .sidebarScrollable__53543 {
+  background: transparent;
+}
+
+/* Its scrollers, rows and the disclosure panel around it paint nothing. */
+#app-mount .standardSidebarView__23e6b .scroller__53543,
+#app-mount .standardSidebarView__23e6b .content__53543,
+#app-mount .standardSidebarView__23e6b .permissionsForm__0ab2c,
+#app-mount .standardSidebarView__23e6b .layoutStyle__0ab2c,
+#app-mount .standardSidebarView__23e6b .container__0ab2c,
+#app-mount .standardSidebarView__23e6b .panel__4914c {
+  background: transparent;
+}
+
+/* Deny, passthrough and allow keep their semantic colour in the icon; the frame around it
+ * is the theme's, and the selected state is tinted with that same colour. */
+#app-mount .standardSidebarView__23e6b .item__344e6 {
+  background: transparent;
+  border: 1px solid var(--fg-border);
+  border-radius: var(--radius-xs);
+}
+
+#app-mount .standardSidebarView__23e6b .item__344e6:hover {
+  background: var(--background-message-hover);
+}
+
+#app-mount .standardSidebarView__23e6b .item__344e6.passthrough__344e6.selected__344e6 {
+  background: var(--fg-primary);
+  border-color: var(--irc-dim);
+}
+
+#app-mount .standardSidebarView__23e6b .item__344e6.deny__344e6.selected__344e6 {
+  background: hsl(from var(--red-500) h s l / 0.15);
+  border-color: var(--red-500);
+}
+
+#app-mount .standardSidebarView__23e6b .item__344e6.allow__344e6.selected__344e6 {
+  background: hsl(from var(--irc-status-online-color) h s l / 0.15);
+  border-color: var(--irc-status-online-color);
+}
