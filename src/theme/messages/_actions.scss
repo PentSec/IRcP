@@ -1,0 +1,79 @@
+// Message actions
+//
+// The hover bar that floats over a row: quick reactions, then translate, react, reply,
+// forward and more. One popover, so it takes the surface every floating listbox gets.
+
+/* The group only positions the bar; its surface is painted one level down. */
+#app-mount .buttons__5126c {
+  background: transparent;
+}
+
+/* Panel: the menu surface with the primary edge, so it reads as a floating listbox. */
+#app-mount .buttonsInner__5126c {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  background: var(--bg-primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(var(--foreground-blur));
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
+/* Buttons are bare boxes: the glyph carries the state, not a filled chip. */
+#app-mount .buttonsInner__5126c .hoverBarButton_f84418 {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--irc-dim);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+/* Hover, keyboard focus and the open More menu share the toolbar's primary signal. */
+#app-mount .buttonsInner__5126c .hoverBarButton_f84418:is(:hover, :focus-visible, [aria-expanded='true']) {
+  background: hsl(from var(--primary) h s l / 0.1);
+  color: var(--primary);
+}
+
+#app-mount
+  .buttonsInner__5126c
+  .hoverBarButton_f84418:is(:hover, :focus-visible, [aria-expanded='true'])
+  .icon_f84418
+  > svg {
+  filter: drop-shadow(0 0 calc(var(--glow-intensity) * 4px) hsl(from var(--primary) h s l / 0.55));
+}
+
+/* One glyph box for both kinds of button: SVG actions and the emoji quick-reacts. */
+#app-mount .buttonsInner__5126c .icon_f84418 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: inherit;
+}
+
+#app-mount .buttonsInner__5126c .icon_f84418 > svg,
+#app-mount .buttonsInner__5126c .icon_f84418 .emoji__040f0 {
+  width: 100%;
+  height: 100%;
+}
+
+/* The divider before the actions uses the same hairline as the panels. */
+#app-mount .buttonsInner__5126c .separator_f84418 {
+  align-self: center;
+  flex: none;
+  width: 1px;
+  height: 16px;
+  margin: 0 4px;
+  background: var(--bg-border);
+}
