@@ -1,0 +1,11 @@
+/* Chat embeds.
+ *
+ * The card ships an opaque surface and a border on all four sides. The surface becomes the
+ * theme's lift and the three chrome sides its hairline; the 4px start bar keeps its inline
+ * colour, which is the provider's and not the theme's to repaint.
+ */
+
+#app-mount .embedFull__623de {
+  background: var(--fg-primary);
+  border-color: var(--fg-border);
+}
