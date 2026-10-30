@@ -98,6 +98,70 @@
   @include irc-blur;
 }
 
+/* Standalone picker ----------------------------------------------------------- */
+
+/* The reaction picker opens without the tab wrapper, so it is its own frame: the same bare
+ * panel, primary edge and blur the tabbed one gets. */
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) {
+  background: transparent;
+  border: 1px solid var(--primary);
+  @include irc-blur;
+}
+
+/* Its header, grid and rail paint an opaque surface and a stacked shadow of their own, which
+ * would hide that frame, so both are cleared here. */
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .header_c0e32c,
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .emojiPicker_c0e32c,
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .bodyWrapper_c0e32c,
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .categoryList_c0e32c {
+  background: transparent;
+  box-shadow: none;
+  @include irc-blur;
+}
+
+/* Super reactions swap the frame for a brand ring and a brand glow; both become the primary,
+ * or a blurple halo would sit outside the primary edge. */
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c).isBurstReactionPicker_c0e32c {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c).isBurstReactionPicker_c0e32c::before {
+  box-shadow: 0 0 100px hsl(from var(--primary) h s l / 0.5);
+}
+
+/* Search field: the composer's textbox. Discord's focus ring is an outline on the box, so it
+ * is cleared at rest and the primary edge with its glow takes over. */
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .container__75098 {
+  @include irc-field;
+  box-shadow: none;
+  outline: none;
+}
+
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .container__75098 .input__75098 {
+  box-shadow: none;
+  outline: none;
+}
+
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .container__75098:focus-within {
+  @include irc-field-focus;
+}
+
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .icon__75098 path {
+  fill: var(--irc-dim);
+}
+
+/* The inspector is a sibling of the grid in this variant, not a child, so the rule above
+ * misses it and it needs its own. */
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .inspector_aeaaeb {
+  background: transparent;
+  border-top: 1px solid var(--bg-border);
+  @include irc-blur;
+}
+
+#app-mount .wrapper_c0e32c:not(.emojiPickerHasTabWrapper_c0e32c) .titlePrimary_aeaaeb {
+  color: var(--primary);
+}
+
 /* Stickers pane --------------------------------------------------------------- */
 
 /* Same frame, same rule: the primary edge is the only border, so nothing inside paints. */

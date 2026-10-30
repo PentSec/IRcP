@@ -45,6 +45,22 @@
   background: hsl(from var(--secondary) h s l / 0.05);
 }
 
+/* The announcement follow prompt is the same strip as the new-messages bar: a sentence and
+ * the action it asks for, so it takes the primary wash and the primary copy. */
+#app-mount .wrapper__44df5 {
+  background: hsl(from var(--primary) h s l/0.1);
+  border-bottom: 1px solid var(--bg-border);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(var(--foreground-blur));
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
+/* Its heading carries a colour of its own through a class, so the wash would stop at the
+ * edge without this. */
+#app-mount .wrapper__44df5 .title__44df5 {
+  color: var(--primary);
+}
+
 #app-mount .message__5126c.mentioned__5126c {
   background: hsl(from var(--primary) h s l/0.05);
 }
