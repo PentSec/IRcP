@@ -1,24 +1,45 @@
 # AGENTS.md
 
-Vencord theme for a personal Discord install, built with `bd-scss`. No tests: the
-deliverable is CSS that Vencord injects into the renderer. `main` holds sources; `deploy`
+Vencord theme for a personal Discord install, built with `bd-scss`. There is no test suite:
+the deliverable is CSS that Vencord injects into the renderer. `main` holds sources; `deploy`
 holds generated files and is written only by CI.
+
+## Commands
+
+```bash
+bun install
+bun run build            # dist/: what CI publishes
+bun run verify:cascade   # after build; needs the deploy baseline, see below
+bun run format:check
+bun run dev              # watcher; one self-contained file into the client's themes folder
+bun run reroll           # network fetch; rewrites hashed classes in src/**/_*.scss
+```
+
+`bun` only, one lockfile (`bun.lock`; CI pins bun 1.4.4). Run the CI order locally:
+`bun run build` → `bun run verify:cascade` → `bun run format:check`. CI additionally fetches
+`origin/deploy` first, and publishes `dist/` to the `deploy` branch on every push to `main`.
+
+`verify:cascade` reads `dist/irc.css`, so a build must exist. Its baseline is
+`origin/deploy:irc.css`; when that ref is missing it prints "no deploy baseline found;
+skipping" and **exits 0** — a green run then proves nothing. Fetch it
+(`git fetch origin deploy`) or pass a file: `bun run verify:cascade -- --baseline f.css`.
 
 ## Layout
 
 | Path                         | What it is                                                                         |
 | ---------------------------- | ---------------------------------------------------------------------------------- |
 | `bd-scss.config.js`          | `meta` (the `@name`/`@version` header), `github`, the fonts addon, `deploy.origin` |
-| `src/root.scss`              | compiles to `irc.theme.css`: user variables only, no selectors                     |
-| `src/main.scss`              | compiles to `irc.css`: `@use` of the partials, in cascade order                    |
+| `src/root.scss`              | compiles to `irc.theme.css`: user variables only, no selectors; wallpaper map      |
+| `src/main.scss`              | compiles to `irc.css`: `@use` of the folders, in cascade order                     |
 | `src/theme/_tokens.scss`     | internal custom properties shared by every partial                                 |
+| `src/theme/_mixins.scss`     | `@mixin` recipes (field, focus, blur); not forwarded, emits no CSS of its own      |
 | `src/theme/app/`             | background layer, titlebar, toolbar, window controls                               |
-| `src/theme/serverlist/`      | guild rail: folders, items, unread pill, icons                                     |
-| `src/theme/sidebar/`         | channel and DM lists, user panel                                                   |
-| `src/theme/chat/`            | message area, composer, dividers, notice bars, mentions, gates, connecting screen  |
+| `src/theme/serverlist/`      | guild rail: folders, items, unread pill, hover puck, icons                         |
+| `src/theme/sidebar/`         | channel and DM lists, user panel, quest bar                                        |
+| `src/theme/chat/`            | message area, composer, autocomplete, search, dividers, notices, mentions, gates   |
 | `src/theme/members/`         | member list column, rows and role groups                                           |
-| `src/theme/popouts/`         | server/channel/thread/pinned/inbox popouts, modals, menus, tooltips                |
-| `src/theme/messages/`        | one-line message rows: row, clock, runs, reply, nick, avatar, embeds, skeleton     |
+| `src/theme/popouts/`         | server/channel settings, thread/pinned/inbox/expression popouts, modals, menus     |
+| `src/theme/messages/`        | one-line rows: row, clock, runs, reply, nick, avatar, embeds, skeleton, hover bar  |
 | `src/theme/forum/`           | forum posts as log lines                                                           |
 | `src/theme/status/`          | presence rings, glow and the avatar exceptions                                     |
 | `src/theme/_wiring.scss`     | maps `--irc-font` onto the variables Discord reads; not configuration              |
@@ -26,7 +47,7 @@ holds generated files and is written only by CI.
 | `src/assets/bg*.png, *.jpg`  | wallpapers, published next to the theme                                            |
 | `scripts/postbuild.mjs`      | everything bd-scss does not do (see below)                                         |
 | `scripts/minify-css.mjs`     | compacts the published body, refusing any output that is not equivalent            |
-| `scripts/dev.mjs`            | forces the initial dev build, which bd-scss skips                                  |
+| `scripts/dev.mjs`            | forces the initial dev build, which bd-scss skips; copies wallpapers               |
 | `scripts/verify-cascade.mjs` | fails when a rule moves past a rule it can fight with                              |
 | `THIRD-PARTY-NOTICES.md`     | MIT texts for the reused CSS, OFL/CC-BY for font and icon                          |
 
@@ -48,7 +69,8 @@ holds generated files and is written only by CI.
   falls back to `.dev/`. `scripts/dev.mjs` wraps it because bd-scss compiles only from the
   watcher's `change` event and never on `ready`, so an unwrapped `dev` sits idle until the
   first save; the wrapper triggers that first build once the ready banner appears.
-- `reroll` rewrites hashed classes only in `src/**/_*.scss`.
+- `reroll` fetches the community class map over the network and rewrites only files whose
+  name starts with `_` under `src/`; `root.scss` and `main.scss` are untouched.
 
 `scripts/postbuild.mjs` covers the gap: it rewrites the `github.io` import to
 `deploy.origin`, restores `@name IRcP`, compacts the body through `scripts/minify-css.mjs`,
@@ -100,6 +122,10 @@ the first is the file users open to change a variable, the second explains its l
   `"gg sans", "Noto Sans"` even though only the theme declared it). Namespace everything
   with `--irc-*` and use `!important` for font wiring. `--irc-theme: 1` is a marker
   proving the entry file parsed.
+- Roughly 70 `!important` flags are deliberate: Discord declares the same property with
+  higher specificity or inline. Do not strip them as cleanup.
+- `@extend` is banned in `src/` (`_mixins.scss` uses `@mixin` on purpose): extending
+  rewrites selectors and moves them in the cascade. Include the mixin where it is needed.
 - Sass rewrites some modern syntax on the way out: `hsl(0 0% 100% / 0.12)` becomes
   `hsla(0, 0%, 100%, 0.12)` and `center / contain` becomes `center/contain`. Same
   meaning, so do not "fix" the output.
@@ -110,6 +136,9 @@ the first is the file users open to change a variable, the second explains its l
   CORS headers, and font loads are CORS-mode requests, so an external `.woff2` fails
   silently: measured once, the face reports `error` in `document.fonts` while the base64
   copy reports `loaded`. Splitting them would also need per-file cache busting.
+- `format:check` walks `.atl/skill-registry.md`, a generated file git-excluded on this
+  machine only. It is the one file a clean tree reports; CI never sees it. Do not commit it
+  and do not reformat the rest of the repository because of it.
 - Two other styles are active and can outrank this theme when debugging a "rule doesn't
   apply": `~/.config/Vencord/settings/quickCss.css` (DiscordRecolor) and `themeLinks`
   (ClearVision).
@@ -121,11 +150,12 @@ changes between builds; a rule that silently stops working usually means the has
 To find the current one without logging in:
 
 ```bash
-curl -s https://discord.com/app -o /tmp/app.html
-grep -o '/assets/[a-z0-9]*\.[a-f0-9]*\.css' /tmp/app.html | sort -u > /tmp/css.txt
-# download the chunks, then:
-grep -l 'cozy' /tmp/dcss/*.css      # the message component lives in exactly one chunk
-grep -o '\.[a-z]*_c19a55' FILE.css | sort -u
+mkdir -p /tmp/opencode/dcss && cd /tmp/opencode/dcss
+curl -s https://discord.com/app -o app.html
+grep -o '/assets/[a-z0-9]*\.[a-f0-9]*\.css' app.html | sort -u |
+  while read -r p; do curl -s "https://discord.com$p" -o "$(basename "$p")"; done
+grep -l 'cozy' *.css                     # the message component lives in exactly one chunk
+grep -oh '\.[a-z]*_[0-9a-f]\{6\}' CHUNK.css | sort -u
 ```
 
 Discord's own rules in that chunk are the reference: copy their values instead of
@@ -187,15 +217,14 @@ release archive is not in the repository.
 ## Comments
 
 - Comment only non-obvious decisions: the why, never the what.
-- Two lines per comment, maximum.
+- One idea per comment, a few lines at most.
 - No narrative, no comparisons with other selectors, no references to sections or line numbers.
-- One idea per comment.
 - If the code is clear, do not comment.
 
 ## Conventions
 
-- Bump `meta.version` in `bd-scss.config.js` (`2.0.0-irc.N`) on every change so the loaded
-  build is identifiable.
+- Bump the version on every change, in **both** `bd-scss.config.js` (`meta.version`) and
+  `package.json` (`2.0.0-irc.N`), so the loaded build is identifiable in the client.
 - Variables the user is meant to touch go in `src/root.scss` and in the README table.
   Anything else is internal and lives in the partial that uses it.
 - Keep `THIRD-PARTY-NOTICES.md` and the `Derived from …` headers. The reused CSS is MIT
@@ -211,23 +240,25 @@ release archive is not in the repository.
   `bun run verify:cascade` diffs the build against the published `irc.css` (or
   `-- --baseline <file>`) and fails on an inverted pair; CI runs it before publishing.
   The split that produced this layout kept every conflicting pair in order.
-- `bun` only. One lockfile. `format:check` must pass; formatting changes get their own
-  commit.
+- Conventional Commits, one concern per commit, no AI attribution trailers; formatting
+  changes get their own commit. `bun run format` writes with the repo's Prettier config
+  (`_fonts.scss` and `bun.lock` are ignored on purpose).
 - The deployed URLs are part of the contract: `irc.theme.css` is what users paste into
-  Vencord. Do not rename files without a migration plan.
+  Vencord. Do not rename files without a migration plan, and never edit `deploy` by hand.
 
 ## References
 
-The BetterDiscord theme docs are the closest external reference, and they document a
-different loader: BD demands the `@name` meta at byte 0 and the `*.theme.css` name, while
-Vencord ignores meta and lists every top-level `*.css`. Only three pages apply:
+- `README.md` — user-facing install, the `src/root.scss` variable table, wallpaper switch.
+- `CONTRIBUTING.md` — the same rules stated for human contributors; keep it in sync.
+- BetterDiscord theme docs, the closest external reference, which document a different
+  loader: BD demands the `@name` meta at byte 0 and the `*.theme.css` name, while Vencord
+  ignores meta and lists every top-level `*.css`. Only three pages apply:
+  - <https://docs.betterdiscord.app/themes/tutorials/selectors> — class hunting, to
+    complement the `curl` recipe above.
+  - <https://docs.betterdiscord.app/themes/concepts/performance> — the real cost of `:has()`,
+    `backdrop-filter` and filters on long lists.
+  - <https://docs.betterdiscord.app/themes/concepts/accessibility> — contrast and
+    `prefers-reduced-motion`.
 
-- <https://docs.betterdiscord.app/themes/tutorials/selectors> — class hunting, to
-  complement the `curl` recipe above.
-- <https://docs.betterdiscord.app/themes/concepts/performance> — the real cost of `:has()`,
-  `backdrop-filter` and filters on long lists.
-- <https://docs.betterdiscord.app/themes/concepts/accessibility> — contrast and
-  `prefers-reduced-motion`.
-
-Skip `/themes/publishing/*` (BD addon store) and `/themes/concepts/preprocessing` (it only
-confirms transpile-then-bundle, which `bd-scss` already does).
+  Skip `/themes/publishing/*` (BD addon store) and `/themes/concepts/preprocessing` (it only
+  confirms transpile-then-bundle, which `bd-scss` already does).
