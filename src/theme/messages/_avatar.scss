@@ -1,5 +1,5 @@
 /* One line tall, inline before the nick. */
-:is(.cozy_c19a55, .compact_c19a55) .avatar_c19a55 {
+.compact_c19a55 .avatar_c19a55 {
   height: var(--irc-avatar-size, 1em);
   width: var(--irc-avatar-size, 1em);
   position: relative;
@@ -8,7 +8,7 @@
   margin: 0 0.4em 0 0;
 }
 
-/* Decorations break the one-line rhythm. */
-.avatarDecoration_c19a55 {
+/* Decorations break the one-line rhythm of the compact row; cozy keeps Discord's. */
+.compact_c19a55 .avatarDecoration_c19a55 {
   display: none !important;
 }

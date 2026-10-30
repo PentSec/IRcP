@@ -1,11 +1,9 @@
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55))
-  :is(.header_c19a55, .contents_c19a55)
-  > .timestamp_c19a55 {
+.compact_c19a55.wrapper_c19a55:not(:has(.header_c19a55)) :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
   opacity: 0;
   transition: opacity 0.1s ease;
 }
 
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)):hover
+.compact_c19a55.wrapper_c19a55:not(:has(.header_c19a55)):hover
   :is(.header_c19a55, .contents_c19a55)
   > .timestamp_c19a55 {
   opacity: 0.75;
@@ -13,7 +11,7 @@
 
 /* A headerless row is drawn as an end (└); it becomes │ only when the next row is not a
  * groupStart, because :has() cannot be nested and the class prefix survives hash changes. */
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
+.compact_c19a55.wrapper_c19a55:not(:has(.header_c19a55)) .contents_c19a55::before {
   content: '└';
   display: inline-block;
   color: var(--irc-dim);
@@ -23,8 +21,8 @@
   transform-origin: center;
 }
 
-li:has(+ li > .wrapper_c19a55:not([class*='groupStart']))
-  > .wrapper_c19a55:not(:has(.header_c19a55))
+li:has(+ li > .compact_c19a55.wrapper_c19a55:not([class*='groupStart']))
+  > .compact_c19a55.wrapper_c19a55:not(:has(.header_c19a55))
   .contents_c19a55::before {
   content: '│';
 }

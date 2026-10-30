@@ -1,17 +1,16 @@
-/* Cozy and compact share one row: avatar, clock gutter, nick, text.
+/* The compact row: avatar, clock gutter, nick, text. Cozy keeps Discord's own layout.
  * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 {
+.compact_c19a55.wrapper_c19a55 {
   padding-top: 0;
   padding-bottom: 0;
-  /* Discord reserves 44px per row for the cozy avatar line; with an inline 1em avatar that
- * is dead space. */
+  /* Discord reserves 44px per row for the avatar line; the compact row is one line tall. */
   min-height: 0;
   line-height: var(--irc-line-height);
 }
 
 /* One line-height for every inline piece, or the body sits lower than the nick. */
-:is(.cozy_c19a55, .compact_c19a55) :is(.header_c19a55, .messageContent_c19a55) {
+.compact_c19a55 :is(.header_c19a55, .messageContent_c19a55) {
   font-size: inherit;
   line-height: inherit;
   vertical-align: baseline;
@@ -19,12 +18,12 @@
 
 /* The clock lives inside the header in the DOM, so it is pulled into a gutter instead of
  * reordering the row; flex on .contents would drag replies and embeds in. */
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 {
+.compact_c19a55.wrapper_c19a55 {
   position: relative;
   padding-inline-start: var(--irc-ts-gutter);
 }
 
-:is(.cozy_c19a55, .compact_c19a55) .contents_c19a55 {
+.compact_c19a55 .contents_c19a55 {
   margin-inline-start: 0;
   padding-inline-start: 0;
   text-indent: 0;

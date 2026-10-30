@@ -1,17 +1,3 @@
-/* Off by default: a bubble adds padding and switches to inline-block, which breaks the row. */
-:root {
-  --chat-bubble-padding: 0;
-  --chat-bubble-display: inline;
-  --chat-bubble-bg: transparent;
-}
-
-#app-mount .cozyMessage__5126c .messageContent_c19a55:not(.repliedTextContent_c19a55):not(:empty) {
-  background: var(--chat-bubble-bg);
-  padding: var(--chat-bubble-padding);
-  border-radius: var(--radius-xs);
-  display: var(--chat-bubble-display);
-}
-
 /* Accent tint and halo instead of --mention-background; currentColor lets a role-coloured
  * tag glow in its own colour. */
 #app-mount .wrapper__4106a,

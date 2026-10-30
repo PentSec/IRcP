@@ -1,6 +1,6 @@
 /* static keeps the absolute clock anchored to the wrapper; !important because Discord
  * re-declares position here with higher specificity when a message has extras. */
-:is(.cozy_c19a55, .compact_c19a55) .header_c19a55 {
+.compact_c19a55 .header_c19a55 {
   display: inline;
   min-height: 0;
   line-height: inherit;
@@ -8,18 +8,18 @@
   position: static !important;
 }
 
-:is(.cozy_c19a55, .compact_c19a55) .messageContent_c19a55 {
+.compact_c19a55 .messageContent_c19a55 {
   display: inline;
 }
 
 /* Bold restores the hierarchy: a medium-weight nick is the same grey as the body. */
-:is(.cozy_c19a55, .compact_c19a55) .headerText_c19a55 .username_c19a55 {
+.compact_c19a55 .headerText_c19a55 .username_c19a55 {
   font-weight: 700;
 }
 
 /* Inline role colours beat any rule without !important, so this only paints nicks that have
  * none; gradients paint with background-clip and would be flattened. */
-:is(.cozy_c19a55, .compact_c19a55)
+.compact_c19a55
   .headerText_c19a55
   .username_c19a55:not([style*='color']):not([data-username-has-gradient]):not([class*='Gradient']) {
   color: var(--irc-nick, var(--primary));
@@ -27,8 +27,6 @@
 
 /* text-shadow reads as a halo in the nick's own colour through currentColor.
  * Gradient nicks are excluded: Discord already draws a blurred copy and the halo blooms. */
-:is(.cozy_c19a55, .compact_c19a55)
-  .headerText_c19a55
-  .username_c19a55:not([class*='Gradient']):not([data-username-has-gradient]) {
+.compact_c19a55 .headerText_c19a55 .username_c19a55:not([class*='Gradient']):not([data-username-has-gradient]) {
   text-shadow: 0 0 calc(var(--irc-nick-glow, 1) * var(--irc-nick-glow-size, 6px)) currentColor;
 }

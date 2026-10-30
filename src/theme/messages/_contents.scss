@@ -1,5 +1,5 @@
 /* static: a positioned box would become the containing block of the absolute clock. */
-:is(.cozy_c19a55, .compact_c19a55) .contents_c19a55 {
+.compact_c19a55 .contents_c19a55 {
   position: static;
 }
 

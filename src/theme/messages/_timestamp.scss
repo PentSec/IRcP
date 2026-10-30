@@ -1,6 +1,6 @@
 /* A fixed window anchored right and clipped left: older messages carry "18/10/26, 13:38"
  * in one text node, so the date is cut instead of widening the column. Width: --irc-ts-width. */
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55 :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
+.compact_c19a55.wrapper_c19a55 :is(.header_c19a55, .contents_c19a55) > .timestamp_c19a55 {
   position: absolute;
   inset-inline-start: auto; /* the alt variant sets inset-inline-start: 0, which direction:rtl would read as right:0 */
   left: 0; /* physical on purpose: direction:rtl below would flip inset-inline-start */
@@ -18,14 +18,14 @@
   opacity: 0.75;
 }
 
-:is(.cozy_c19a55, .compact_c19a55) .timestamp_c19a55 time {
+.compact_c19a55 .timestamp_c19a55 time {
   direction: ltr;
   unicode-bidi: isolate;
 }
 
 /* Brackets hang off .contents and the header (an <img> takes no pseudo-element) so they wrap
  * avatar and nick; gated on :has(.header), since a grouped row has neither. */
-:is(.cozy_c19a55, .compact_c19a55).wrapper_c19a55:has(.header_c19a55) .contents_c19a55::before {
+.compact_c19a55.wrapper_c19a55:has(.header_c19a55) .contents_c19a55::before {
   content: '<';
   color: var(--irc-dim);
   opacity: 0.75;
@@ -39,7 +39,7 @@
 
 /* The trailing space in the header would push the bracket away from the nick: the bracket is
  * pulled back by exactly one space glyph, which in a monospace font is one ch. */
-:is(.cozy_c19a55, .compact_c19a55) .header_c19a55::after {
+.compact_c19a55 .header_c19a55::after {
   content: '>';
   color: var(--irc-dim);
   opacity: 0.75;
