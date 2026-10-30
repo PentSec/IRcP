@@ -10,7 +10,7 @@
  * clips the header bar to the same corner. */
 #app-mount .messagesPopoutWrap__432f4 {
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   border-radius: var(--radius-md, 8px);
   box-shadow: var(--shadow-lg);
   @include irc-blur;
@@ -26,13 +26,13 @@
 
 /* The icon is a presentation attribute, which any CSS rule beats. */
 #app-mount .messagesPopoutWrap__432f4 .titleContainer__432f4 path {
-  fill: var(--accent);
+  fill: var(--primary);
 }
 
 /* The title colour is inline, hence the flag. The glow matches the channel names. */
 #app-mount .messagesPopoutWrap__432f4 .titleContainer__432f4 div {
-  color: var(--accent) !important;
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+  color: var(--primary) !important;
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
 }
 
 /* Only when there are pins: the rows carry their own clock gutter, so the card padding

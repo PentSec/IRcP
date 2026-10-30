@@ -27,10 +27,10 @@
 }
 
 /* Hover popouts paint an opaque surface one level down, so the panel goes on both boxes
- * and the radius is explicit, or the accent border would run square. */
+ * and the radius is explicit, or the primary border would run square. */
 #app-mount .popout_af3b89 {
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   border-radius: var(--radius-md, 8px);
 }
 

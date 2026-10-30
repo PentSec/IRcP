@@ -11,7 +11,7 @@
   background: var(--bg-primary);
 }
 
-/* The frame keeps its accent edge but drops its own copy of the surface. The :has() makes
+/* The frame keeps its primary edge but drops its own copy of the surface. The :has() makes
  * this match only a container that actually holds this view. */
 #app-mount .container__8a031:has(.standardSidebarView__23e6b) {
   background: transparent;
@@ -48,12 +48,12 @@
   background: var(--bg-border);
 }
 
-/* The active tab carries the same signal as a selected channel: tint, pill and accent
+/* The active tab carries the same signal as a selected channel: tint, pill and primary
  * text, exactly as the user-settings sidebar does. */
 #app-mount .standardSidebarView__23e6b .item_aa8da2.selected_aa8da2 {
   position: relative;
-  background: hsl(from var(--accent) h s l / 0.1);
-  color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.1);
+  color: var(--primary);
 }
 
 #app-mount .standardSidebarView__23e6b .item_aa8da2.selected_aa8da2::before {
@@ -63,9 +63,9 @@
   top: 0;
   width: var(--channel-pill-width);
   height: 100%;
-  background: var(--accent);
+  background: var(--primary);
   box-shadow: 0 0 calc(var(--channel-glow-intensity) * 15px) calc(var(--channel-glow-intensity) * 5px)
-    hsl(from var(--accent) h s l / 0.2);
+    hsl(from var(--primary) h s l / 0.2);
 }
 
 #app-mount .standardSidebarView__23e6b .item_aa8da2:not(.selected_aa8da2):hover {
@@ -124,7 +124,7 @@
 
 #app-mount .standardSidebarView__23e6b .button_bba883:hover {
   background: var(--background-message-hover);
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .standardSidebarView__23e6b .divider_bba883 {
@@ -144,8 +144,8 @@
 }
 
 #app-mount .standardSidebarView__23e6b .closeButton_c2b141:hover {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.4));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.4));
 }
 
 #app-mount .standardSidebarView__23e6b .keybind_c2b141 {

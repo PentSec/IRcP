@@ -105,25 +105,37 @@ compiles on startup — it waits for the first file change.
 Everything worth touching is in the `:root` block of `src/root.scss`, which compiles into
 the top of `irc.theme.css`. Edit it, run the build, publish.
 
-| Variable                                   | What it does                                                       | Default             |
-| ------------------------------------------ | ------------------------------------------------------------------ | ------------------- |
-| `--accent`                                 | Theme colour: glows, mentions, categories, the selected channel    | `hsl(164 100% 45%)` |
-| `--glow-intensity`                         | Strength of every glow; `0` disables them                          | `1`                 |
-| `--background-image`                       | Wallpaper override; follows `$irc-background`, resolves next to it | `url('bg6.png')`    |
-| `--background-blur`                        | Blur applied to the background image                               | `8px`               |
-| `--opacity`                                | Opacity of the app panels                                          | `0.78`              |
-| `--irc-line-height`                        | Line height of a message row                                       | `1.25`              |
-| `--irc-ts-width`                           | Clock column width (`8ch` for a 12-hour clock, `5ch` for 24-hour)  | `8ch`               |
-| `--irc-avatar-size`                        | Avatar box in a message row; above `1em` the row grows             | `1.2em`             |
-| `--irc-nick-glow` / `--irc-nick-glow-size` | Nickname halo strength and blur                                    | `1` / `6px`         |
-| `--irc-forum-stamp`                        | Width of the forum thumbnail column                                | `3.4em`             |
-| `--irc-forum-row-pad`                      | Vertical padding of a forum log row                                | `2px`               |
-| `--irc-category-background`                | Channel-category background strength; `0` removes it               | `0`                 |
-| `--irc-status-members-width`               | Member-list avatar box the ring is drawn around                    | `30px`              |
-| `--irc-status-self-speaking-colour`        | Ring colour while your own voice transmits                         | `#57d39b`           |
-| `--irc-status-*`                           | Avatar ring sizes and colours                                      | see the file        |
-| `--members-width`, `--server-icon-size`    | Sidebar geometry                                                   | see the file        |
-| `--guilds-width`                           | No effect: the rail is a puck, so overriding it changes nothing    | `80px`              |
+Renamed in `2.0.0-irc.100`: `--accent` is now `--primary`, `--accent-text` is now
+`--primary-text`. A snippet that still sets `--accent` changes nothing.
+
+| Variable                                   | What it does                                                      | Default                 |
+| ------------------------------------------ | ----------------------------------------------------------------- | ----------------------- |
+| `--primary`                                | Main colour: glow, mentions, pills, selected channel, focus rings | `#1efcf9`               |
+| `--primary-text`                           | Text drawn on a `--primary` fill (buttons, badges)                | `hsl(0 0 0%)`           |
+| `--secondary`                              | Neutral colour: unread rings, icon masks, text on a tinted row    | `#ffffff`               |
+| `--bg-primary`                             | App panels; its alpha follows `--opacity`                         | `hsl(0 0% 10% / 0.83)`  |
+| `--bg-secondary`                           | Chat column and cards                                             | `hsl(0 0% 10% / 0.855)` |
+| `--bg-solid`                               | Opaque panel colour, used where an alpha would show through       | `hsl(0 0% 10%)`         |
+| `--bg-border`                              | Hairline between panels                                           | `hsl(0 0% 5% / 0.75)`   |
+| `--scrim`                                  | Black wash: feeds the shadows and the presence-ring cutout        | `hsl(0 0% 0% / 0.5)`    |
+| `--glow-intensity`                         | Strength of every glow; `0` disables them                         | `1`                     |
+| `--background-image`                       | Wallpaper; `none` leaves the app transparent                      | `none`                  |
+| `--background-gradient`                    | `var(--gradient)` paints the radial wash instead of the wallpaper | `var(--gradient)`       |
+| `--gradient`                               | The wash itself: black centre, palette edge, editable stops       | see the file            |
+| `--background-blur`                        | Blur applied to the background image                              | `8px`                   |
+| `--opacity`                                | Opacity of the app panels                                         | `0.78`                  |
+| `--irc-line-height`                        | Line height of a message row                                      | `1.25`                  |
+| `--irc-ts-width`                           | Clock column width (`8ch` for a 12-hour clock, `5ch` for 24-hour) | `8ch`                   |
+| `--irc-avatar-size`                        | Avatar box in a message row; above `1em` the row grows            | `1.2em`                 |
+| `--irc-nick-glow` / `--irc-nick-glow-size` | Nickname halo strength and blur                                   | `1` / `6px`             |
+| `--irc-forum-stamp`                        | Width of the forum thumbnail column                               | `3.4em`                 |
+| `--irc-forum-row-pad`                      | Vertical padding of a forum log row                               | `2px`                   |
+| `--irc-category-background`                | Channel-category background strength; `0` removes it              | `0`                     |
+| `--irc-status-members-width`               | Member-list avatar box the ring is drawn around                   | `30px`                  |
+| `--irc-status-self-speaking-colour`        | Ring colour while your own voice transmits                        | `#57d39b`               |
+| `--irc-status-*`                           | Avatar ring sizes and colours                                     | see the file            |
+| `--members-width`, `--server-icon-size`    | Sidebar geometry                                                  | see the file            |
+| `--guilds-width`                           | No effect: the rail is a puck, so overriding it changes nothing   | `80px`                  |
 
 ### Wallpapers
 

@@ -35,7 +35,7 @@
     hsl(from var(--server-unread-colour) h s l/0.25);
 }
 
-/* The guild you are in gets the accent instead. */
+/* The guild you are in gets the primary instead. */
 #app-mount .listItem__650eb .wrapper__58105 .item__58105.selected__58105 {
   border-color: var(--server-selected-colour);
   box-shadow: 0 0 calc(var(--server-glow-intensity) * 15px) calc(var(--server-glow-intensity) * 5px)

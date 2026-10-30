@@ -1,8 +1,8 @@
 #app-mount .newMessagesBar__0f481 {
-  background: hsl(from var(--accent) h s l/0.1);
+  background: hsl(from var(--primary) h s l/0.1);
   -webkit-backdrop-filter: blur(var(--foreground-blur));
   backdrop-filter: blur(var(--foreground-blur));
-  color: var(--accent);
+  color: var(--primary);
   left: 0;
   right: 0;
   border-radius: 0;
@@ -13,19 +13,19 @@
   box-shadow: none;
 }
 
-/* The jump-to-present bar: panel surface, accent edge and a glow behind it. */
+/* The jump-to-present bar: panel surface, primary edge and a glow behind it. */
 #app-mount .jumpToPresentBar__0f481 {
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 calc(var(--glow-intensity) * 12px) hsl(from var(--accent) h s l/0.35);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 12px) hsl(from var(--primary) h s l/0.35);
   -webkit-backdrop-filter: blur(var(--foreground-blur));
   backdrop-filter: blur(var(--foreground-blur));
 }
 
 #app-mount .barButtonBase__0f481 {
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3))
-    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--accent) h s l/0.2));
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l/0.3))
+    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--primary) h s l/0.2));
 }
 
 #app-mount .barButtonMain__0f481 {
@@ -42,17 +42,17 @@
 }
 
 #app-mount .barButtonAlt__0f481:hover {
-  background: hsla(0, 0%, 100%, 0.05);
+  background: hsl(from var(--secondary) h s l / 0.05);
 }
 
 #app-mount .message__5126c.mentioned__5126c {
-  background: hsl(from var(--accent) h s l/0.05);
+  background: hsl(from var(--primary) h s l/0.05);
 }
 
 #app-mount .message__5126c.mentioned__5126c::before {
-  background: hsl(from var(--accent) h s l);
+  background: hsl(from var(--primary) h s l);
 }
 
 #app-mount .message__5126c.mentioned__5126c:hover {
-  background: hsl(from var(--accent) h s l/0.075);
+  background: hsl(from var(--primary) h s l/0.075);
 }

@@ -50,9 +50,9 @@
   border-radius: var(--radius-sm);
   /* A folder popout is wider than the puck; clipping it would cut it in half. */
   overflow: visible;
-  border-color: var(--accent);
+  border-color: var(--primary);
   /* Low alpha on purpose: at --bg-primary alpha the backdrop blur is invisible. */
-  background: hsl(0 0% 10% / calc(var(--opacity) * 0.7));
+  background: hsl(from var(--bg-solid) h s l / calc(var(--opacity) * 0.7));
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
@@ -90,8 +90,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--background-feedback-notification, hsl(359 87% 60%));
-  box-shadow: 0 0 0 2px hsl(0 0% 10%);
+  background: var(--background-feedback-notification);
+  box-shadow: 0 0 0 2px var(--bg-solid);
 }
 
 /* The list scrolls inside the puck; the rail's max-height is what animates. The scrollbar is

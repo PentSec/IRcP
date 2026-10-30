@@ -16,25 +16,25 @@
   border-left-width: 0;
   border-image: linear-gradient(
       270deg,
-      hsl(from var(--accent) h s l / var(--irc-category-background)) 0%,
-      hsl(from var(--accent) h s l / calc(var(--irc-category-background) * 0.5)) 30%,
+      hsl(from var(--primary) h s l / var(--irc-category-background)) 0%,
+      hsl(from var(--primary) h s l / calc(var(--irc-category-background) * 0.5)) 30%,
       transparent 78%
     )
     1;
   border-radius: 0;
   background: linear-gradient(
     270deg,
-    hsl(from var(--accent) h s l / calc(var(--irc-category-background) * 0.22)) 0%,
+    hsl(from var(--primary) h s l / calc(var(--irc-category-background) * 0.22)) 0%,
     transparent 78%
   );
   box-shadow: 0 0 calc(var(--glow-intensity, 1) * 8px)
-    hsl(from var(--accent) h s l / calc(var(--irc-category-background) * 0.22));
+    hsl(from var(--primary) h s l / calc(var(--irc-category-background) * 0.22));
 }
 
 #app-mount .wrapper__29444:hover {
   background: linear-gradient(
     270deg,
-    hsl(from var(--accent) h s l / calc(var(--irc-category-background) * 0.32)) 0%,
+    hsl(from var(--primary) h s l / calc(var(--irc-category-background) * 0.32)) 0%,
     transparent 82%
   );
 }
@@ -61,7 +61,7 @@
 }
 
 #app-mount .interactive_bf202d.selected_bf202d {
-  background: hsl(from var(--accent) h s l/0.1);
+  background: hsl(from var(--primary) h s l/0.1);
 }
 
 #app-mount .interactive_bf202d.selected_bf202d::before {
@@ -70,20 +70,20 @@
   left: 0;
   height: 100%;
   width: var(--channel-pill-width);
-  background: var(--accent);
+  background: var(--primary);
   box-shadow: 0 0 calc(var(--channel-glow-intensity) * 15px) calc(var(--channel-glow-intensity) * 5px)
-    hsl(from var(--accent) h s l/0.2);
+    hsl(from var(--primary) h s l/0.2);
 }
 
 #app-mount .interactive_bf202d.selected_bf202d .nameAndDecorators__20a53,
 #app-mount .interactive_bf202d.selected_bf202d .linkButtonIcon__972a0 {
-  color: hsl(from var(--accent) h s l);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l/0.3))
-    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--accent) h s l/0.2));
+  color: hsl(from var(--primary) h s l);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l/0.3))
+    drop-shadow(0 0 calc(var(--channel-glow-intensity) * 2px) hsl(from var(--primary) h s l/0.2));
 }
 
 #app-mount .interactive_bf202d.selected_bf202d .text_c9d15c {
-  color: hsl(from var(--accent) h s l);
+  color: hsl(from var(--primary) h s l);
   opacity: 0.85;
 }
 

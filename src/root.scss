@@ -18,9 +18,6 @@ $irc-backgrounds: (
   7: 'bg7.jpg'
 );
 
-/* The body stylesheet loads this one by itself, so picking it changes nothing. */
-$irc-background-default: 'bg1.png';
-
 $irc-background-file: map.get($irc-backgrounds, $irc-background);
 
 @if $irc-background-file == null {
@@ -33,11 +30,11 @@ $irc-background-file: map.get($irc-backgrounds, $irc-background);
   --irc-ts-width: 8ch; /* the clock column. 12-hour clock ("9:45 AM" = 7 chars): 8ch. 24-hour clock ("13:38"): 5ch */
   --irc-ts-gutter: calc(var(--irc-ts-width) * 0.75 + 1em); /* clock column + two spaces before the "<" */
   --irc-dim: var(--chat-text-muted, #8b8f96); /* gray for the clock and the < > brackets */
-  --irc-nick: var(--accent); /* nick colour for people with no role colour and no gradient */
+  --irc-nick: var(--primary); /* nick colour for people with no role colour and no gradient */
   --irc-nick-glow: 1; /* glow behind nicks, in the nick's own colour. 0 disables it */
   --irc-nick-glow-size: 6px; /* blur radius of that glow at strength 1 */
   --irc-role-group-color: var(
-    --accent
+    --primary
   ); /* Role headers: Discord does not expose the role colour, so this is a theme colour */
   --irc-forum-stamp: 3.4em; /* Forum list: thumbnail column width; the image covers the box */
   --irc-forum-row-pad: 2px; /* Forum list: vertical padding of a log row. 0 makes rows touch each other */
@@ -47,14 +44,23 @@ $irc-background-file: map.get($irc-backgrounds, $irc-background);
   --irc-theme: 1; /* marker: if the computed value reads 1, this file parsed and applied */
 
   /* App surface */
-  /* Only declared when the choice differs from the body's own fallback. The file it names has
-   * to sit next to the theme, so a copy of this file used on its own needs it too. */
-  @if $irc-background-file != $irc-background-default {
-    --background-image: url('#{$irc-background-file}');
-  }
+  /* A file name resolves next to this stylesheet, so the file has to be published there.
+   * `none` leaves the app transparent, with the panels sitting on nothing. */
+  --background-image: none; /* change to none to disable it or url('#{$irc-background-file}') to use background*/
   --background-blur: 8px; /* Blur applied to --background-image. Must end in px */
-  --accent: hsl(164 100% 45%); /* Colour used around the app. | Any valid CSS unit. | Default: hsl(164 100% 45%) */
-  --accent-text: hsl(0 0 0%); /* Colour used on solid or high contrast accent backgrounds. | hsl(0 0 10%) */
+  /* Colours. Everything else derives from these, so any valid CSS colour works here. */
+  --primary: #1efcf9; /* main colour: glow, mentions, pills, selected channel */
+  --primary-text: hsl(0 0 0%); /* text drawn on a --primary fill */
+  --secondary: #ffffff; /* neutral: unread rings, icon masks, text on a tinted row */
+  --bg-primary: hsl(0 0% 10% / calc(var(--opacity) + 0.05)); /* app panels */
+  --bg-secondary: hsl(0 0% 10% / calc(var(--opacity) + 0.075)); /* chat column, cards */
+  --bg-solid: hsl(0 0% 10%); /* opaque panel colour, where an alpha would show through */
+  --bg-border: hsl(0 0% 5% / 0.75); /* hairline between panels */
+  --scrim: hsl(0 0% 0% / 0.5); /* black wash: feeds both shadows and the presence-ring cutout */
+  /* Radial wash from the centre out: black in the middle, the palette at the edge. It is
+   * opaque, so turning it on hides the wallpaper. `--background-gradient: var(--gradient)`. */
+  --gradient: radial-gradient(circle at 50% 50%, hsl(0 0% 0%) 20%, var(--primary) 300%, var(--secondary) 100%);
+  --background-gradient: var(--gradient); /* use  var(--gradient) to active degradate. or none to disable*/
   --glow-intensity: 1; /* Glow intensity around the app; 0 disables it. Default: 1 */
   --members-width: 230px; /* Width of the members list */
   --guilds-width: 80px; /* No effect: nothing reads it, because the rail pins --custom-guild-list-width to 0. */

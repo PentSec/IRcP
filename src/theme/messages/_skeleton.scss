@@ -5,13 +5,13 @@
 // opacity, so only the shape and the row anatomy change here: a clock column, a nick
 // block and a body block, on the same one-line rhythm as a real message.
 
-/* One bar per line, sharp like a log row instead of Discord's rounded pills. The accent is
+/* One bar per line, sharp like a log row instead of Discord's rounded pills. The primary is
  * the base colour, not white: the inline opacity dims it to 6-19%, which is exactly the
  * shimmer, so anything neutral here ends up reading as Discord grey. */
 #app-mount .wrapper_d852db .blob_fc8177 {
   height: 0.75em;
   border-radius: 1px;
-  background: var(--accent);
+  background: var(--primary);
 }
 
 /* The list gets a plate of its own while it loads. --fg-primary is white at 7,5%: lifts the
@@ -56,5 +56,5 @@
 /* The attachment placeholder is a faint block, not a pill either. */
 #app-mount .wrapper_d852db .attachment_fc8177 {
   border-radius: 2px;
-  background: hsl(0 0% 100%);
+  background: var(--secondary);
 }

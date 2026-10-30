@@ -2,15 +2,15 @@
 //
 // The box in the chat header and the suggestions list under it.
 
-/* The box takes an accent edge so it reads as the entry point. */
+/* The box takes a primary edge so it reads as the entry point. */
 #app-mount .searchBar__25bec {
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
 }
 
 /* The suggestions list has no surface of its own, so it floats on whatever is behind. */
 #app-mount .container__16eb0 {
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
   -webkit-backdrop-filter: blur(3px);
@@ -51,7 +51,7 @@
   background: var(--background-message-hover);
 }
 
-/* The channel heading of a group reads as a category: accent label over a hairline. */
+/* The channel heading of a group reads as a category: primary label over a hairline. */
 #app-mount .searchResultGroup_a7e67f > div[role='button'] {
   border-bottom: 1px solid var(--bg-border);
 }
@@ -61,19 +61,19 @@
 }
 
 #app-mount .channelNameText_a7e67f {
-  color: var(--accent) !important;
+  color: var(--primary) !important;
   font-weight: normal;
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
 }
 
-/* Jump is the only action in a result, so it carries the accent outline of the bars. */
+/* Jump is the only action in a result, so it carries the primary outline of the bars. */
 #app-mount .button__80bf8 {
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l / 0.25);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--primary) h s l / 0.25);
 }
 
 #app-mount .button__80bf8:hover {
-  background: hsl(from var(--accent) h s l / 0.15);
+  background: hsl(from var(--primary) h s l / 0.15);
 }

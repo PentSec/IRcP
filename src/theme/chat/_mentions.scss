@@ -16,15 +16,15 @@
  * tag glow in its own colour. */
 #app-mount .wrapper__4106a,
 #app-mount .wrapper_f61d60 {
-  background: hsl(from var(--accent) h s l / 0.15);
-  color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.15);
+  color: var(--primary);
   text-shadow: 0 0 calc(var(--glow-intensity, 1) * 5px) currentColor;
 }
 
 #app-mount .wrapper__4106a.interactive:hover,
 #app-mount .wrapper_f61d60.interactive:hover {
-  background: hsl(from var(--accent) h s l / 0.3);
-  color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.3);
+  color: var(--primary);
   text-shadow: 0 0 calc(var(--glow-intensity, 1) * 8px) currentColor;
 }
 

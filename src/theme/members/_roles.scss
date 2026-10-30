@@ -3,7 +3,7 @@
 /* Set on the <h2> so RoleColorEverywhere's inline style beats it and currentColor follows;
  * colouring the name span would block that. */
 #app-mount .membersGroup_c8ffbb {
-  color: var(--irc-role-group-color, var(--accent));
+  color: var(--irc-role-group-color, var(--primary));
 }
 
 #app-mount .membersGroupName_c8ffbb {

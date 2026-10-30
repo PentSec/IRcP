@@ -23,29 +23,29 @@
 }
 
 #app-mount .container__0b563 .icon__9293f {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .container__0b563 .title__9293f {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
 }
 
-/* The selected tab takes the accent as a tint; the shape stays Discord's, because this is a
+/* The selected tab takes the primary as a tint; the shape stays Discord's, because this is a
  * page with rounded controls and not a log list. */
 #app-mount .container__0b563 .tabBarItem__0b563.item_aa8da2.selected_aa8da2 {
-  background: hsl(from var(--accent) h s l / 0.12);
-  color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.12);
+  color: var(--primary);
 }
 
 #app-mount .container__0b563 .tabBarItem__0b563.item_aa8da2:not(.selected_aa8da2):hover {
   background: var(--background-message-hover);
 }
 
-/* The count next to the tab keeps its pill and takes the accent tint. */
+/* The count next to the tab keeps its pill and takes the primary tint. */
 #app-mount .container__0b563 .numberBadge__0b563 {
-  background: hsl(from var(--accent) h s l / 0.15);
-  color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.15);
+  color: var(--primary);
   font-weight: normal;
 }
 
@@ -94,15 +94,15 @@
   color: var(--irc-dim);
 }
 
-/* View and Open are the row's only action, so they take the accent fill the theme uses for
+/* View and Open are the row's only action, so they take the primary fill the theme uses for
  * a primary button. No border and no glow: on a rounded page that reads as a box. */
 #app-mount .container__0b563 .overlay-primary_a22cb0 {
-  background: var(--accent);
-  color: var(--accent-text);
+  background: var(--primary);
+  color: var(--primary-text);
 }
 
 #app-mount .container__0b563 .overlay-primary_a22cb0:hover {
-  background: hsl(from var(--accent) h s l / 0.85);
+  background: hsl(from var(--primary) h s l / 0.85);
 }
 
 /* Customize tab -------------------------------------------------------------- */
@@ -125,31 +125,31 @@
 }
 
 #app-mount .pageBody__5d7c9 .optionButtonWrapper__270d7:hover {
-  background: hsl(from var(--accent) h s l / 0.1);
-  border-color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.1);
+  border-color: var(--primary);
 }
 
 #app-mount .pageBody__5d7c9 .optionButtonWrapper__270d7.selected__270d7 {
-  background: hsl(from var(--accent) h s l / 0.15);
-  border-color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.15);
+  border-color: var(--primary);
 }
 
 /* The selected border Discord paints on the inner button is recoloured, not doubled: only
  * border-color changes, so its width and radius stay as they are. */
 #app-mount .pageBody__5d7c9 .selected__270d7 .optionButton__270d7 {
   background: transparent;
-  border-color: var(--accent);
+  border-color: var(--primary);
 }
 
 #app-mount .pageBody__5d7c9 .selected__270d7 .buttonText__270d7 [data-text-variant] {
-  color: var(--accent) !important;
+  color: var(--primary) !important;
 }
 
-/* The preview card is accent-tinted, not white: a 7,5% white lift is invisible over this
+/* The preview card is primary-tinted, not white: a 7,5% white lift is invisible over this
  * panel, which is why the card looked untouched. */
 #app-mount .pageBody__5d7c9 .profileCard__5d7c9 {
-  background: hsl(from var(--accent) h s l / 0.06);
-  border: 1px solid hsl(from var(--accent) h s l / 0.25);
+  background: hsl(from var(--primary) h s l / 0.06);
+  border: 1px solid hsl(from var(--primary) h s l / 0.25);
   border-radius: var(--radius-sm);
 }
 

@@ -28,15 +28,15 @@
   bottom: 0;
   right: 0;
   width: 1px;
-  background: var(--accent);
-  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l / 0.35);
+  background: var(--primary);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--primary) h s l / 0.35);
   transition:
     background-color var(--transition),
     box-shadow var(--transition);
 }
 
 #app-mount .sidebarResizeHandle__5e434:is(:hover, :active, :focus-visible)::after {
-  box-shadow: 0 0 calc(var(--glow-intensity) * 16px) hsl(from var(--accent) h s l / 0.6);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 16px) hsl(from var(--primary) h s l / 0.6);
 }
 
 #app-mount .sidebarList__5e434 {
@@ -91,7 +91,7 @@
 }
 
 #app-mount .refresh-active-now .wrapper__00943:hover {
-  background: hsl(0 0% 100% / 0.12); /* the card's own hover feedback */
+  background: hsl(from var(--secondary) h s l / 0.12); /* the card's own hover feedback */
 }
 
 #app-mount .refresh-active-now .header__00943 {
@@ -104,7 +104,7 @@
 }
 
 #app-mount .container__0f2e8:hover {
-  background: hsl(0 0% 100% / 0.12); /* the card's own hover feedback */
+  background: hsl(from var(--secondary) h s l / 0.12); /* the card's own hover feedback */
 }
 
 #app-mount .sectionDivider_e6b769 {

@@ -22,16 +22,16 @@
 }
 
 #app-mount .wrapper__0d616:hover::after {
-  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--accent) h s l / 0.25);
+  box-shadow: 0 0 calc(var(--glow-intensity) * 8px) hsl(from var(--primary) h s l / 0.25);
 }
 
 #app-mount .overlay__0d616 {
   display: none;
 }
 
-/* The wash is inline and blue; the accent keeps the bar inside the palette. */
+/* The wash is inline and blue; the primary keeps the bar inside the palette. */
 #app-mount .postEnrollmentBackground__1699b {
-  background-image: linear-gradient(90deg, transparent, hsl(from var(--accent) h s l / 0.12)) !important;
+  background-image: linear-gradient(90deg, transparent, hsl(from var(--primary) h s l / 0.12)) !important;
 }
 
 #app-mount .divider__1699b {
@@ -44,7 +44,7 @@
   color: var(--irc-dim) !important;
 }
 
-/* The ring is the only state in the bar, so it carries the accent. */
+/* The ring is the only state in the bar, so it carries the primary. */
 #app-mount .progressBar__146e2 circle:last-of-type {
-  stroke: var(--accent);
+  stroke: var(--primary);
 }

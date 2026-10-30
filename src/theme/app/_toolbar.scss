@@ -46,13 +46,13 @@
   display: block;
   width: 20px;
   height: 20px;
-  background: #fff;
-  filter: drop-shadow(0 0 calc(var(--glow-intensity, 1) * 4px) #fff);
+  background: var(--secondary);
+  filter: drop-shadow(0 0 calc(var(--glow-intensity, 1) * 4px) var(--secondary));
   -webkit-mask: var(--irc-toolbar-icon) center / contain no-repeat;
   mask: var(--irc-toolbar-icon) center / contain no-repeat;
 }
 
-/* Glyph and halo switch to the accent; the shadow is what reads as "on". */
+/* Glyph and halo switch to the primary; the shadow is what reads as "on". */
 #app-mount
   .toolbar__9293f
   .iconWrapper__9293f:is(
@@ -62,6 +62,6 @@
     [aria-label='Hide Member List'],
     [aria-label='Show Member List']
   ):is(:hover, .selected__9293f, [aria-expanded='true'])::before {
-  background: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--glow-intensity, 1) * 5px) var(--accent));
+  background: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--glow-intensity, 1) * 5px) var(--primary));
 }

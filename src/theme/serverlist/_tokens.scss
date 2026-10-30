@@ -2,9 +2,9 @@
  * Derived from SoftX, Copyright (c) 2021 DiscordStyles, MIT. See THIRD-PARTY-NOTICES.md. */
 
 :root {
-  --server-unread-colour: rgb(255, 255, 255);
-  --server-hover-colour: rgb(255, 255, 255);
-  --server-selected-colour: var(--accent, rgb(0, 231, 169));
+  --server-unread-colour: var(--secondary);
+  --server-hover-colour: var(--secondary);
+  --server-selected-colour: var(--primary);
   --server-spacing: 16px;
   --server-glow-intensity: var(--glow-intensity, 1);
   --server-ring-offset: 6px;

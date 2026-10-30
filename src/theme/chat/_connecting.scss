@@ -31,7 +31,7 @@
   content: '▊ RECONNECTION ';
   display: block;
   padding-block: var(--space-sm);
-  color: var(--accent);
+  color: var(--primary);
   font-size: 2em;
   line-height: var(--irc-line-height);
   animation: irc-cursor 1.1s steps(2, start) infinite;
@@ -50,7 +50,7 @@
 }
 
 /* The tip label and the footer line are metadata; the tip body keeps the normal text
- * colour. The two links need nothing: --text-link is already mapped to the accent and both
+ * colour. The two links need nothing: --text-link is already mapped to the primary and both
  * icons paint with currentColor. */
 #app-mount .container_a2f514 .tipTitle_a2f514,
 #app-mount .container_a2f514 .problemsText_a2f514 {

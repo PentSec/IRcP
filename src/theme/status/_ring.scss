@@ -49,7 +49,7 @@
 }
 
 #app-mount .wrapper__44b0c .pointerEvents__44b0c[x='14.5'] {
-  fill: rgba(0, 0, 0, 0.5) !important;
+  fill: var(--scrim) !important;
   width: var(--irc-status-members-width, 30px);
   height: var(--irc-status-members-width, 30px);
   x: calc(var(--irc-status-members-width, 30px) / 2 - 2px);

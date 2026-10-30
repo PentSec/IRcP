@@ -14,14 +14,14 @@
   @include irc-blur;
 }
 
-/* The heading carries the accent the other panel headers use. */
+/* The heading carries the primary the other panel headers use. */
 #app-mount .gatedContent__7184c .title__7184c {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
 }
 
-/* The body copy is inline-coloured. Buttons need nothing: the control tokens already paint
- * the secondary as an accent tint and the primary as an accent fill. */
+/* The body copy is inline-coloured. Buttons need nothing: the control tokens already tint a
+ * secondary button and fill a primary one. */
 #app-mount .gatedContent__7184c .description__7184c {
   color: var(--irc-dim) !important;
 }

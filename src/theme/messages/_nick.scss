@@ -22,7 +22,7 @@
 :is(.cozy_c19a55, .compact_c19a55)
   .headerText_c19a55
   .username_c19a55:not([style*='color']):not([data-username-has-gradient]):not([class*='Gradient']) {
-  color: var(--irc-nick, var(--accent));
+  color: var(--irc-nick, var(--primary));
 }
 
 /* text-shadow reads as a halo in the nick's own colour through currentColor.

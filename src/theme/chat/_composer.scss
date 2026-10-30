@@ -24,20 +24,20 @@
 
 #app-mount .channelTextArea_f75fb0:focus-within,
 #app-mount .channelTextArea__5126c:focus-within {
-  border-color: hsl(from var(--accent) h s l);
+  border-color: hsl(from var(--primary) h s l);
   box-shadow: 0 0 calc(var(--input-glow-intensity) * 20px) calc(var(--input-glow-intensity) * 5px)
-    hsl(from var(--accent) h s l/0.25);
+    hsl(from var(--primary) h s l/0.25);
 }
 
 #app-mount .scrollableContainer__74017 {
   background: transparent;
 }
 
-/* Reply bar: the composer's own surface with the accent edge the theme uses for a quote. */
+/* Reply bar: the composer's own surface with the primary edge the theme uses for a quote. */
 #app-mount .replyBar__841c8 {
   background: var(--textbox-background);
   border-radius: 0;
-  box-shadow: inset 2px 0 calc(var(--glow-intensity) * 10px) hsl(from var(--accent) h s l / 0.25);
+  box-shadow: inset 2px 0 calc(var(--glow-intensity) * 10px) hsl(from var(--primary) h s l / 0.25);
 }
 
 /* Dim on purpose: it is context for the composer, not content. */
@@ -56,7 +56,7 @@
 }
 
 #app-mount [role='switch'][aria-checked='true'] .mentionButton__841c8 {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .separator__841c8 {
@@ -68,6 +68,6 @@
 }
 
 #app-mount .closeButton_e876a8:hover {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.4));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.4));
 }

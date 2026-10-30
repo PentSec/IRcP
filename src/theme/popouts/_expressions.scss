@@ -7,7 +7,7 @@
 // pane is its own module (fed6d3, 8ef02/e94b8c, c0e32c), so a rule has to be scoped per pane
 // even when the class names look familiar.
 
-/* Tabs: the active pane is an accent label, not a box. */
+/* Tabs: the active pane is a primary label, not a box. */
 #app-mount .contentWrapper__08434 .navButton__08434 {
   color: var(--irc-dim);
 }
@@ -17,7 +17,7 @@
 }
 
 #app-mount .contentWrapper__08434 .navButtonActive__08434 {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 /* Search field: the composer's textbox, as in every other picker and settings page. The focus
@@ -43,18 +43,18 @@
   color: var(--irc-dim);
 }
 
-/* One cell: hover is the message tint, the picked one is the accent. The radius stays
+/* One cell: hover is the message tint, the picked one is the primary. The radius stays
  * Discord's. */
 #app-mount .emojiPicker_c0e32c .emojiItem_fc7141:hover {
   background: var(--background-message-hover);
 }
 
 #app-mount .emojiPicker_c0e32c .emojiItemSelected_fc7141 {
-  background: hsl(from var(--accent) h s l / 0.2);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  background: hsl(from var(--primary) h s l / 0.2);
+  box-shadow: inset 0 0 0 1px var(--primary);
 }
 
-/* The rail on the right holds the guild icons; the selected one takes the accent. */
+/* The rail on the right holds the guild icons; the selected one takes the primary. */
 #app-mount .categoryList_c0e32c .categoryItem_b9ee0c {
   color: var(--irc-dim);
 }
@@ -66,7 +66,7 @@
 
 #app-mount .categoryList_c0e32c .categoryItemDefaultCategorySelected_b9ee0c,
 #app-mount .categoryList_c0e32c .categoryItemDefaultCategorySelected_b9ee0c .categoryIcon_b9ee0c {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 /* The inspector names the emoji under the cursor. */
@@ -77,14 +77,14 @@
 }
 
 #app-mount .emojiPicker_c0e32c .titlePrimary_aeaaeb {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 /* The picker is a bare panel: no surface of its own, so the wallpaper shows through, and the
- * accent edge marks the frame. */
+ * primary edge marks the frame. */
 #app-mount .contentWrapper__08434 {
   background: transparent;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   @include irc-blur;
 }
 
@@ -100,7 +100,7 @@
 
 /* Stickers pane --------------------------------------------------------------- */
 
-/* Same frame, same rule: the accent edge is the only border, so nothing inside paints. */
+/* Same frame, same rule: the primary edge is the only border, so nothing inside paints. */
 #app-mount .wrapper__8ef02,
 #app-mount .wrapper__8ef02 .header__8ef02,
 #app-mount .wrapper__8ef02 .listWrapper__8ef02,
@@ -116,7 +116,7 @@
 }
 
 #app-mount .wrapper__8ef02 .container__75098:focus-within {
-  border-color: var(--accent);
+  border-color: var(--primary);
 }
 
 #app-mount .wrapper__8ef02 .icon__75098 path {
@@ -136,15 +136,15 @@
   color: var(--irc-dim);
 }
 
-/* One sticker: hover is the message tint, the inspected one is the accent. The inline size
+/* One sticker: hover is the message tint, the inspected one is the primary. The inline size
  * and padding stay, and so does Discord's radius. */
 #app-mount .wrapper__8ef02 .sticker_c6367b:hover .inspectedIndicator_c6367b {
   background: var(--background-message-hover);
 }
 
 #app-mount .wrapper__8ef02 .stickerInspected_c6367b .inspectedIndicator_c6367b {
-  background: hsl(from var(--accent) h s l / 0.2);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  background: hsl(from var(--primary) h s l / 0.2);
+  box-shadow: inset 0 0 0 1px var(--primary);
 }
 
 /* The inspector names the sticker, exactly like the emoji one. */
@@ -155,14 +155,14 @@
 }
 
 #app-mount .wrapper__8ef02 .titlePrimary_aeaaeb {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .wrapper__8ef02 .titleSecondary_aeaaeb {
   color: var(--irc-dim);
 }
 
-/* The sticker rail: dim, hover tint, the selected entry in accent. */
+/* The sticker rail: dim, hover tint, the selected entry in primary. */
 #app-mount .categoryList__3ad28 .stickerCategory__3ad28 {
   color: var(--irc-dim);
 }
@@ -174,7 +174,7 @@
 
 #app-mount .categoryList__3ad28 .stickerCategoryGenericSelected__3ad28,
 #app-mount .categoryList__3ad28 .stickerCategoryGenericSelected__3ad28 .stickerCategoryGenericIcon__3ad28 {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .categoryList__3ad28 .standardStickerShortcut__3ad28 {
@@ -182,12 +182,12 @@
 }
 
 #app-mount .categoryList__3ad28 .standardStickerShortcut__3ad28:hover {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 /* GIFs pane ------------------------------------------------------------------- */
 
-/* Same frame again: nothing inside paints, the accent edge stays the only border. */
+/* Same frame again: nothing inside paints, the primary edge stays the only border. */
 #app-mount .container_fed6d3,
 #app-mount .container_fed6d3 .header_fed6d3,
 #app-mount .container_fed6d3 .content_fed6d3,
@@ -204,7 +204,7 @@
 
 #app-mount .container_fed6d3 .container__75098:focus-within,
 #app-mount .container_fed6d3 .selectField__0edde:hover {
-  border-color: var(--accent);
+  border-color: var(--primary);
 }
 
 #app-mount .container_fed6d3 .icon__75098 path {
@@ -215,23 +215,23 @@
   color: var(--irc-dim);
 }
 
-/* The Favorites tile ships a blurple wash under that name; it becomes the accent wash so
+/* The Favorites tile ships a blurple wash under that name; it becomes the primary wash so
  * the featured tile belongs to the theme. */
 #app-mount .container_fed6d3 .categoryFadeBlurple_d02962 {
-  background: linear-gradient(0deg, hsl(from var(--accent) h s l / 0.75), hsl(from var(--accent) h s l / 0.15));
+  background: linear-gradient(0deg, hsl(from var(--primary) h s l / 0.75), hsl(from var(--primary) h s l / 0.15));
 }
 
-/* A tile takes the accent as a ring when hovered or focused; its size stays inline. */
+/* A tile takes the primary as a ring when hovered or focused; its size stays inline. */
 #app-mount .container_fed6d3 .result__2dc39:hover,
 #app-mount .container_fed6d3 .result__2dc39[data-focused='true'] {
-  box-shadow: inset 0 0 0 2px var(--accent);
+  box-shadow: inset 0 0 0 2px var(--primary);
 }
 
 /* The picker's text fields ---------------------------------------------------- */
 
 /* Discord paints its focus ring in blurple on the input itself, which is what shows as a blue
- * edge next to the accent border. The ring is removed on both the wrapper and the input; the
- * accent edge and its glow replace it. This is scoped to the picker so no other field moves. */
+ * edge next to the primary border. The ring is removed on both the wrapper and the input; the
+ * primary edge and its glow replace it. This is scoped to the picker so no other field moves. */
 #app-mount .contentWrapper__08434 .container__75098,
 #app-mount .contentWrapper__08434 .container__75098 .input__75098 {
   box-shadow: none;
@@ -244,7 +244,7 @@
 }
 
 /* The provider select draws the same blurple ring, and it comes from the focus target inside
- * it, so the ring is cleared on the chain and the accent edge takes over. */
+ * it, so the ring is cleared on the chain and the primary edge takes over. */
 #app-mount .contentWrapper__08434 .selectField__0edde,
 #app-mount .contentWrapper__08434 .selectField__0edde .focusTarget__54e4b {
   box-shadow: none;

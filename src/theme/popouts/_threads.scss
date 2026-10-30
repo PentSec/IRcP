@@ -8,7 +8,7 @@
 /* The frame is the panel, and the header bar keeps the hairline the other panels use. */
 #app-mount .browser_d98031 {
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   border-radius: var(--radius-md, 8px);
   box-shadow: var(--shadow-lg);
   @include irc-blur;
@@ -22,13 +22,13 @@
 
 /* The icon paints with currentColor, so it follows the header. */
 #app-mount .container_d9c882 .threadIcon_d9c882 {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 /* The title colour comes from a shared heading class, not inline, so no flag is needed. */
 #app-mount .container_d9c882 .title_d9c882 {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
 }
 
 #app-mount .container_d9c882 .divider_d9c882 {

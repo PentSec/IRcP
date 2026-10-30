@@ -30,12 +30,12 @@
 }
 
 #app-mount .page_c791b2 .icon__9293f {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .page_c791b2 .title__9293f {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.3));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
 }
 
 /* The search field is the composer textbox, as in the channel modal. */
@@ -92,11 +92,11 @@
 
 #app-mount .page_c791b2 .actionCell__71c22 .button__71c22:hover,
 #app-mount .page_c791b2 .addRoleContainer__71c22:hover .addRoleIcon__71c22 {
-  color: var(--accent);
-  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--accent) h s l / 0.4));
+  color: var(--primary);
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.4));
 }
 
-/* Pagination: plain numbers, the current page in the accent. */
+/* Pagination: plain numbers, the current page in the primary. */
 #app-mount .page_c791b2 .roundButton_c15210.pageButton_c15210 {
   background: transparent;
   color: var(--irc-dim);
@@ -104,12 +104,12 @@
 
 #app-mount .page_c791b2 .roundButton_c15210.pageButton_c15210:hover {
   background: var(--background-message-hover);
-  color: var(--accent);
+  color: var(--primary);
 }
 
 #app-mount .page_c791b2 .roundButton_c15210.activeButton_c15210 {
-  background: hsl(from var(--accent) h s l / 0.15);
-  color: var(--accent);
+  background: hsl(from var(--primary) h s l / 0.15);
+  color: var(--primary);
 }
 
 /* Previous and Next are labels, not boxes. */
@@ -118,10 +118,10 @@
 }
 
 #app-mount .page_c791b2 .endButton_c15210:not([disabled]):hover {
-  color: var(--accent);
+  color: var(--primary);
 }
 
-/* The progress bar carries the accent instead of Discord's blue. */
+/* The progress bar carries the primary instead of Discord's blue. */
 #app-mount .page_c791b2 .loaderBar__09a38 {
-  background: var(--accent);
+  background: var(--primary);
 }
