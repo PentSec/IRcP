@@ -17,8 +17,8 @@ holds generated files and is written only by CI.
 | `src/theme/sidebar/`         | channel and DM lists, user panel                                                   |
 | `src/theme/chat/`            | message area, composer, dividers, notice bars, mentions, gates, connecting screen  |
 | `src/theme/members/`         | member list column, rows and role groups                                           |
-| `src/theme/popouts/`         | server/channel/thread/pinned popouts, modals, menus, tooltips                      |
-| `src/theme/messages/`        | one-line message rows: row, clock, runs, reply, nick, avatar, skeleton             |
+| `src/theme/popouts/`         | server/channel/thread/pinned/inbox popouts, modals, menus, tooltips                |
+| `src/theme/messages/`        | one-line message rows: row, clock, runs, reply, nick, avatar, embeds, skeleton     |
 | `src/theme/forum/`           | forum posts as log lines                                                           |
 | `src/theme/status/`          | presence rings, glow and the avatar exceptions                                     |
 | `src/theme/_wiring.scss`     | maps `--irc-font` onto the variables Discord reads; not configuration              |
