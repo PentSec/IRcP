@@ -1,0 +1,58 @@
+/* Inbox popout.
+ *
+ * The dialog paints its own panel one level down; the header and the tab bar inside it are
+ * already bare, so only the panel, the title and the tab colour need the theme.
+ */
+
+/* Panel: the menu surface with the primary edge and the blur every floating listbox gets. */
+#app-mount .container__8cb2e {
+  background: var(--bg-primary);
+  border: 1px solid var(--primary);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: blur(var(--foreground-blur));
+  backdrop-filter: blur(var(--foreground-blur));
+}
+
+/* Icon and title carry the primary like every other panel header. The title colour is inline,
+ * which is what the flag is for. */
+#app-mount .container__8cb2e .inboxIcon__06f80 {
+  color: var(--primary);
+}
+
+#app-mount .container__8cb2e .inboxTitle__06f80 {
+  color: var(--primary) !important;
+  filter: drop-shadow(0 0 calc(var(--channel-glow-intensity) * 5px) hsl(from var(--primary) h s l / 0.3));
+}
+
+/* The tab bar closes with the theme hairline. */
+#app-mount .container__8cb2e .top_aa8da2 {
+  border-bottom-color: var(--bg-border);
+}
+
+/* Tabs: dim at rest, primary when active. This variant takes its selected colour from the
+ * brand blurple, which --brand-500 does not reach, so both states are set here. */
+#app-mount .container__8cb2e .top_aa8da2 .item_aa8da2 {
+  --selected-tab-item-color: var(--primary);
+  color: var(--irc-dim);
+}
+
+#app-mount .container__8cb2e .top_aa8da2 .item_aa8da2:hover {
+  color: var(--text-normal);
+}
+
+#app-mount .container__8cb2e .top_aa8da2 .item_aa8da2.selected_aa8da2 {
+  color: var(--primary);
+}
+
+/* One card per channel. Same recipe as the settings cards: a white lift for a surface and a
+ * hairline for an edge, so the message rows inside sit on something. */
+#app-mount .container__8cb2e .box__376cb {
+  background: var(--fg-primary);
+  border: 1px solid var(--fg-border);
+  border-radius: var(--radius-sm);
+}
+
+/* The "guild › category" line under the channel name is metadata, so it dims like the rest. */
+#app-mount .container__8cb2e .guildName__5d903 {
+  color: var(--irc-dim) !important;
+}
