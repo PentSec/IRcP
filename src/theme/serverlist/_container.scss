@@ -4,18 +4,29 @@
   width: var(--server-size);
 }
 
+/* The column is the theme's: one number sets the width, and the visibility switch can take it
+ * to zero so the channel list reclaims it. Discord derives the same value from the avatar size. */
+:root {
+  --custom-guild-list-width: calc(var(--guilds-width, 80px) * var(--irc-guilds-visible, 1));
+}
+
 #app-mount .guilds__5e434 {
+  background: var(--bg-primary);
   border-right: 1px solid var(--bg-border);
-  /* The Discord button has no gap above it, so the rail carries the top spacing itself. */
-  padding-top: var(--server-spacing, 16px);
-  margin-bottom: var(--custom-app-panels-height);
+  /* Hidden, the rail is scaled to nothing: the column is already zero, and this takes the icons
+   * with it so none of them overflow into the channel list. */
+  transform: scale(var(--irc-guilds-visible));
+  transform-origin: top left;
 }
 
 /* scrollbar-gutter: stable reserves width for a bar that is never visible and pushes the
- * icons off centre; the bar is hidden instead. */
+ * icons off centre; the bar is hidden instead.
+ * The padding is written inline as 0, so the first icon started against the clipped edge and
+ * lost the top of its ring glow: the spacing lives here, not on the rail, or it is clipped. */
 #app-mount .guilds__5e434 .scroller_ef3116 {
   scrollbar-gutter: auto;
   scrollbar-width: none;
+  padding-top: calc(var(--server-spacing, 16px) * 1.5) !important;
 }
 
 #app-mount .guilds__5e434 .scroller_ef3116::-webkit-scrollbar {
@@ -31,10 +42,6 @@
 
 #app-mount .guildSeparator__252b6 {
   background: var(--bg-border);
-}
-
-#app-mount .itemsContainer_ef3116 > div.stack_dbd263 {
-  padding-top: var(--server-spacing, 16px);
 }
 
 #app-mount .unreadMentionsIndicatorBottom_ef3116,

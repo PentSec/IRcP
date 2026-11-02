@@ -29,7 +29,9 @@
   --text-link: var(--primary) !important;
   --background-mentioned: var(--primary);
   --background-message-hover: hsl(from var(--secondary) h s l / 0.02) !important;
-  --guildbar-folder-size: var(--server-size);
+  /* Folder geometry stays Discord's: its button is 48px and the icon scale is a transform,
+   * so shrinking the token would clip the folder inside a box smaller than its own glyph. */
+  --guildbar-folder-size: 48px;
 }
 
 /* Discord redeclares these on every .theme-dark root, so the override has to sit on the

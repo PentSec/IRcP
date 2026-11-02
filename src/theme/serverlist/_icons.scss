@@ -15,6 +15,16 @@
   mask: none !important;
 }
 
+/* --server-icon-size is the scale of the list. Resizing the box does not work: the SVG is
+ * absolutely positioned at -4px and clips to itself, so any size but 40 shifts and cuts the
+ * blob. The box keeps the geometry Discord built and is scaled whole instead, which keeps the
+ * icon, its mask and its badge centred at any value.
+ * Direct child only: a guild icon holds a second wrapper inside its foreignObject, and scaling
+ * both shrinks the servers twice while folders, which have one, keep their size. */
+#app-mount .guilds__5e434 :is(.blobContainer_e5445c, .listItemWrapper__91816, .folderButton__48112) > .wrapper_cc5dd2 {
+  transform: scale(calc(var(--server-icon-size) / 40));
+}
+
 .pill__5bc7e {
   display: none;
 }

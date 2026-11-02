@@ -34,7 +34,7 @@ skipping" and **exits 0** — a green run then proves nothing. Fetch it
 | `src/theme/_tokens.scss`     | internal custom properties shared by every partial                                 |
 | `src/theme/_mixins.scss`     | `@mixin` recipes (field, focus, blur); not forwarded, emits no CSS of its own      |
 | `src/theme/app/`             | background layer, titlebar, toolbar, window controls                               |
-| `src/theme/serverlist/`      | guild rail: folders, items, unread pill, hover puck, icons                         |
+| `src/theme/serverlist/`      | guild rail: folders, items, unread pill, icons                                     |
 | `src/theme/sidebar/`         | channel and DM lists, user panel, quest bar                                        |
 | `src/theme/chat/`            | message area, composer, autocomplete, search, dividers, notices, mentions, gates   |
 | `src/theme/members/`         | member list column, rows and role groups                                           |

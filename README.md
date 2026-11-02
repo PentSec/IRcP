@@ -134,8 +134,9 @@ Renamed in `2.0.0-irc.100`: `--accent` is now `--primary`, `--accent-text` is no
 | `--irc-status-members-width`               | Member-list avatar box the ring is drawn around                   | `30px`                  |
 | `--irc-status-self-speaking-colour`        | Ring colour while your own voice transmits                        | `#57d39b`               |
 | `--irc-status-*`                           | Avatar ring sizes and colours                                     | see the file            |
-| `--members-width`, `--server-icon-size`    | Sidebar geometry                                                  | see the file            |
-| `--guilds-width`                           | No effect: the rail is a puck, so overriding it changes nothing   | `80px`                  |
+| `--members-width`, `--server-icon-size`    | Sidebar geometry; the icon size is the server list's scale        | see the file            |
+| `--guilds-width`                           | Width of the server list column                                   | `80px`                  |
+| `--irc-guilds-visible`                     | `1` shows the server list, `0` hides it and gives the column back | `1`                     |
 
 ### Wallpapers
 
